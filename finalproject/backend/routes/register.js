@@ -25,7 +25,12 @@ const upload = multer({ storage: storage });
 router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
+    if (req.method == "POST") {
     const file = req.files;
+    
+
+    console.log(file);
+    // console.log(file.path.substring(6));
     
     if (!file) {
         return res.status(400).json({ message: "Please upload a file" });
@@ -35,18 +40,24 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
     const user_phone = req.body.phoneNumber;
     const user_userName = req.body.userName;
     const user_password = req.body.password;
+    let pathArray = [];
+
+    
 
     try {
         let [info, _] = await conn.query(
             "select user_fname, user_phone from user where ? = user_fname AND ? =  user_phone;",
             [user_fname, user_phone]
         );
-
+        req.files.forEach((file, index) => {
+            let path = [user_fname, user_lname,user_phone,file.path];
+            pathArray.push(path);
+          });  
         if (info.length == 0) {
 
             let [rows, _] = await conn.query(
-                "INSERT INTO user(user_fname, user_lname, user_phone, user_image) VALUES(?,?,?,?);",
-                [user_fname, user_lname, user_phone, file.path]
+                "INSERT INTO user(user_fname, user_lname, user_phone, user_image) VALUES ?;",
+                [pathArray]
             );
 
             let [data, a] = await conn.query(
@@ -84,6 +95,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
         // console.error(error);
         next(error);
     }
+}
 
 })
 

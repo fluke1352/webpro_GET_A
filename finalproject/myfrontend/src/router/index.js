@@ -6,24 +6,22 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue') // set home as path '/'
+    name: 'home',
+    component: () => import('../views/Home.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login.vue') // set home as path '/'
+    path: '/blogs/detail/:id',
+    name: 'detail',
+    component: () => import('../views/blogs/DetailBlog.vue')
   },
   {
-    path: '/detail/:id',
-    name: 'Detail',
-    component: () => import('../views/Detail.vue') // set home as path '/'
-  },
+    path: '/blogs/create',
+    name: 'create-blog',
+    component: () => import('../views/blogs/CreateBlog.vue')
+  }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 

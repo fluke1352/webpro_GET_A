@@ -35,6 +35,29 @@
               />
             </div>
           </div>
+          <div class="column">
+            <h1 class="is-size-4">Profile image</h1>
+            <input
+              class="mb-5"
+              multiple
+              type="file"
+              accept="image/png, image/jpeg, image/webp"
+              @change="selectImages"
+            />
+          </div>
+          <div
+            v-for="image in images"
+            :key="image.id"
+            class="column is-one-quarter"
+          >
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-square">
+                  <img :src="showSelectImage(image)" alt="Placeholder image" />
+                </figure>
+              </div>
+            </div>
+          </div>
 
           <div class="column">
             <label><p>phone number</p></label>
@@ -98,19 +121,38 @@ import "bulma/css/bulma.css";
 export default {
   created() {},
   methods: {
+    selectImages(event) {
+      this.images = event.target.files;
+      console.log(this.images);
+    },
+    showSelectImage(image) {
+      return URL.createObjectURL(image);
+    },
+  
     resgister() {
-      if(this.password === this.confirmPassword){
-        axios.post("http://localhost:3000/register", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        phoneNumber: this.phoneNumber,
-        userName: this.userName,
-        password: this.password
-      });
-      }else{
-        alert("error")
+      if (this.password === this.confirmPassword) {
+        axios
+          .post("http://localhost:3000/register", {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            phoneNumber: this.phoneNumber,
+            userName: this.userName,
+            password: this.password,
+            myImage: this.images,
+          })
+          .then((response) => {
+            this.alertregister = response.data.message;
+            alert(this.alertregister);
+            if (this.alertregister === "Add Complete") {
+              this.$router.push("/login");
+            } else {
+              alert("Please try again");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
-      
     },
   },
   data() {
@@ -121,6 +163,8 @@ export default {
       userName: null,
       password: null,
       confirmPassword: null,
+      alertregister: null,
+      images: null,
     };
   },
 };

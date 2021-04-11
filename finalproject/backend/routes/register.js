@@ -25,7 +25,11 @@ const upload = multer({ storage: storage });
 router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
-    const file = req.file;
+    const file = req.files;
+    
+    if (!file) {
+        return res.status(400).json({ message: "Please upload a file" });
+      }
     const user_fname = req.body.firstName;
     const user_lname = req.body.lastName;
     const user_phone = req.body.phoneNumber;
@@ -42,7 +46,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
 
             let [rows, _] = await conn.query(
                 "INSERT INTO user(user_fname, user_lname, user_phone, user_image) VALUES(?,?,?,?);",
-                [user_fname, user_lname, user_phone, file]
+                [user_fname, user_lname, user_phone, file.path]
             );
 
             let [data, a] = await conn.query(

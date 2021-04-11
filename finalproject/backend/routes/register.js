@@ -5,23 +5,24 @@ const fs = require("fs");
 
 router = express.Router();
 
+// Require multer for file upload
 const multer = require("multer");
-
+// SET STORAGE
 var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, "./static/uploads");
-    },
-    filename: function (req, file, callback) {
-        callback(
-            null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-        );
-    },
+  destination: function (req, file, callback) {
+    callback(null, "./static/uploads");
+  },
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
 const upload = multer({ storage: storage });
 
 
-router.post("/register", upload.single("myImage"), async (req, res, next) => {
+router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     const file = req.file;
@@ -41,7 +42,7 @@ router.post("/register", upload.single("myImage"), async (req, res, next) => {
 
             let [rows, _] = await conn.query(
                 "INSERT INTO user(user_fname, user_lname, user_phone, user_image) VALUES(?,?,?,?);",
-                [user_fname, user_lname, user_phone, file.path.substring(6)]
+                [user_fname, user_lname, user_phone, file]
             );
 
             let [data, a] = await conn.query(

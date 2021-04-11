@@ -122,25 +122,29 @@ export default {
   created() {},
   methods: {
     selectImages(event) {
-      
       this.images = event.target.files;
       console.log(this.images);
+      this.test.push(event.target.files);
+      console.log(this.test);
     },
     showSelectImage(image) {
       return URL.createObjectURL(image);
     },
-  
+
     resgister() {
+      let formData = new FormData();
+      formData.append("firstName", this.firstName);
+      formData.append("lastName", this.lastName);
+      formData.append("phoneNumber", this.phoneNumber);
+      formData.append("userName", this.userName);
+      formData.append("password", this.password);
+      this.images.forEach((image) => {
+        formData.append("myImage", image);
+      });
+
       if (this.password === this.confirmPassword) {
         axios
-          .post("http://localhost:3000/register", {
-            firstName: this.firstName,
-            lastName: this.lastName,
-            phoneNumber: this.phoneNumber,
-            userName: this.userName,
-            password: this.password,
-            myImage: this.images,
-          })
+        .post("http://localhost:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
@@ -166,6 +170,7 @@ export default {
       confirmPassword: null,
       alertregister: null,
       images: null,
+      test: [],
     };
   },
 };

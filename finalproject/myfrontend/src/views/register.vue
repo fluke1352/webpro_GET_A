@@ -122,6 +122,7 @@ export default {
   created() {},
   methods: {
     selectImages(event) {
+      
       this.images = event.target.files;
       console.log(this.images);
     },

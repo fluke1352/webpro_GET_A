@@ -50,7 +50,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
             [user_fname, user_phone]
         );
         req.files.forEach((file, index) => {
-            let path = [user_fname, user_lname,user_phone,file.path];
+            let path = [user_fname, user_lname,user_phone,file.path.substring(6)];
             pathArray.push(path);
           });  
         if (info.length == 0) {

@@ -31,9 +31,7 @@ router.post("/login", async (req, res, next) => {
 
             if (login.length > 0) {
                 console.log("login success");
-                res.json({
-                    message: "login success"
-                });
+                res.json({message: "login success"});
             }
 
             else {

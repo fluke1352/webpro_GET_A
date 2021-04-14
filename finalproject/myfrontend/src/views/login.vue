@@ -55,19 +55,23 @@ export default {
   created() {},
   methods: {
     login() {
-      
         axios.post("http://localhost:3000/login", {
         username: this.username,
         password: this.password,
-      });
-      
-      
+      }).then((response)=>{
+        this.alertlogin = response.data.message
+        alert(this.alertlogin);
+        if (this.alertlogin === "login success") {
+          this.$router.push("/");
+        }
+      })
     },
   },
   data() {
     return {
       username: null,
       password: null,
+      alertlogin: null
     };
   },
 };

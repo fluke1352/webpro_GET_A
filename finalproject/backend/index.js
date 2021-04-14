@@ -18,7 +18,13 @@ const login = require('./routes/login')
 const home = require('./routes/index')
 
 // const commentRouter = require('./routes/comment')
-
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
 // app.use(indexRouter.router)
 // app.use(blogRouter.router)
 app.use(register.router)

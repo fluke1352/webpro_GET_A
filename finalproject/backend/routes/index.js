@@ -3,16 +3,16 @@ const pool = require("../config");
 
 router = express.Router();
 
-router.get("/", async  (req, res, next) =>{
+router.get("/", async function (req, res, next) {
   try {
     const [rows, fields] = await pool.query(
-      `SELECT * from product_type`
+      `SELECT a.*, b.file_path FROM blogs AS a LEFT JOIN 
+      (SELECT * FROM images WHERE main=1) AS b ON a.id = b.blog_id;`
     );
-    res.json(rows);
+    return res.json(rows);
   } catch (err) {
-    next(err)
+    return next(err)
   }
-  
 });
 
 exports.router = router;

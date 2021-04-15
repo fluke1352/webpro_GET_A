@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <div  style="background-color: #34495e">
     <div class="columns">
       <div class="column is-full has-background-primary">nev Bar</div>
     </div>
     <div class="container mt-6">
       <div class="columns">
-        <div class="column is-half has-background-info">
-          wellcome to 999auto
-        </div>
-        <div class="column has-background-warning">
+        <!-- <div class="column is-half">
+          <div style="color: white">wellcome to 999auto</div>
+        </div> -->
+        <div class="column is-three-fifths is-offset-one-fifth my-5" id="SingUp">
           <p class="is-size-3 has-text-centered">Sign up</p>
           <p class="has-text-centered">check your email to confirmation</p>
 
           <div class="columns column">
-            <div class="column is-half">
+            <div class="column is-half xxxx">
               <label><p>name</p></label>
               <input
                 class="input"
@@ -37,13 +37,15 @@
           </div>
           <div class="column">
             <h1 class="is-size-4">Profile image</h1>
-            <input
-              class="mb-5"
-              multiple
-              type="file"
-              accept="image/png, image/jpeg, image/webp"
-              @change="selectImages"
-            />
+            <div class="control has-icons-left">
+              <input
+                class="mb-5"
+                multiple
+                type="file"
+                accept="image/png, image/jpeg, image/webp"
+                @change="selectImages"
+              />
+            </div>
           </div>
           <div
             v-for="image in images"
@@ -144,7 +146,7 @@ export default {
 
       if (this.password === this.confirmPassword) {
         axios
-        .post("http://localhost:3000/register", formData)
+          .post("http://localhost:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
@@ -177,4 +179,24 @@ export default {
 </script>
 
 <style scoped>
+/* #FirstName{background-color: coral;} */
+#SingUp {
+  background-color: #191919;
+  color: white;
+  text-transform: uppercase;
+  /* font-weight: 50000; */
+}
+/* .input input[type = text], .input input[type = "file"], .input input[type = "password"] */
+.xxxx input[type = "text"]{
+  color: rgb(179, 179, 179) !important;
+  background: none;
+  margin: 3px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  border-radius: 24px;
+  padding: 14px 10px;
+  transition: 0.25s;
+  
+  
+}
 </style>

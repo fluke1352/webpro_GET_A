@@ -1,14 +1,25 @@
 <template>
+<<<<<<< HEAD
   <div  style="background-color: #34495e">
+=======
+  <div>
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
     <div class="columns">
       <div class="column is-full has-background-primary">nev Bar</div>
     </div>
     <div class="container mt-6">
       <div class="columns">
+<<<<<<< HEAD
         <!-- <div class="column is-half">
           <div style="color: white">wellcome to 999auto</div>
         </div> -->
         <div class="column is-three-fifths is-offset-one-fifth my-5" id="SingUp">
+=======
+        <div class="column is-half has-background-info">
+          wellcome to 999auto
+        </div>
+        <div class="column has-background-warning">
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
           <p class="is-size-3 has-text-centered">Sign up</p>
           <p class="has-text-centered">check your email to confirmation</p>
 
@@ -37,15 +48,13 @@
           </div>
           <div class="column">
             <h1 class="is-size-4">Profile image</h1>
-            <div class="control has-icons-left">
-              <input
-                class="mb-5"
-                multiple
-                type="file"
-                accept="image/png, image/jpeg, image/webp"
-                @change="selectImages"
-              />
-            </div>
+            <input
+              class="mb-5"
+              multiple
+              type="file"
+              accept="image/png, image/jpeg, image/webp"
+              @change="selectImages"
+            />
           </div>
           <div
             v-for="image in images"
@@ -146,7 +155,7 @@ export default {
 
       if (this.password === this.confirmPassword) {
         axios
-          .post("http://localhost:3000/register", formData)
+        .post("http://localhost:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
@@ -179,6 +188,7 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 /* #FirstName{background-color: coral;} */
 #SingUp {
   background-color: #191919;
@@ -199,4 +209,6 @@ export default {
   
   
 }
+=======
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
 </style>

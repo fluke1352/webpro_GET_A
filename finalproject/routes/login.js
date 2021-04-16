@@ -1,8 +1,6 @@
 const express = require("express");
 const path = require("path");
 const pool = require("../config");
-const session = require('express-session');
-var bodyParser = require('body-parser');
 
 router = express.Router();
 
@@ -25,24 +23,11 @@ router.post("/login", async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
-        var username = req.body.username;
-        var password = req.body.password;
+        const username = req.body.username;
+        const password = req.body.password;
         if (username && password) {
 
             let [login, _] = await conn.query('SELECT * FROM account WHERE user_username = ? AND user_password = ?', [username, password]);
-<<<<<<< HEAD
-            return function (error, results, fields) { // query callback
-                if (results.length > 0) {
-                    req.session.loggedin = true;
-                    req.session.username = username;
-                    res.redirect('/');
-                } else {
-                    res.send('Username and/or Password not found');
-                }
-                conn.close();
-                resp.end();
-            };
-=======
 
             if (login.length > 0) {
                 console.log("login success");
@@ -54,7 +39,6 @@ router.post("/login", async (req, res, next) => {
                     message: "wrong username or password"
                 });
             }
->>>>>>> 09728be695464ef3b6a915829642604e70d6e606
         } else {
             res.json({
                 message: "please input username or password"

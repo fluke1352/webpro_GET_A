@@ -15,21 +15,17 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 // const blogRouter = require('./routes/blog')
 const register = require('./routes/register')
 const login = require('./routes/login')
-const home = require('./routes/index')
-
+const inflowhistory = require('./routes/inflowhistory')
+const owner = require('./routes/addproduct')
+// const editaccount = require('./routes/editaccount')
 // const commentRouter = require('./routes/comment')
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
+
 // app.use(indexRouter.router)
 // app.use(blogRouter.router)
 app.use(register.router)
 app.use(login.router)
-app.use(home.router)
+app.use(inflowhistory.router)
+app.use(owner.router)
 // app.use(commentRouter.router)
 
 app.listen(3000, () => {

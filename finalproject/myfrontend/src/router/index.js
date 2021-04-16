@@ -24,6 +24,22 @@ const routes = [
     name: 'Detail',
     component: () => import('../views/Detail.vue') // set home as path '/'
   },
+  {
+    path: '/editaccount',
+    name: 'editaccount',
+    component: () => import('../views/editaccount.vue') // set home as path '/'
+  },
+  {
+    path: '/inflowhistory',
+    name: 'inflowhistory',
+    component: () => import('../views/inflowhistory.vue') // set home as path '/'
+  },
+  {
+    path: '/addproduct',
+    name: 'addproduct',
+    component: () => import('../views/addproduct.vue') // set home as path '/'
+  },
+
 ]
 
 const router = new VueRouter({

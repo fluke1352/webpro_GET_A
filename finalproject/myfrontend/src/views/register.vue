@@ -1,26 +1,30 @@
 <template>
-  <div class="bgSignUp">
-    <!-- <div> -->
-    <!-- <div class="columns">
-      <div class="column is-full has-background-warning">nev Bar</div>
-    </div> -->
-    <div class="container">
+<<<<<<< HEAD
+  <div  style="background-color: #34495e">
+=======
+  <div>
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
+    <div class="columns">
+      <div class="column is-full has-background-primary">nev Bar</div>
+    </div>
+    <div class="container mt-6">
       <div class="columns">
-        <!-- <div class="column is-3 my-5"></div> -->
-        <!-- <div
-          class="my-5 column is-4"
-          style="background-color: black; margin: 5px"
-        >
-          <div class="has-text-warning">wellcome to 999auto</div>
+<<<<<<< HEAD
+        <!-- <div class="column is-half">
+          <div style="color: white">wellcome to 999auto</div>
         </div> -->
-        <div class="my-5 column is-half is-offset-one-quarter" id="SingUp">
+        <div class="column is-three-fifths is-offset-one-fifth my-5" id="SingUp">
+=======
+        <div class="column is-half has-background-info">
+          wellcome to 999auto
+        </div>
+        <div class="column has-background-warning">
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
           <p class="is-size-3 has-text-centered">Sign up</p>
-          <p class="has-text-centered has-text-warning">
-            check your email to confirmation
-          </p>
+          <p class="has-text-centered">check your email to confirmation</p>
 
           <div class="columns column">
-            <div class="column is-half">
+            <div class="column is-half xxxx">
               <label><p>name</p></label>
               <input
                 class="input"
@@ -42,17 +46,15 @@
               />
             </div>
           </div>
-          <div class="column has-text-warning">
+          <div class="column">
             <h1 class="is-size-4">Profile image</h1>
-            <div class="control has-icons-left">
-              <input
-                class="mb-5"
-                multiple
-                type="file"
-                accept="image/png, image/jpeg, image/webp"
-                @change="selectImages"
-              />
-            </div>
+            <input
+              class="mb-5"
+              multiple
+              type="file"
+              accept="image/png, image/jpeg, image/webp"
+              @change="selectImages"
+            />
           </div>
           <div
             v-for="image in images"
@@ -114,7 +116,7 @@
           </div>
 
           <div class="column mx-auto has-text-centered">
-            <button class="button is-warning" @click="resgister()">
+            <button class="button is-primary" @click="resgister()">
               Sign up
             </button>
           </div>
@@ -153,7 +155,7 @@ export default {
 
       if (this.password === this.confirmPassword) {
         axios
-          .post("http://localhost:3000/register", formData)
+        .post("http://localhost:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
@@ -186,17 +188,27 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 /* #FirstName{background-color: coral;} */
 #SingUp {
-  background-color: #252525;
+  background-color: #191919;
   color: white;
   text-transform: uppercase;
-  border-radius: 1%;
   /* font-weight: 50000; */
 }
-.bgSignUp {
-  background-image: url("../assets/bgSignUp.jpg");
-}
-
 /* .input input[type = text], .input input[type = "file"], .input input[type = "password"] */
+.xxxx input[type = "text"]{
+  color: rgb(179, 179, 179) !important;
+  background: none;
+  margin: 3px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  border-radius: 24px;
+  padding: 14px 10px;
+  transition: 0.25s;
+  
+  
+}
+=======
+>>>>>>> parent of 0c61030 (Merge branch 'main' of https://github.com/fluke1352/webpro_GET_A into main)
 </style>

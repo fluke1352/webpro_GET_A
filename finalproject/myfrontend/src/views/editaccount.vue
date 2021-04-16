@@ -125,7 +125,7 @@ export default {
   created() {
     axios
       .post("http://localhost:3000/editaccount", {
-        id: 24,
+        id: 23,
       })
       .then((response) => {
         this.info = response.data.message;
@@ -147,7 +147,7 @@ export default {
       let formData = new FormData();
       formData.append("username", username);
       formData.append("pass", pass);
-      formData.append("id", 24);
+      formData.append("id", 23);
       if (this.images) {
         // console.log("aaa");
         this.images.forEach((image) => {
@@ -189,7 +189,7 @@ export default {
     fetchdb() {
       axios
         .post("http://localhost:3000/editaccount", {
-          id: 24,
+          id: 23,
         })
         .then((response) => {
           this.info = response.data.message;
@@ -199,7 +199,7 @@ export default {
   },
   data() {
     return {
-      info: null,
+      info: [],
       showEdit: true,
       images: null,
     };

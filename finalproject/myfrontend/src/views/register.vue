@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column is-full has-background-primary">nev Bar</div>
-    </div>
-    <div class="container mt-6">
+  <div class="bgSignUp">
+    <!-- <div> -->
+    <!-- <div class="columns">
+      <div class="column is-full has-background-warning">nev Bar</div>
+    </div> -->
+    <div class="container">
       <div class="columns">
-        <div class="column is-half has-background-info">
-          wellcome to 999auto
-        </div>
-        <div class="column has-background-warning">
+        <!-- <div class="column is-3 my-5"></div> -->
+        <!-- <div
+          class="my-5 column is-4"
+          style="background-color: black; margin: 5px"
+        >
+          <div class="has-text-warning">wellcome to 999auto</div>
+        </div> -->
+        <div class="my-5 column is-half is-offset-one-quarter" id="SingUp">
           <p class="is-size-3 has-text-centered">Sign up</p>
-          <p class="has-text-centered">check your email to confirmation</p>
+          <p class="has-text-centered has-text-warning">
+            check your email to confirmation
+          </p>
 
           <div class="columns column">
             <div class="column is-half">
@@ -35,15 +42,17 @@
               />
             </div>
           </div>
-          <div class="column">
+          <div class="column has-text-warning">
             <h1 class="is-size-4">Profile image</h1>
-            <input
-              class="mb-5"
-              multiple
-              type="file"
-              accept="image/png, image/jpeg, image/webp"
-              @change="selectImages"
-            />
+            <div class="control has-icons-left">
+              <input
+                class="mb-5"
+                multiple
+                type="file"
+                accept="image/png, image/jpeg, image/webp"
+                @change="selectImages"
+              />
+            </div>
           </div>
           <div
             v-for="image in images"
@@ -105,7 +114,7 @@
           </div>
 
           <div class="column mx-auto has-text-centered">
-            <button class="button is-primary" @click="resgister()">
+            <button class="button is-warning" @click="resgister()">
               Sign up
             </button>
           </div>
@@ -144,7 +153,7 @@ export default {
 
       if (this.password === this.confirmPassword) {
         axios
-        .post("http://localhost:3000/register", formData)
+          .post("http://localhost:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
@@ -177,4 +186,17 @@ export default {
 </script>
 
 <style scoped>
+/* #FirstName{background-color: coral;} */
+#SingUp {
+  background-color: #252525;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 1%;
+  /* font-weight: 50000; */
+}
+.bgSignUp {
+  background-image: url("../assets/bgSignUp.jpg");
+}
+
+/* .input input[type = text], .input input[type = "file"], .input input[type = "password"] */
 </style>

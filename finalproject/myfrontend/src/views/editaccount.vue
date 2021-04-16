@@ -1,20 +1,19 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column is-full has-background-primary">nev Bar</div>
-    </div>
-    <div class="container mt-6">
+  <div class="bg">
+    <div class="container">
       <div class="columns">
-        <div class="column is-half has-background-info has-text-centered">
+        <div class="column is-half has-text-centered mt-6" style="background-color:black; opacity: 100%;">
           <img
             v-if="info.user_image"
             :src="imagePath(info.user_image)"
             alt="myImage"
-            style="width: 300px; height: 337px; object-fit: cover"
+            style="width: 300px; height: 337px; object-fit: cover ; 
+            border-bottom: 5px solid white; border-left: 10px solid white;
+            border-top: 5px solid #ffdd57; border-right: 10px solid #ffdd57;"
             class="mt-5"
           />
           <!-- wellcome to 999auto -->
-          <h1 class="is-size-4">Profile image</h1>
+          <h1 class="is-size-4 mt-5" style="color:white; border: 1px solid white">Profile image</h1>
           <div v-if="!showEdit">
             <div class="column">
               <input
@@ -36,7 +35,7 @@
             </div>
           </div>
         </div>
-        <div class="column has-background-warning">
+        <div class="column has-background-warning  mt-6">
           <p class="is-size-3 has-text-centered">Edit Account</p>
           <p class="has-text-centered">check your info to confirmation</p>
 
@@ -104,7 +103,7 @@
           </div>
 
           <div class="column mx-auto has-text-centered" v-show="showEdit">
-            <button class="button is-primary" @click="edit()">Edit</button>
+            <button class="button button is-dark" @click="edit()">Edit</button>
           </div>
 
           <div class="column mx-auto has-text-centered" v-show="!showEdit">
@@ -134,7 +133,7 @@ export default {
   },
   methods: {
     edit() {
-      var password = prompt("Please enter your passwoed:", "");
+      var password = prompt("Please enter your password:", "");
       if (password == this.info.user_password) {
         this.showEdit = !this.showEdit;
       } else {
@@ -208,4 +207,7 @@ export default {
 </script>
 
 <style scoped>
+.bg {
+  background-image: url("../assets/tecnicial.jpg");
+}
 </style>

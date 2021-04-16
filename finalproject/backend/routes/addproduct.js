@@ -40,7 +40,6 @@ router.post("/addproduct", upload.array("myImage", 1), async (req, res, next) =>
 
 
         try {
-            
             let [check, c] = await conn.query(
                 "select * from product where ? = product_name AND ? =  category",
                 [productname, productcategory]
@@ -49,16 +48,16 @@ router.post("/addproduct", upload.array("myImage", 1), async (req, res, next) =>
                 "select * from product_type where ? = type_name AND ? = brand",
                 [producttype, productbrand]
             );
-            //ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที
+
             if(check.length > 0 && check2.length > 0){
-                let [a, b] = await conn.query('SELECT product_type.amount_product FROM product_type  WHERE product_product_id=?', [check.product_id])
-                await conn.query("UPDATE product_type SET amount_product=? WHERE product_product_id=?",[a[0]+productamount, check.product_id])
-            //ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที//ฝากแก้ที    
+                let [a, b] = await conn.query('SELECT product_type.amount_product FROM product_type  WHERE product_product_id=?', [check[0].product_id])
+                await conn.query("UPDATE product_type SET amount_product=? WHERE product_product_id=?",[a[0].amount_product+parseInt(productamount), check[0].product_id])
             }else{
+
             let [data, a] = await conn.query(
                 "select * from product;",
             );
-            let id = data[data.length-1].product_id
+            let id = data[data.length-1].product_id+1
 
             req.files.forEach((file, index) => {
                 let path = [producttype, productdescription,productprice, productamount,productbrand,id ,file.path.substring(6)];

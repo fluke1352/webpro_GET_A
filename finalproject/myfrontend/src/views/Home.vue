@@ -30,35 +30,47 @@
 
     <div class="columns has-text-centered mb-5 mx-5" style="padding-top: 80px">
       <div class="column bgProduct" style="position: relative; height: 275px">
-        <img
-          src="https://th-test-11.slatic.net/shop/cd5cec15f2b01477c7d153cfd35e4e2a.jpeg"
-          alt=""
-          class="showimage"
-        />
-        <div class="showproduct">Speaker</div>
+        <router-link
+          :to="{ name: 'showproduct', params: { category: 'speaker' } }"
+        >
+          <img
+            src="https://th-test-11.slatic.net/shop/cd5cec15f2b01477c7d153cfd35e4e2a.jpeg"
+            alt=""
+            class="showimage"
+          />
+          <div class="showproduct">Speaker</div></router-link
+        >
       </div>
 
       <div class="column bgProduct" style="position: relative; height: 275px">
-        <img
-          src="https://www.tuek-klongthom.com/wp-content/uploads/wpsc/product_images/2DIN-DNX4330.jpg"
-          alt=""
-          class="showimage"
-        />
-        <div class="showproduct">Radio</div>
+        <router-link
+          :to="{ name: 'showproduct', params: { category: 'radio' } }"
+        >
+          <img
+            src="https://www.tuek-klongthom.com/wp-content/uploads/wpsc/product_images/2DIN-DNX4330.jpg"
+            alt=""
+            class="showimage"
+          />
+          <div class="showproduct">Radio</div></router-link
+        >
       </div>
 
       <div
         class="column bgProduct"
         style="position: relative; height: 275px; object-fit: cover"
       >
-        <img
-          src="https://image.makewebeasy.net/makeweb/0/FpbNivp4p/lamina/09_lamina_POP.jpg"
-          alt=""
-          class="showimage"
-        />
-        <div class="columns">
-          <div class="showproduct">Film</div>
-        </div>
+        <router-link
+          :to="{ name: 'showproduct', params: { category: 'film' } }"
+        >
+          <img
+            src="https://image.makewebeasy.net/makeweb/0/FpbNivp4p/lamina/09_lamina_POP.jpg"
+            alt=""
+            class="showimage"
+          />
+          <div class="columns">
+            <div class="showproduct">Film</div>
+          </div></router-link
+        >
       </div>
     </div>
 
@@ -67,35 +79,45 @@
       style="padding-bottom: 80px"
     >
       <div class="column bgProduct" style="position: relative; height: 275px">
-        <img
-          src="https://th-live-01.slatic.net/p/69b9b7e209fd466812122bb458af45be.jpg"
-          alt=""
-          class="showimage"
-        />
-        <div class="showproduct">Camera</div>
+        <router-link
+          :to="{ name: 'showproduct', params: { category: 'camera' } }"
+        >
+          <img
+            src="https://th-live-01.slatic.net/p/69b9b7e209fd466812122bb458af45be.jpg"
+            alt=""
+            class="showimage"
+          />
+          <div class="showproduct">Camera</div></router-link
+        >
       </div>
 
       <div class="column bgProduct" style="position: relative; height: 275px">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/3GeJAEH5YINEXeJ6iGbX4_a7P-E7e9uZVSLcwBhynma3bzzIGu8CZJiThxw_JoHw6TGNh5ZzQbAquO7oRmOBX3f341UILo3fg8FmBR8"
-          alt=""
-          class="showimage"
-        />
-        <div class="showproduct">Sensor</div>
+        <router-link
+          :to="{ name: 'showproduct', params: { category: 'sensor' } }"
+        >
+          <img
+            src="https://lh3.googleusercontent.com/proxy/3GeJAEH5YINEXeJ6iGbX4_a7P-E7e9uZVSLcwBhynma3bzzIGu8CZJiThxw_JoHw6TGNh5ZzQbAquO7oRmOBX3f341UILo3fg8FmBR8"
+            alt=""
+            class="showimage"
+          />
+          <div class="showproduct">Sensor</div></router-link
+        >
       </div>
 
       <div
         class="column bgProduct"
         style="position: relative; height: 275px; object-fit: cover"
       >
-        <img
-          src="https://cdn.discordapp.com/attachments/603631846525501460/832636104422719499/unknown.png"
-          alt=""
-          class="showimage"
-        />
-        <div class="columns">
-          <div class="showproduct">All</div>
-        </div>
+        <router-link to="allproduct">
+          <img
+            src="https://cdn.discordapp.com/attachments/603631846525501460/832636104422719499/unknown.png"
+            alt=""
+            class="showimage"
+          />
+          <div class="columns">
+            <div class="showproduct">All</div>
+          </div></router-link
+        >
       </div>
     </div>
   </div>
@@ -128,6 +150,7 @@ export default {
     },
   },
   mounted: function () {
+    clearInterval(this.fades);
     this.fade();
   },
   methods: {
@@ -136,13 +159,13 @@ export default {
       this.indexslide = a;
     },
     fade() {
-      setInterval(() => {
+      this.fades = setInterval(() => {
         console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
         element.classList.add("fade");
-        this.indexslide++
+        this.indexslide++;
       }, 5000);
     },
   },
@@ -155,6 +178,7 @@ export default {
         "https://www.w3schools.com/howto/img_mountains_wide.jpg",
       ],
       indexslide: 0,
+      fades: null,
     };
   },
 };

@@ -44,6 +44,11 @@ const routes = [
     name: 'allproduct',
     component: () => import('../views/allproduct.vue') // set home as path '/'
   },
+  {
+    path: '/showproduct/:category',
+    name: 'showproduct',
+    component: () => import('../views/showproduct.vue') // set home as path '/'
+  },
 
 ]
 

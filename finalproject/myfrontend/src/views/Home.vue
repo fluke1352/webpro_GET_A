@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div class="columns">
-      <div class="column is-full has-background-primary">nev Bar</div>
-    </div>
+  <div class="bg">
     <div class="columns">
       <div class="slideshow-container">
         <div class="fade" id="fade">
@@ -30,8 +27,9 @@
         >
       </div>
     </div>
-    <div class="columns mx-5 has-text-centered mb-5" >
-      <div class="column has-background-primary" style="position: relative; height: 275px;">
+
+    <div class="columns has-text-centered mb-5 mx-5" style="padding-top: 80px">
+      <div class="column bgProduct" style="position: relative; height: 275px">
         <img
           src="https://th-test-11.slatic.net/shop/cd5cec15f2b01477c7d153cfd35e4e2a.jpeg"
           alt=""
@@ -40,10 +38,7 @@
         <div class="showproduct">Speaker</div>
       </div>
 
-      <div
-        class="column has-background-primary mx-3"
-        style="position: relative; height: 275px;"
-      >
+      <div class="column bgProduct" style="position: relative; height: 275px">
         <img
           src="https://www.tuek-klongthom.com/wp-content/uploads/wpsc/product_images/2DIN-DNX4330.jpg"
           alt=""
@@ -53,7 +48,7 @@
       </div>
 
       <div
-        class="column has-background-primary mx-3"
+        class="column bgProduct"
         style="position: relative; height: 275px; object-fit: cover"
       >
         <img
@@ -62,35 +57,35 @@
           class="showimage"
         />
         <div class="columns">
-        <div class="showproduct">film</div></div>
+          <div class="showproduct">Film</div>
+        </div>
       </div>
-
     </div>
 
-    <div class="columns mx-5 has-text-centered mb-5" >
-      <div class="column has-background-primary" style="position: relative; height: 275px;">
+    <div
+      class="columns has-text-centered mb-5 mx-5"
+      style="padding-bottom: 80px"
+    >
+      <div class="column bgProduct" style="position: relative; height: 275px">
         <img
           src="https://th-live-01.slatic.net/p/69b9b7e209fd466812122bb458af45be.jpg"
           alt=""
           class="showimage"
         />
-        <div class="showproduct">camere</div>
+        <div class="showproduct">Camera</div>
       </div>
 
-      <div
-        class="column has-background-primary mx-3"
-        style="position: relative; height: 275px;"
-      >
+      <div class="column bgProduct" style="position: relative; height: 275px">
         <img
           src="https://lh3.googleusercontent.com/proxy/3GeJAEH5YINEXeJ6iGbX4_a7P-E7e9uZVSLcwBhynma3bzzIGu8CZJiThxw_JoHw6TGNh5ZzQbAquO7oRmOBX3f341UILo3fg8FmBR8"
           alt=""
           class="showimage"
         />
-        <div class="showproduct">sensor</div>
+        <div class="showproduct">Sensor</div>
       </div>
 
       <div
-        class="column has-background-primary mx-3"
+        class="column bgProduct"
         style="position: relative; height: 275px; object-fit: cover"
       >
         <img
@@ -99,13 +94,14 @@
           class="showimage"
         />
         <div class="columns">
-        <div class="showproduct">All</div></div>
+          <div class="showproduct">All</div>
+        </div>
       </div>
-
     </div>
-
   </div>
 </template>
+
+
 
 <script>
 import axios from "axios";
@@ -131,17 +127,23 @@ export default {
       return a;
     },
   },
+  mounted: function () {
+    this.fade();
+  },
   methods: {
     fetchdb() {},
     indexvalue(a) {
       this.indexslide = a;
     },
     fade() {
-      console.log("reani");
-      var element = document.getElementById("fade");
-      element.classList.remove("fade");
-      void element.offsetWidth; 
-      element.classList.add("fade");
+      setInterval(() => {
+        console.log("reani");
+        var element = document.getElementById("fade");
+        element.classList.remove("fade");
+        void element.offsetWidth;
+        element.classList.add("fade");
+        this.indexslide++
+      }, 5000);
     },
   },
   data() {
@@ -159,16 +161,53 @@ export default {
 </script>
 
 <style scoped>
+.bg {
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100%;
+  object-fit: cover;
+  /* padding: 150px; */
+}
+html {
+  background-color: black;
+}
+.bgProduct {
+  background-color: #ffdd57;
+  border-radius: 1%;
+
+  margin-left: 10px;
+  position: relative;
+  width: 50%;
+}
+
+.bgProduct:hover .showimage {
+  opacity: 0.3;
+}
+
+.bgProduct:hover .showproduct {
+  opacity: 1;
+}
+
 .showproduct {
   position: absolute;
   padding: 10px;
-  margin-top: -50%;
   font-size: 6em;
+
+  transition: 0.5s ease;
+  opacity: 0;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
 }
 
 .showimage {
-  height: 100%;
-  object-fit: cover
+  height: 250px;
+  object-fit: cover;
+  border-radius: 5%;
+
+  transition: 0.5s ease;
+  backface-visibility: hidden;
 }
 
 .slideshow-container {

@@ -209,5 +209,6 @@ export default {
 <style scoped>
 .bg {
   background-image: url("../assets/tecnicial.jpg");
+  height: 1000px;
 }
 </style>

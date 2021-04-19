@@ -1,18 +1,7 @@
 <template>
   <div class="bgSignUp">
-    <!-- <div> -->
-    <!-- <div class="columns">
-      <div class="column is-full has-background-warning">nev Bar</div>
-    </div> -->
     <div class="container">
       <div class="columns">
-        <!-- <div class="column is-3 my-5"></div> -->
-        <!-- <div
-          class="my-5 column is-4"
-          style="background-color: black; margin: 5px"
-        >
-          <div class="has-text-warning">wellcome to 999auto</div>
-        </div> -->
         <div class="my-5 column is-half is-offset-one-quarter" id="SingUp">
           <p class="is-size-3 has-text-centered">Sign up</p>
           <p class="has-text-centered has-text-warning">
@@ -193,6 +182,7 @@ export default {
   text-transform: uppercase;
   border-radius: 1%;
   /* font-weight: 50000; */
+  
 }
 .bgSignUp {
   background-image: url("../assets/bgSignUp.jpg");

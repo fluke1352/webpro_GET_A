@@ -16,8 +16,7 @@
         <div class="navbar-start">
           <a class="navbar-item"> Home </a>
 
-          
-          <a class="navbar-item "> Documentation!!! </a>
+          <a class="navbar-item"> Documentation!!! </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>
@@ -47,17 +46,12 @@
       </div>
     </nav>
 
-    <div
-      class="modal is-active"
-      v-show="isModal"
-      @close="isModal = false"
-      
-    >
+    <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
         class="modal-background"
         style="background-color: #181818; opacity: 95%"
       ></div>
-      <div class="modal-content" style="overflow: hidden; width:31%;">
+      <div class="modal-content" style="overflow: hidden; width: 31%">
         <!-- Any other Bulma elements you want -->
         <div class="columns is-centered">
           <div class="column mt-6" id="Login">
@@ -121,7 +115,72 @@
       ></button>
     </div>
 
-    <router-view :key="$route.fullPath" />
+    <router-view
+      :key="$route.fullPath"
+      style="padding-bottom: 70px; padding-top: 40px"
+    />
+
+    <footer class="footer has-background-dark" style="height:">
+      <div class="content has-text-centered has-text-white">
+        <h1 style="color: #ffdd57">999Auto ประดับยนต์</h1>
+        <h6 style="color: #ffdd57">เปิด 8.00-19.00 หยุดวันอาทิตย์</h6>
+        <br /><br />
+        <div class="columns">
+          <div class="column">
+            <h4 style="color: #ffdd57">About Us</h4>
+            <p class="has-text-center">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </div>
+          <div class="column">
+            <h4 style="color: #ffdd57">Product</h4>
+            <!-- <ul> -->
+            <a href="#" style="color:whitesmoke">Speaker</a><br />
+            <a href="#" style="color:whitesmoke">Radio</a><br />
+            <a href="#" style="color:whitesmoke">Film</a><br />
+            <a href="#" style="color:whitesmoke">Camera</a><br />
+            <a href="#" style="color:whitesmoke">Sensor</a>
+            <!-- </ul> -->
+          </div>
+          <div class="column">
+            <h4 style="color: #ffdd57">Address</h4>
+            <p>ที่อยู่: 83/3 ถนน ลาดกระบัง แขวง ลาดกระบัง เขตลาดกระบัง กรุงเทพมหานคร 10520</p>
+          </div>
+          <div class="column">
+            <h4 style="color: #ffdd57">Contact Us</h4>
+            <a
+              href="https://www.facebook.com/999auto-1673907482865058/"
+              style="color: white"
+              ><i class="fab fa-facebook-square is-size-5 "> 999auto</i></a
+            ><br />
+            <i class="fas fa-mobile-alt is-size-5 my-2"> 02-329-1368</i><br />
+            <a
+              href="https://goo.gl/maps/h3vhMUBMAfXC9g1m7"
+              style="color: white"
+              ><i class="fas fa-map-marker-alt  is-size-5 "> Look on map</i></a
+            ><br />
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="has-background-warning has-text-white bottom">
+      <div class="container is-fluid">
+        <div class="columns">
+          <div class="column">
+            <p style="color: black">999Auto 2020.</p>
+          </div>
+          <div class="column has-text-right">
+            <!-- <i class="fa fa-facebook-square"></i>
+            <i class="fa fa-twitter-square"></i>
+            <i class="fa fa-google-plus-square"></i>
+            <i class="fa fa-linkedin-square"></i> -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -143,7 +202,7 @@ export default {
           alert(this.alertlogin);
           if (this.alertlogin === "login success") {
             this.$router.push("/");
-            this.$router.isModal = false;
+            this.isModal = false;
           }
         });
     },
@@ -168,6 +227,11 @@ export default {
   color: #2c3e50;
   /* margin-top: 10px; */
 }
+.footer,
+textfoot {
+  background-color: #1d1d1d;
+  color: #ffdd57;
+}
 #Login {
   background-color: #252525;
   color: white;
@@ -188,10 +252,9 @@ export default {
   text-align: center;
   /* margin-top: 5px; */
 }
-.iconInput i{
+.iconInput i {
   text-align: center;
   margin-top: 13px;
   margin-left: 7px;
-  
 }
 </style>

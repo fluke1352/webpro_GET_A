@@ -39,6 +39,11 @@ const routes = [
     name: 'addproduct',
     component: () => import('../views/addproduct.vue') // set home as path '/'
   },
+  {
+    path: '/allproduct',
+    name: 'allproduct',
+    component: () => import('../views/allproduct.vue') // set home as path '/'
+  },
 
 ]
 

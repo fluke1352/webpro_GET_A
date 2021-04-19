@@ -17,6 +17,7 @@ const register = require('./routes/register')
 const login = require('./routes/login')
 const inflowhistory = require('./routes/inflowhistory')
 const owner = require('./routes/addproduct')
+const allproduct = require('./routes/allproduct')
 // const editaccount = require('./routes/editaccount')
 // const commentRouter = require('./routes/comment')
 
@@ -26,6 +27,7 @@ app.use(register.router)
 app.use(login.router)
 app.use(inflowhistory.router)
 app.use(owner.router)
+app.use(allproduct.router)
 // app.use(commentRouter.router)
 
 app.listen(3000, () => {

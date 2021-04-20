@@ -41,17 +41,25 @@
           v-for="(product, index) in allproduct"
           :key="index"
         >
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img :src="imagePath(product.image)" alt="Placeholder image" />
-              </figure>
+          <router-link
+            :to="{ name: 'detail', params: { id: product.product_id} }"
+          >
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img
+                    :src="imagePath(product.image)"
+                    alt="Placeholder image"
+                  />
+                </figure>
+              </div>
+              <div class="card-content has-text-centered">
+                <p>{{ product.product_name }}</p>
+                <p>ราคา {{ product.price }} บาท</p>
+              </div>
             </div>
-            <div class="card-content has-text-centered">
-              <p>{{ product.product_name }}</p>
-              <p>ราคา {{ product.price}} บาท</p>
-            </div>
-          </div>
+          </router-link>
+
         </div>
       </div>
     </div>
@@ -81,7 +89,7 @@ export default {
         .post("http://localhost:3000/seaechproduct", {
           search: this.search,
           minrange: this.minrange,
-          maxrange: this.maxrange
+          maxrange: this.maxrange,
         })
         .then((response) => {
           this.allproduct = response.data.message;

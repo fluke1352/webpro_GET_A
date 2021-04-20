@@ -41,6 +41,9 @@
           v-for="(product, index) in allproduct"
           :key="index"
         >
+        <router-link
+            :to="{ name: 'detail', params: { id: product.product_id} }"
+          >
           <div class="card">
             <div class="card-image">
               <figure class="image is-4by3">
@@ -52,6 +55,8 @@
               <p>ราคา {{ product.price}} บาท</p>
             </div>
           </div>
+          </router-link>
+
         </div>
       </div>
     </div>

@@ -1,22 +1,112 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <h1>Fluketo is very handsome id: {{id}}</h1>
+    <div class="container mt-5">
+      <div class="columns">
+        <div class="column is-1 ">
+          <div>
+            <img
+              class="image mb-4 p-0"
+              style="width: 96px; height: 120px; object-fit: cover"
+              :src="imagePath(productdetial.image)"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div class="column is-5">
+          <div>
+            <img
+              class="image mb-4 p-0"
+              style="width: 100%; height: 100%; object-fit: cover"
+              :src="imagePath(productdetial.image)"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div class="column ">
+          <p class=" is-size-1 has-text-centered">
+            {{productdetial.product_name}}
+          </p>
+          <p class="is-size-3">ราคา{{productdetial.price}}฿</p>
+          <p class="mt-5">
+            <b class="is-size-5"> รายละเอียด ต่างๆ </b><br>
+            category is {{productdetial.category}} <br>
+            brand is {{productdetial.brand}} <br>
+            amount_product is {{productdetial.amount_product}}<br>
+            other_spec is {{productdetial.other_spec}}
+          </p>
+          <!-- <div class="column"></div> -->
+          <p class="mt-5">จำนวน</p>
+          <div class="columns p-0 m-0 mt-1 has-text-centered">
+            <div class="column has-text-centered button" @click="orderamount--">−</div>
+            <input
+              class="column input has-text-centered is-9"
+              v-model="computorderamount"
+            />
+            <div class="column has-text-centered button" @click="orderamount++">+</div>
+          </div>
+
+          <div class="column has-text-centered mt-5">
+            <button class="button" v-if="productdetial.amount_product > 0">add to cart</button>
+            <button class="button" v-if="productdetial.amount_product <= 0" disabled>add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import "bulma/css/bulma.css";
 export default {
-    created(){
-        this.id = this.$route.params.id
-        // console.log(this.$route.params.id);
-    },
-    data() {
-      return {
-          id:null
+  created() {
+    axios
+      .post("http://localhost:3000/productdetial/" + this.$route.params.id)
+      .then((response) => {
+        this.productdetial = response.data.message[0];
+        // console.log(this.allproduct);
+      });
+    this.id = this.$route.params.id;
+    // console.log(this.$route.params.id);
+  },
+  computed:{
+    computorderamount(){
+      let val = 1
+      if(this.orderamount < 1){
+        val =  1
       }
+      else if(this.orderamount > this.productdetial.amount_product){
+        val =  this.productdetial.amount_product
+      }
+      else{
+        val = this.orderamount
+      }
+      this.changeorderamount(val)
+      return val
     }
-  }
+  },
+  methods:{
+    changeorderamount(val){
+      this.orderamount = val
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:3000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+  },
+  data() {
+    return {
+      id: null,
+      productdetial: [],
+      orderamount: 1,
+    };
+  },
+};
 </script>
 
 <style scoped>

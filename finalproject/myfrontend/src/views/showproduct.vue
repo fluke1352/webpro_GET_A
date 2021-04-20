@@ -49,7 +49,7 @@
             </div>
             <div class="card-content has-text-centered">
               <p>{{ product.product_name }}</p>
-              <p>ราคา {{ product.price / product.amount_product }} บาท</p>
+              <p>ราคา {{ product.price}} บาท</p>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default {
       allproduct: [],
       search: null,
       minrange: 0,
-      maxrange: 50000,
+      maxrange: 500000,
       category: this.$route.params.category,
     };
   },

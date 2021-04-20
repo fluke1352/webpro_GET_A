@@ -12,7 +12,7 @@ router.post("/allproduct", async (req, res, next) => {
     try {
 
         [info, _] = await conn.query(
-            "select * from product p join product_type pt on(p.product_id = pt.product_product_id) order by (price/amount_product)"
+            "select * from product p join product_type pt on(p.product_id = pt.product_product_id) order by (price)"
         );
 
         res.json({ message: info })
@@ -34,7 +34,7 @@ router.post("/showproduct/:category", async (req, res, next) => {
     try {
 
         [info, _] = await conn.query(
-            "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? order by (price/amount_product)",[category]
+            "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? order by (price)",[category]
         );
 
         res.json({ message: info })
@@ -58,13 +58,13 @@ router.post("/seaechproduct", async (req, res, next) => {
     try {
         if (!search) {
             [info, _] = await conn.query(
-                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where (price/amount_product) >= ? AND (price/amount_product) <= ? order by (price/amount_product)"
+                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where (price) >= ? AND (price) <= ? order by (price)"
                 , [minrange, maxrange]
             );
         }
         else {
             [info, _] = await conn.query(
-                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where (product_name like ? or category like ? or brand like ?) AND ((price/amount_product) >= ? AND (price/amount_product) <= ?) order by (price/amount_product)"
+                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where (product_name like ? or category like ? or brand like ?) AND ((price) >= ? AND (price) <= ?) order by (price)"
                 , ['%' + search + '%', '%' + search + '%', '%' + search + '%', minrange, maxrange]
             );
         }
@@ -91,13 +91,13 @@ router.post("/seaechproductincategory", async (req, res, next) => {
     try {
         if (!search) {
             [info, _] = await conn.query(
-                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? AND (price/amount_product) >= ? AND (price/amount_product) <= ? order by (price/amount_product)"
+                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? AND (price) >= ? AND (price) <= ? order by (price)"
                 , [category , minrange, maxrange]
             );
         }
         else {
             [info, _] = await conn.query(
-                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? AND (product_name like ? or category like ? or brand like ?) AND ((price/amount_product) >= ? AND (price/amount_product) <= ?) order by (price/amount_product)"
+                "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where category = ? AND (product_name like ? or category like ? or brand like ?) AND ((price) >= ? AND (price) <= ?) order by (price)"
                 , [category , '%' + search + '%', '%' + search + '%', '%' + search + '%', minrange, maxrange]
             );
         }

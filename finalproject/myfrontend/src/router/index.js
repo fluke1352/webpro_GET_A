@@ -21,8 +21,8 @@ const routes = [
   },
   {
     path: '/detail/:id',
-    name: 'Detail',
-    component: () => import('../views/Detail.vue') // set home as path '/'
+    name: 'detail',
+    component: () => import('../views/detail.vue') // set home as path '/'
   },
   {
     path: '/editaccount',
@@ -45,11 +45,16 @@ const routes = [
     component: () => import('../views/allproduct.vue') // set home as path '/'
   },
   {
+    path: '/orderhistory',
+    name: 'orderhistory',
+    component: () => import('../views/orderhistory.vue') // set home as path '/'
+  },
+  {
     path: '/showproduct/:category',
     name: 'showproduct',
     component: () => import('../views/showproduct.vue') // set home as path '/'
   },
-
+  
 ]
 
 const router = new VueRouter({

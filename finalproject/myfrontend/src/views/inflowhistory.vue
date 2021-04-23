@@ -34,7 +34,7 @@ export default {
   created() {
     axios.post("http://localhost:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
-      // console.log(this.data);
+      console.log(response);
     });
   },
   methods: {

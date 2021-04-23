@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="bg">
     <div class="container mt-5">
       <div class="columns">
-        <div class="column is-1 ">
+        <div class="column is-1">
           <div>
             <img
               class="image mb-4 p-0"
@@ -24,32 +24,51 @@
           </div>
         </div>
 
-        <div class="column ">
-          <p class=" is-size-1 has-text-centered">
-            {{productdetial.product_name}}
+        <div class="column has-text-warning">
+          <p class="is-size-1 has-text-centered">
+            {{ productdetial.product_name }}
           </p>
-          <p class="is-size-3">ราคา{{productdetial.price}}฿</p>
+          <p class="is-size-3">ราคา {{ productdetial.price }} ฿</p>
           <p class="mt-5">
-            <b class="is-size-5"> รายละเอียด ต่างๆ </b><br>
-            category is {{productdetial.category}} <br>
-            brand is {{productdetial.brand}} <br>
-            amount_product is {{productdetial.amount_product}}<br>
-            other_spec is {{productdetial.other_spec}}
+            <b class="is-size-5" style="border-bottom: 1px solid white">
+              รายละเอียดต่างๆ </b
+            ><br />
+          </p>
+          <p class="mt-1 ml-3">
+            Category is <b class="has-text-light">:</b>  {{ productdetial.category }} <br />
+            Brand is <b class="has-text-light">:</b>   {{ productdetial.brand }} <br />
+            Amount product is <b class="has-text-light">:</b>   {{ productdetial.amount_product }}<br />
+            Other spec is <b class="has-text-light">:</b>   {{ productdetial.other_spec }}
           </p>
           <!-- <div class="column"></div> -->
-          <p class="mt-5">จำนวน</p>
+          <p class="mt-5"><b>จำนวน</b></p>
           <div class="columns p-0 m-0 mt-1 has-text-centered">
-            <div class="column has-text-centered button" @click="orderamount--">−</div>
+            <div class="column has-text-centered button" @click="orderamount--">
+              −
+            </div>
             <input
               class="column input has-text-centered is-9"
               v-model="computorderamount"
             />
-            <div class="column has-text-centered button" @click="orderamount++">+</div>
+            <div class="column has-text-centered button" @click="orderamount++">
+              +
+            </div>
           </div>
 
           <div class="column has-text-centered mt-5">
-            <button class="button" v-if="productdetial.amount_product > 0">add to cart</button>
-            <button class="button" v-if="productdetial.amount_product <= 0" disabled>add to cart</button>
+            <button
+              class="button is-warning"
+              v-if="productdetial.amount_product > 0"
+            >
+              <strong>Add to cart</strong>
+            </button>
+            <button
+              class="button"
+              v-if="productdetial.amount_product <= 0"
+              disabled
+            >
+              add to cart
+            </button>
           </div>
         </div>
       </div>
@@ -71,25 +90,23 @@ export default {
     this.id = this.$route.params.id;
     // console.log(this.$route.params.id);
   },
-  computed:{
-    computorderamount(){
-      let val = 1
-      if(this.orderamount < 1){
-        val =  1
+  computed: {
+    computorderamount() {
+      let val = 1;
+      if (this.orderamount < 1) {
+        val = 1;
+      } else if (this.orderamount > this.productdetial.amount_product) {
+        val = this.productdetial.amount_product;
+      } else {
+        val = this.orderamount;
       }
-      else if(this.orderamount > this.productdetial.amount_product){
-        val =  this.productdetial.amount_product
-      }
-      else{
-        val = this.orderamount
-      }
-      this.changeorderamount(val)
-      return val
-    }
+      this.changeorderamount(val);
+      return val;
+    },
   },
-  methods:{
-    changeorderamount(val){
-      this.orderamount = val
+  methods: {
+    changeorderamount(val) {
+      this.orderamount = val;
     },
     imagePath(file_path) {
       if (file_path) {
@@ -110,4 +127,10 @@ export default {
 </script>
 
 <style scoped>
+body,html{
+  font-family: 'Roboto', sans-serif;
+}
+.bg {
+  background-color: rgb(26, 26, 26);
+}
 </style>

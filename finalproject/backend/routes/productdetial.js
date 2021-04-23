@@ -9,7 +9,7 @@ router.post("/productdetial/:id", async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     const id = req.params.id
-    // console.log(id);
+    console.log(id);
     try {
 
         [info, _] = await conn.query(

@@ -1,21 +1,40 @@
 <template>
   <div class="bg">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-half has-text-centered mt-6" style="background-color:black; opacity: 100%;">
+    <div class="container" style="margin-top:100px;margin-bottom:100px">
+      <div class="columns has-text-warning" >
+        <div class="column is-1"></div>
+        <div
+          class="column is-5 has-text-centered mt-6"
+          style="background-color: #1a1a1a; opacity: 100% ;margin-top:100px;margin-bottom:100px;"
+        >
           <img
-            v-if="info.user_image"
+            v-if="info.user_image && !images"
             :src="imagePath(info.user_image)"
             alt="myImage"
-            style="width: 300px; height: 337px; object-fit: cover ; 
-            border-bottom: 5px solid white; border-left: 10px solid white;
-            border-top: 5px solid #ffdd57; border-right: 10px solid #ffdd57;"
+            style="width: 35%; margin-top: 50px; box-shadow: 5px 5px #888888"
             class="mt-5"
           />
+          <div v-for="image in images" :key="image.id" class="is-one-quarter">
+            <figure class="">
+              <img
+                :src="showSelectImage(image)"
+                alt="Placeholder image"
+                style="
+                  width: 35%;
+                  margin-top: 50px;
+                  box-shadow: 5px 5px #888888;
+                  object-fit: cover;
+                "
+              />
+            </figure>
+          </div>
+          
+
           <!-- wellcome to 999auto -->
-          <h1 class="is-size-4 mt-5" style="color:white; border: 1px solid white">Profile image</h1>
-          <div v-if="!showEdit">
-            <div class="column">
+          <h1 class="is-size-4 mt-3" v-if="!images"><b> Profile image</b></h1>
+          <h1 class="is-size-4 mt-3" v-if="images"><b> New profile</b></h1>
+          <div v-if="!showEdit" class="">
+            <div class="column ml-6">
               <input
                 class=""
                 multiple
@@ -24,19 +43,15 @@
                 @change="selectImages"
               />
             </div>
-            <div v-for="image in images" :key="image.id" class="is-one-quarter">
-              <figure class="">
-                <img
-                  :src="showSelectImage(image)"
-                  alt="Placeholder image"
-                  style="width: 300px; height: 337px; object-fit: cover"
-                />
-              </figure>
-            </div>
           </div>
+          <div style="background-color:#FFDD57; width:50%; height:2px;  margin-left:20px;"></div>
+          <div style="background-color:#FFDD57; width:50%; height:2px; margin-top:20px; margin-left:250px;" ></div>
         </div>
-        <div class="column has-background-warning  mt-6">
-          <p class="is-size-3 has-text-centered">Edit Account</p>
+        <div
+          class="column is-5 mt-6"
+          style="background-color: #111111; margin-top:100px;margin-bottom:100px;"
+        >
+          <p class="is-size-3 has-text-centered"><b> Edit Account</b></p>
           <p class="has-text-centered">check your info to confirmation</p>
 
           <div class="columns column">
@@ -103,12 +118,14 @@
           </div>
 
           <div class="column mx-auto has-text-centered" v-show="showEdit">
-            <button class="button button is-dark" @click="edit()">Edit</button>
+            <button class="button button is-warning" @click="edit()">
+              <strong>Edit</strong>
+            </button>
           </div>
 
           <div class="column mx-auto has-text-centered" v-show="!showEdit">
-            <button class="button is-primary" @click="confirm()">
-              confirm
+            <button class="button is-warning" @click="confirm()">
+              <strong> Confirm</strong>
             </button>
           </div>
         </div>
@@ -208,7 +225,16 @@ export default {
 
 <style scoped>
 .bg {
-  background-image: url("../assets/tecnicial.jpg");
-  height: 1000px;
+  background-image: url("https://images.pexels.com/photos/1030766/pexels-photo-1030766.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body,
+html {
+  height: 100%;
 }
 </style>

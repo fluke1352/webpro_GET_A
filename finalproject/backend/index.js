@@ -13,23 +13,25 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 // routers
 // const indexRouter = require('./routes/index')
 // const blogRouter = require('./routes/blog')
-const product = require('./routes/product')
 const register = require('./routes/register')
 const login = require('./routes/login')
 const inflowhistory = require('./routes/inflowhistory')
 const owner = require('./routes/addproduct')
 const allproduct = require('./routes/allproduct')
+const orderhistory = require('./routes/orderhistory')
+const productdetial = require('./routes/productdetial')
 // const editaccount = require('./routes/editaccount')
 // const commentRouter = require('./routes/comment')
 
 // app.use(indexRouter.router)
 // app.use(blogRouter.router)
-app.use(product.router)
 app.use(register.router)
 app.use(login.router)
 app.use(inflowhistory.router)
 app.use(owner.router)
 app.use(allproduct.router)
+app.use(orderhistory.router)
+app.use(productdetial.router)
 // app.use(commentRouter.router)
 
 app.listen(3000, () => {

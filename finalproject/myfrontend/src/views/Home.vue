@@ -5,7 +5,7 @@
         <div class="fade" id="fade">
           <img
             :src="slide[indexsslide]"
-            style="width: 100%; object-fit: cover"
+            style="width: 100%;  object-fit: cover;  height: 500px"
           />
         </div>
 
@@ -27,99 +27,76 @@
         >
       </div>
     </div>
-
-    <div class="columns has-text-centered mb-5 mx-5" style="padding-top: 80px">
-      <div class="column bgProduct" style="position: relative; height: 275px">
+    <section class="card--all">
+      <div>
         <router-link
           :to="{ name: 'showproduct', params: { category: 'speaker' } }"
         >
-          <img
-            src="https://th-test-11.slatic.net/shop/cd5cec15f2b01477c7d153cfd35e4e2a.jpeg"
-            alt=""
-            class="showimage"
-          />
-          <div class="showproduct">Speaker</div></router-link
-        >
+          <div class="image--">
+            <img style="height:420px"
+              src="https://images.pexels.com/photos/157534/pexels-photo-157534.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            />
+          </div>
+          <p>Speaker</p>
+        </router-link>
       </div>
-
-      <div class="column bgProduct" style="position: relative; height: 275px">
+      <div>
         <router-link
           :to="{ name: 'showproduct', params: { category: 'radio' } }"
         >
-          <img
-            src="https://www.tuek-klongthom.com/wp-content/uploads/wpsc/product_images/2DIN-DNX4330.jpg"
-            alt=""
-            class="showimage"
-          />
-          <div class="showproduct">Radio</div></router-link
-        >
+          <div class="image--">
+            <img src="https://images.pexels.com/photos/3738982/pexels-photo-3738982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+          </div>
+          <p>Radio</p>
+        </router-link>
       </div>
-
-      <div
-        class="column bgProduct"
-        style="position: relative; height: 275px; object-fit: cover"
-      >
+      <div>
         <router-link
           :to="{ name: 'showproduct', params: { category: 'film' } }"
         >
-          <img
-            src="https://image.makewebeasy.net/makeweb/0/FpbNivp4p/lamina/09_lamina_POP.jpg"
-            alt=""
-            class="showimage"
-          />
-          <div class="columns">
-            <div class="showproduct">Film</div>
-          </div></router-link
-        >
+          <div class="image--">
+            <img
+              src="https://images.pexels.com/photos/3550674/pexels-photo-3550674.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+            />
+          </div>
+          <p>Film</p>
+        </router-link>
       </div>
-    </div>
-
-    <div
-      class="columns has-text-centered mb-5 mx-5"
-      style="padding-bottom: 80px"
-    >
-      <div class="column bgProduct" style="position: relative; height: 275px">
+    </section>
+    <section class="card--all">
+      <div>
         <router-link
           :to="{ name: 'showproduct', params: { category: 'camera' } }"
         >
-          <img
-            src="https://th-live-01.slatic.net/p/69b9b7e209fd466812122bb458af45be.jpg"
-            alt=""
-            class="showimage"
-          />
-          <div class="showproduct">Camera</div></router-link
-        >
+          <div class="image--">
+            <img style="height:420px"
+              src="https://images.pexels.com/photos/4062452/pexels-photo-4062452.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            />
+          </div>
+          <p>Camera</p>
+        </router-link>
       </div>
-
-      <div class="column bgProduct" style="position: relative; height: 275px">
+      <div>
         <router-link
           :to="{ name: 'showproduct', params: { category: 'sensor' } }"
         >
-          <img
-            src="https://lh3.googleusercontent.com/proxy/3GeJAEH5YINEXeJ6iGbX4_a7P-E7e9uZVSLcwBhynma3bzzIGu8CZJiThxw_JoHw6TGNh5ZzQbAquO7oRmOBX3f341UILo3fg8FmBR8"
-            alt=""
-            class="showimage"
-          />
-          <div class="showproduct">Sensor</div></router-link
-        >
+          <div class="image--">
+            <img style="height:420px" src="https://news.hmgjournal.com/images_n/contents/0602_mobilgene_01.png" />
+          </div>
+          <p>Sensor</p>
+        </router-link>
       </div>
-
-      <div
-        class="column bgProduct"
-        style="position: relative; height: 275px; object-fit: cover"
-      >
+      <div>
         <router-link to="allproduct">
-          <img
-            src="https://cdn.discordapp.com/attachments/603631846525501460/832636104422719499/unknown.png"
-            alt=""
-            class="showimage"
-          />
-          <div class="columns">
-            <div class="showproduct">All</div>
-          </div></router-link
-        >
+          <div class="image--">
+            <img
+              src="https://images.pexels.com/photos/4489708/pexels-photo-4489708.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            />
+          </div>
+          <p>All</p>
+        </router-link>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -159,23 +136,25 @@ export default {
       this.indexslide = a;
     },
     fade() {
-      this.fades = setInterval(() => {
-        console.log("reani");
+      try {
+        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
         element.classList.add("fade");
         this.indexslide++;
-      }, 5000);
+        setTimeout(this.fade, 5000);
+      } catch (error) {console.log('error');}
     },
+
   },
   data() {
     return {
       data: null,
       slide: [
-        "https://www.w3schools.com/howto/img_nature_wide.jpg",
-        "https://www.w3schools.com/howto/img_snow_wide.jpg",
-        "https://www.w3schools.com/howto/img_mountains_wide.jpg",
+        "https://images.pexels.com/photos/4489732/pexels-photo-4489732.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "https://images.pexels.com/photos/4116193/pexels-photo-4116193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "https://images.pexels.com/photos/3822844/pexels-photo-3822844.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       ],
       indexslide: 0,
       fades: null,
@@ -187,14 +166,21 @@ export default {
 <style scoped>
 .bg {
   background-color: black;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-size: auto;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; */
   /* padding: 150px; */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-html {
+body,html {
   background-color: black;
+  height: 100%;
 }
 .bgProduct {
   background-color: #ffdd57;
@@ -275,6 +261,36 @@ html {
   -webkit-animation-duration: 1.5s;
   animation-name: fade;
   animation-duration: 1.5s;
+}
+/* -------HOVER PIC PRODUCT */
+.card--all {
+  display: flex;
+}
+.card--all div {
+  position: relative;
+  width: 33.33%;
+}
+.card--all div .image-- {
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.card--all div .image-- img {
+  transition: all 0.5s 0s ease;
+}
+.card--all div:hover .image-- img {
+  transform: scale(1.2);
+}
+.card--all div p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
 }
 
 @keyframes fade {

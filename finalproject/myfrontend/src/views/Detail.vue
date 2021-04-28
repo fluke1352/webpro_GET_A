@@ -3,22 +3,22 @@
     <div class="container mt-5">
       <div class="columns">
         <div class="column is-1">
-          <div>
+          <div  v-for="image, index in img" :key="index">
             <img
               class="image mb-4 p-0"
               style="width: 96px; height: 120px; object-fit: cover"
-              :src="imagePath(productdetial.image)"
+              :src="imagePath(image)"
               alt=""
             />
           </div>
         </div>
 
         <div class="column is-5">
-          <div>
+          <div v-for="image, index in img" :key="index">
             <img
               class="image mb-4 p-0"
               style="width: 100%; height: 100%; object-fit: cover"
-              :src="imagePath(productdetial.image)"
+              :src="imagePath(image)"
               alt=""
             />
           </div>
@@ -35,10 +35,14 @@
             ><br />
           </p>
           <p class="mt-1 ml-3">
-            Category is <b class="has-text-light">:</b>  {{ productdetial.category }} <br />
-            Brand is <b class="has-text-light">:</b>   {{ productdetial.brand }} <br />
-            Amount product is <b class="has-text-light">:</b>   {{ productdetial.amount_product }}<br />
-            Other spec is <b class="has-text-light">:</b>   {{ productdetial.other_spec }}
+            Category is <b class="has-text-light">:</b>
+            {{ productdetial.category }} <br />
+            Brand is <b class="has-text-light">:</b> {{ productdetial.brand }}
+            <br />
+            Amount product is <b class="has-text-light">:</b>
+            {{ productdetial.amount_product }}<br />
+            Other spec is <b class="has-text-light">:</b>
+            {{ productdetial.other_spec }}
           </p>
           <!-- <div class="column"></div> -->
           <p class="mt-5"><b>จำนวน</b></p>
@@ -60,7 +64,7 @@
               class="button is-warning"
               v-if="productdetial.amount_product > 0"
             >
-              <strong>Add to cart</strong>
+              <strong @click="addtocart()">Add to cart</strong>
             </button>
             <button
               class="button"
@@ -85,9 +89,17 @@ export default {
       .post("http://localhost:3000/productdetial/" + this.$route.params.id)
       .then((response) => {
         this.productdetial = response.data.message[0];
-        // console.log(this.allproduct);
+        this.img = this.productdetial.image
+          .slice(1, this.productdetial.image.length - 1)
+          .split(",");
+        // console.log(this.img);
+        // this.imagePath(this.productdetial.image);
       });
     this.id = this.$route.params.id;
+    if (localStorage.getItem("cart")) {
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+    }
+
     // console.log(this.$route.params.id);
   },
   computed: {
@@ -108,8 +120,27 @@ export default {
     changeorderamount(val) {
       this.orderamount = val;
     },
+    addtocart() {
+      // console.log(this.cart.filter((product) => (product.id = this.id)).length);
+
+      if (this.cart.filter((product) => product.id === this.id).length > 0) {
+        this.cart.forEach((product) => {
+          if (product.id == this.id) {
+            product.orderamount = this.orderamount;
+            return true;
+          }
+        });
+      } else {
+        this.cart.push({ id: this.id, orderamount: this.orderamount });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
     imagePath(file_path) {
+      // console.log(file_path);
       if (file_path) {
+        // let img = file_path.slice(1, file_path.length - 1).split(",");
+        // console.log(img[0]);
         return "http://localhost:3000/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
@@ -121,14 +152,17 @@ export default {
       id: null,
       productdetial: [],
       orderamount: 1,
+      cart: [],
+      img: null,
     };
   },
 };
 </script>
 
 <style scoped>
-body,html{
-  font-family: 'Roboto', sans-serif;
+body,
+html {
+  font-family: "Roboto", sans-serif;
 }
 .bg {
   background-color: rgb(26, 26, 26);

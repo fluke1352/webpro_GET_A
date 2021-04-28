@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <!-- //modal -->
+    <!-- //modal cancle order-->
     <div class="modal" :class="{ 'is-active': isModal }">
       <div class="modal-background"></div>
       <div class="modal-card">
@@ -123,7 +123,44 @@
       </div>
     </div>
 
-    <div class="columns">
+    <!--  modal no order in cart  -->
+    <div
+      class="modal"
+      :class="{ 'is-active': totalPrice == 0 && totalAmount == 0 }"
+    >
+      <div class="modal-background has-background-black"></div>
+      <div class="modal-card">
+        <header class="modal-card-head has-background-dark">
+          <p class="modal-card-title has-text-warning">Your cart is blank</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body has-background-warning">
+          <!-- Content ... -->
+          <h1 class="is-size-3 has-text-black">
+            Go to order and comeback again.
+          </h1>
+          <p><i class="fas fa-car"></i> 999 Auto.</p>
+        </section>
+        <footer class="modal-card-foot has-background-dark">
+          <router-link to="../allproduct">
+            <button
+              class="button has-text-black has-background-warning is-dark border"
+            >
+              <b>Get order!</b>
+            </button>
+          </router-link>
+          <router-link to="../Home" class="ml-1">
+            <button
+              class="button has-text-black has-background-warning is-dark border"
+            >
+              <b> Home page. </b>
+            </button>
+          </router-link>
+        </footer>
+      </div>
+    </div>
+
+    <div class="columns" v-show="totalPrice != 0 && totalAmount != 0">
       <div class="column is-3 is-offset-6">
         <div
           class="card has-text-warning"
@@ -135,7 +172,7 @@
       </div>
     </div>
 
-    <div class="columns">
+    <div class="columns" v-show="totalPrice != 0 && totalAmount != 0">
       <div class="column is-4 is-offset-5" style="margin-top: 150px">
         <div class="card" style="background-color: #1b1b1b">
           <div class="columns">
@@ -224,7 +261,9 @@ export default {
           this.deleteIndex = index;
         }
       });
-      this.totalPrice -= (this.products[this.deleteIndex].price * this.products[this.deleteIndex].orderamount);
+      this.totalPrice -=
+        this.products[this.deleteIndex].price *
+        this.products[this.deleteIndex].orderamount;
       this.totalAmount -= this.products[this.deleteIndex].orderamount;
 
       this.products = this.products.filter(
@@ -259,7 +298,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .bg {
   /* background-image: url("../assets/order.jpg"); */
   background-image: url(https://images.pexels.com/photos/3039049/pexels-photo-3039049.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);

@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/Home',
     name: 'Home',
     component: () => import('../views/Home.vue') // set home as path '/'
   },
@@ -53,6 +53,11 @@ const routes = [
     path: '/showproduct/:category',
     name: 'showproduct',
     component: () => import('../views/showproduct.vue') // set home as path '/'
+  },
+  {
+    path: '/usercart',
+    name: 'usercart',
+    component: () => import('../views/usercart.vue') // set home as path '/'
   },
   
 ]

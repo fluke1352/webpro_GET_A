@@ -35,11 +35,11 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="mr-5 is-size-4">
-              <a href="" style="color:black">
-                <!-- <router-link :to="{ name: 'usercart'}"> -->
-                <i class="fas fa-cart-arrow-down "></i>
-              </a>
-              
+              <router-link to="../usercart">
+                <div class="buttons has-text-black mb-1">
+                  <i class="fas fa-cart-arrow-down"></i>
+                </div>
+              </router-link>
             </div>
             <div class="buttons" @click="isModal = true">
               <a
@@ -232,9 +232,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
-  /* margin-top: 10px; */
 }
 .footer,
 textfoot {
@@ -245,21 +243,15 @@ textfoot {
   background-color: #252525;
   color: white;
   text-transform: uppercase;
-  /* padding: 5%; */
 }
 .textInput input {
-  /* background: none; */
-  /* border: none; */
   margin-bottom: 5px;
-  /* padding: 10px; */
-  /* color: white; */
   float: left;
   font-size: 18px;
   outline: none;
 }
 .iconInput {
   text-align: center;
-  /* margin-top: 5px; */
 }
 .iconInput i {
   text-align: center;

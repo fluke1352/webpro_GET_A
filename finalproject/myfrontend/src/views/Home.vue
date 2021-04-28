@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div :class="{bg: true}">
     <div class="columns">
       <div class="slideshow-container">
         <div class="fade" id="fade">
@@ -13,6 +13,7 @@
           class="prev"
           @click="
             indexslide--;
+            clearTimeout(this.timeOut);
             fade();
           "
           >&#10094;</a
@@ -21,6 +22,7 @@
           class="next"
           @click="
             indexslide++;
+            clearTimeout(this.timeOut);
             fade();
           "
           >&#10095;</a
@@ -110,7 +112,7 @@ export default {
     axios.post("http://localhost:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
       // console.log(this.data);
-    });
+    }); 
   },
   computed: {
     indexsslide() {
@@ -143,7 +145,7 @@ export default {
         void element.offsetWidth;
         element.classList.add("fade");
         this.indexslide++;
-        setTimeout(this.fade, 5000);
+        this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {console.log('error');}
     },
 
@@ -158,6 +160,7 @@ export default {
       ],
       indexslide: 0,
       fades: null,
+      timeOut: null
     };
   },
 };
@@ -165,13 +168,17 @@ export default {
 
 <style scoped>
 .bg {
+  /* background-image: url("../assets/bgSignUp.jpg"); */
+
   background-color: black;
+    height: 100%;
+
   /* background-repeat: no-repeat;
   background-size: auto;
   height: 100%;
   object-fit: cover; */
   /* padding: 150px; */
-  height: 100%;
+
 
   /* Center and scale the image nicely */
   background-position: center;

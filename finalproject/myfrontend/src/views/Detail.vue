@@ -1,25 +1,33 @@
 <template>
-  <div class="bg">
+  <div class="bg" id="top">
     <div class="container mt-5">
+      <svg @click="move('top')" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-circle-fill up"
+            style="cursor: pointer;" fill="lawngreen" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+        </svg>
       <div class="columns">
         <div class="column is-1">
-          <div  v-for="image, index in img" :key="index">
+          <div v-for="(image, index) in img" :key="index">
             <img
               class="image mb-4 p-0"
               style="width: 96px; height: 120px; object-fit: cover"
               :src="imagePath(image)"
+              @click="move(index)"
               alt=""
             />
           </div>
         </div>
 
         <div class="column is-5">
-          <div v-for="image, index in img" :key="index">
+          <div v-for="(image, index) in img" :key="index">
             <img
               class="image mb-4 p-0"
               style="width: 100%; height: 100%; object-fit: cover"
               :src="imagePath(image)"
               alt=""
+              :id="index"
+              @click="move(index)"
             />
           </div>
         </div>
@@ -146,6 +154,10 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
+    move(index) {
+      let a = document.getElementById(index);
+      a.scrollIntoView({ behavior: "smooth", block: "start" });
+    },
   },
   data() {
     return {
@@ -166,5 +178,13 @@ html {
 }
 .bg {
   background-color: rgb(26, 26, 26);
+}
+.up{
+    width: 50px;
+    height: 50px;
+    /* background-color: red;   */
+    position: fixed;
+    bottom: 50px;
+    right: 70px;  
 }
 </style>

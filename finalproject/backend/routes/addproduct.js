@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.post("/addproduct", upload.array("myImage", 1), async (req, res, next) => {
+router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     if (req.method == "POST") {
@@ -49,44 +49,53 @@ router.post("/addproduct", upload.array("myImage", 1), async (req, res, next) =>
                 [producttype, productbrand]
             );
 
-            if(check.length > 0 && check2.length > 0){
+            if (check.length > 0 && check2.length > 0) {
                 console.log("already add");
-                res.json({message: "Already add"})
+                res.json({ message: "Already add" })
                 // let [a, b] = await conn.query('SELECT product_type.amount_product FROM product_type  WHERE product_product_id=?', [check[0].product_id])
                 // await conn.query("UPDATE product_type SET amount_product=? WHERE product_product_id=?",[a[0].amount_product+parseInt(productamount), check[0].product_id])
-            }else{
+            } else {
+                await conn.query(
+                    "INSERT INTO product(product_name, category, storge_date) VALUES (?,?,CURRENT_TIMESTAMP);",
+                    [productname, productcategory]
+                );
                 console.log("add complete");
-            let [data, a] = await conn.query(
-                "select * from product;",
-            );
-            let id = data[data.length-1].product_id+1
+                let [data, _] = await conn.query(
+                    "select * from product;",
+                );
+                let id = data[data.length - 1].product_id
 
-            req.files.forEach((file, index) => {
-                let path = [producttype, productdescription,productprice, productamount,productbrand,id ,file.path.substring(6)];
-                pathArray.push(path);
-            });
+                let a  = [];
+                // req.files.forEach((file, index) => {
+                //     let path = [producttype, productdescription,productprice, productamount,productbrand,id ,file.path.substring(6)];
+                //     pathArray.push(path);
+                // });
+                req.files.forEach((file, index) => {
+                    let path = [file.path.substring(6)];
+                    pathArray.push(path);
+                });
+                pathArray = "[" + pathArray + "]"
+                let path = [[producttype, productdescription, productprice, productamount, productbrand, id, pathArray]];
+                console.log(path);
 
-            await conn.query(
-                "INSERT INTO product(product_name, category, storge_date) VALUES (?,?,CURRENT_TIMESTAMP);",
-                [productname, productcategory]
-            );
-            
-            await conn.query(
-                "INSERT INTO product_inflow(inflow_amount, inflow_price, product_product_id,inflow_date) VALUES (?,?,?,CURRENT_TIMESTAMP);",
-                [productamount, productprice, id]
-            );
+                await conn.query(
+                    "INSERT INTO product_inflow(inflow_amount, inflow_price, product_product_id,inflow_date) VALUES (?,?,?,CURRENT_TIMESTAMP);",
+                    [productamount, productprice, id]
+                );
 
-            await conn.query(
-                "INSERT INTO product_owner(product_product_id,owner_owner_id,date) VALUES (?,1,CURRENT_TIMESTAMP);",
-                [id]
-            );
+                await conn.query(
+                    "INSERT INTO product_owner(product_product_id,owner_owner_id,date) VALUES (?,1,CURRENT_TIMESTAMP);",
+                    [id]
+                );
 
-            await conn.query(
-                "INSERT INTO product_type(type_name, other_spec , price, amount_product,brand,product_product_id,image) VALUES ?;",
-                [pathArray]
-            );
-        }
-            res.json({message: "Add complete"})
+                    // console.log(pathArray);
+
+                await conn.query(
+                    "INSERT INTO product_type(type_name, other_spec , price, amount_product,brand,product_product_id,image) VALUES ?;",
+                    [path]
+                );
+            }
+            res.json({ message: "Add complete" })
             conn.commit();
             conn.release();
         }

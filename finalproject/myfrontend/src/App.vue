@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- navbar -->
     <nav
       class="navbar"
       role="navigation"
@@ -33,6 +34,13 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
+            <div class="mr-5 is-size-4">
+              <a href="" style="color:black">
+                <!-- <router-link :to="{ name: 'usercart'}"> -->
+                <i class="fas fa-cart-arrow-down "></i>
+              </a>
+              
+            </div>
             <div class="buttons" @click="isModal = true">
               <a
                 class="button has-text-warning"
@@ -45,7 +53,7 @@
         </div>
       </div>
     </nav>
-
+    <!-- modal -->
     <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
         class="modal-background"
@@ -120,11 +128,11 @@
       style="padding-bottom: 70px; padding-top: 40px"
     />
 
-    <footer class="footer has-background-dark" style="height:">
+    <footer class="footer has-background-dark" style="height: 41vh">
       <div class="content has-text-centered has-text-white">
         <h1 style="color: #ffdd57">999Auto ประดับยนต์</h1>
         <h6 style="color: #ffdd57">เปิด 8.00-19.00 หยุดวันอาทิตย์</h6>
-        <br /><br />
+        <br />
         <div class="columns">
           <div class="column">
             <h4 style="color: #ffdd57">About Us</h4>
@@ -138,29 +146,30 @@
           <div class="column">
             <h4 style="color: #ffdd57">Product</h4>
             <!-- <ul> -->
-            <a href="#" style="color:whitesmoke">Speaker</a><br />
-            <a href="#" style="color:whitesmoke">Radio</a><br />
-            <a href="#" style="color:whitesmoke">Film</a><br />
-            <a href="#" style="color:whitesmoke">Camera</a><br />
-            <a href="#" style="color:whitesmoke">Sensor</a>
+            <a href="#" style="color: whitesmoke">Speaker</a><br />
+            <a href="#" style="color: whitesmoke">Radio</a><br />
+            <a href="#" style="color: whitesmoke">Film</a><br />
+            <a href="#" style="color: whitesmoke">Camera</a><br />
+            <a href="#" style="color: whitesmoke">Sensor</a>
             <!-- </ul> -->
           </div>
           <div class="column">
             <h4 style="color: #ffdd57">Address</h4>
-            <p>ที่อยู่: 83/3 ถนน ลาดกระบัง แขวง ลาดกระบัง เขตลาดกระบัง กรุงเทพมหานคร 10520</p>
+            <p>
+              ที่อยู่: 83/3 ถนน ลาดกระบัง แขวง ลาดกระบัง เขตลาดกระบัง
+              กรุงเทพมหานคร 10520
+            </p>
           </div>
           <div class="column">
             <h4 style="color: #ffdd57">Contact Us</h4>
             <a
               href="https://www.facebook.com/999auto-1673907482865058/"
               style="color: white"
-              ><i class="fab fa-facebook-square is-size-5 "> 999auto</i></a
+              ><i class="fab fa-facebook-square is-size-5"> 999auto</i></a
             ><br />
             <i class="fas fa-mobile-alt is-size-5 my-2"> 02-329-1368</i><br />
-            <a
-              href="https://goo.gl/maps/h3vhMUBMAfXC9g1m7"
-              style="color: white"
-              ><i class="fas fa-map-marker-alt  is-size-5 "> Look on map</i></a
+            <a href="https://goo.gl/maps/h3vhMUBMAfXC9g1m7" style="color: white"
+              ><i class="fas fa-map-marker-alt is-size-5"> Look on map</i></a
             ><br />
           </div>
         </div>

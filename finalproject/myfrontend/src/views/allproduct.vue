@@ -13,21 +13,23 @@
           </div>
 
           <a
-            class="prev"
-            @click="
-              indexslide--;
-              fade();
-            "
-            >&#10094;</a
-          >
-          <a
-            class="next"
-            @click="
-              indexslide++;
-              fade();
-            "
-            >&#10095;</a
-          >
+          class="prev"
+          @click="
+            indexslide--;
+            clearTimeout(this.timeOut);
+            fade();
+          "
+          >&#10094;</a
+        >
+        <a
+          class="next"
+          @click="
+            indexslide++;
+            clearTimeout(this.timeOut);
+            fade();
+          "
+          >&#10095;</a
+        >
         </div>
       </div>
     </div>
@@ -142,15 +144,19 @@ export default {
         void element.offsetWidth;
         element.classList.add("fade");
         this.indexslide++;
-        setTimeout(this.fade, 5000);
+        this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {
         console.log("error");
       }
     },
 
     imagePath(file_path) {
+      // console.log(file_path);
+
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        let img = file_path.slice(1, file_path.length-1).split(',')
+      // console.log(img[0]);
+        return "http://localhost:3000/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -182,6 +188,7 @@ export default {
       ],
       indexslide: 0,
       fades: null,
+      timeOut: null
     };
   },
 };

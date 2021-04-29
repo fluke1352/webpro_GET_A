@@ -10,25 +10,27 @@
 
           <div class="columns column">
             <div class="column is-half">
+
               <label><p>name</p></label>
               <input
-                class="input"
-                type="text"
-                id="FirstName"
-                placeholder="ชื่อ"
-                v-model="firstName"
-              />
+              v-model="$v.firstName.$model"
+              :class="{ 'is-danger': $v.firstName.$error }"
+              class="input"
+              id="firstName"
+              placeholder="ชื่อ"
+              type="text"
+            />
             </div>
 
             <div class="column is-half">
               <label><p>lastname</p></label>
               <input
-                class="input"
-                type="text"
-                id="LasttName"
-                placeholder="นามสกุล"
-                v-model="lastName"
-              />
+              v-model="$v.lastName.$model"
+               :class="{ 'is-danger': $v.lastName.$error }"
+              class="input"
+              placeholder="นามสกุล"
+              type="text"
+            />
             </div>
           </div>
           <div class="column has-text-warning">
@@ -36,8 +38,10 @@
             <div class="control has-icons-left">
               <input
                 class="mb-5"
+                :class="{ 'is-danger': $v.images.$error }"
                 multiple
                 type="file"
+
                 accept="image/png, image/jpeg, image/webp"
                 @change="selectImages"
               />
@@ -46,6 +50,7 @@
           <div
             v-for="image in images"
             :key="image.id"
+            
             class="column is-one-quarter"
           >
             <div class="card">
@@ -59,46 +64,46 @@
 
           <div class="column">
             <label><p>phone number</p></label>
+
             <input
+              v-model="$v.phoneNumber.$model"
+              :class="{ 'is-danger': $v.phoneNumber.$error }"
               class="input"
-              type="text"
-              id="phone"
               placeholder="เบอร์โทร"
-              v-model="phoneNumber"
-              maxlength="10"
+              type="text"
             />
           </div>
 
           <div class="column">
-            <label><p>user name</p></label>
+            <label><p>username</p></label>
             <input
+              v-model="$v.userName.$model"
+              :class="{ 'is-danger': $v.userName.$error }"
               class="input"
+              placeholder="ชื่อบัญชี"
               type="text"
-              id="phone"
-              placeholder="ชื่อบัญชีผู้ใช้"
-              v-model="userName"
             />
           </div>
 
           <div class="column">
             <label><p>password</p></label>
-            <input
+             <input
+              v-model="$v.password.$model"
+              :class="{ 'is-danger': $v.password.$error }"
               class="input"
               type="password"
-              id="phone"
               placeholder="รหัสผ่าน"
-              v-model="password"
             />
           </div>
 
           <div class="column">
             <label><p>comfirm password</p></label>
             <input
+              v-model="$v.confirmPassword.$model"
+              :class="{ 'is-danger': $v.confirmPassword.$error }"
               class="input"
               type="password"
-              id="phone"
               placeholder="ยืนยันรหัสผ่าน"
-              v-model="confirmPassword"
             />
           </div>
 
@@ -115,50 +120,21 @@
 
 <script>
 import axios from "axios";
+import {required,minLength,maxLength,sameAs} from "vuelidate/lib/validators";
 import "bulma/css/bulma.css";
+
+
+function mobile(value) {
+  return !!value.match(/0[0-9]{9}/);
+}
+function complexPassword(value) {
+  if (!(value.match(/[a-z]/) && value.match(/[0-9]/))) {
+    return false;
+  }
+  return true;
+}
 export default {
-  created() {},
-  methods: {
-    selectImages(event) {
-      this.images = event.target.files;
-      console.log(this.images);
-      this.test.push(event.target.files);
-      console.log(this.test);
-    },
-    showSelectImage(image) {
-      return URL.createObjectURL(image);
-    },
-
-    resgister() {
-      let formData = new FormData();
-      formData.append("firstName", this.firstName);
-      formData.append("lastName", this.lastName);
-      formData.append("phoneNumber", this.phoneNumber);
-      formData.append("userName", this.userName);
-      formData.append("password", this.password);
-      this.images.forEach((image) => {
-        formData.append("myImage", image);
-      });
-
-      if (this.password === this.confirmPassword) {
-        axios
-          .post("http://localhost:3000/register", formData)
-          .then((response) => {
-            this.alertregister = response.data.message;
-            alert(this.alertregister);
-            if (this.alertregister === "Add Complete") {
-              this.$router.push("/login");
-            } else {
-              alert("Please try again");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    },
-  },
-  data() {
+    data() {
     return {
       firstName: null,
       lastName: null,
@@ -171,6 +147,71 @@ export default {
       test: [],
     };
   },
+  methods: {
+    selectImages(event) {
+      this.images = event.target.files;
+      this.test.push(event.target.files);
+    },
+    showSelectImage(image) {
+      return URL.createObjectURL(image);
+    },
+    resgister() {
+      this.$v.$touch();
+      let formData = new FormData();
+      formData.append("firstName", this.firstName);
+      formData.append("lastName", this.lastName);
+      formData.append("phoneNumber", this.phoneNumber);
+      formData.append("userName", this.userName);
+      formData.append("password", this.password);
+      this.images.forEach((image) => {
+        formData.append("myImage", image);
+      });
+      if (!this.$v.$invalid) {
+        axios
+          .post("http://localhost:3000/register", formData)
+          .then((response) => {
+            this.alertregister = response.data.message;
+            alert(this.alertregister);
+            this.$router.push("/login");    
+          })
+          .catch((err) => {
+            alert(err.response.data.details.message);
+          });
+      }
+    },
+
+  },
+      validations: {
+      userName: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(20),
+      },
+      firstName: {
+        required,
+        maxLength: maxLength(100),
+      },
+      lastName: {
+        required,
+        maxLength: maxLength(100),
+      },
+      images: {
+         required 
+      },
+      phoneNumber: {
+        required: required,
+        mobile: mobile,
+      },
+      password: {
+        required: required,
+        minLength: minLength(6),
+        complex: complexPassword,
+      },
+      confirmPassword: {
+        sameAs: sameAs("password"),
+      },
+    },
+
 };
 </script>
 

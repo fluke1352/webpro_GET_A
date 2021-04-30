@@ -132,12 +132,15 @@
       <div class="modal-card">
         <header class="modal-card-head has-background-dark">
           <p class="modal-card-title has-text-warning">Your cart is blank</p>
-          <button class="delete" aria-label="close"></button>
+          <router-link to="../allproduct">
+          <button class="delete" aria-label="close">       
+          </button>
+          </router-link>
         </header>
         <section class="modal-card-body has-background-warning">
           <!-- Content ... -->
           <h1 class="is-size-3 has-text-black">
-            Go to order and comeback again.
+            Let get order and comeback again.
           </h1>
           <p><i class="fas fa-car"></i> 999 Auto.</p>
         </section>
@@ -149,7 +152,7 @@
               <b>Get order!</b>
             </button>
           </router-link>
-          <router-link to="../Home" class="ml-1">
+          <router-link to="/" class="ml-1">
             <button
               class="button has-text-black has-background-warning is-dark border"
             >
@@ -186,13 +189,14 @@
                 type="date"
                 class="input"
                 style="text-align: center"
-                v-model="dateSetup"
+                v-model="date_deliver"
               />
             </div>
             <div class="column is-4 ml-3">
               <button
                 class="button has-background-warning"
                 style="height: 4vh; text-align: center"
+                @click="Confirm()"
               >
                 <b>Confirm order</b>
               </button>
@@ -212,11 +216,6 @@ export default {
     this.fetchDatabase();
   },
   computed: {
-    // totalAmount()   {
-    // },
-    // totalPrice(){
-    //   this.totalPrice =0
-    // }
   },
 
   methods: {
@@ -231,6 +230,7 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
+
     fetchDatabase() {
       if (localStorage.getItem("cart")) {
         this.cart = JSON.parse(localStorage.getItem("cart"));
@@ -254,7 +254,6 @@ export default {
           });
       }
     },
-    totalPriceAmount() {},
     cancleProduct() {
       this.products.forEach((item, index) => {
         if (item.product_id == this.id_wantCancle) {
@@ -272,12 +271,28 @@ export default {
       this.cart = this.cart.filter((_, index) => index != this.deleteIndex);
       localStorage.removeItem("cart");
       localStorage.setItem("cart", JSON.stringify(this.cart));
+      
     },
     resetModalData() {
       (this.isModal = false),
         (this.brand = null),
         (this.category = null),
         (this.id_wantCancle = null);
+    },
+    Confirm() {
+      axios
+        .post("http://localhost:3000/usercart/8", {
+          products: this.products,
+          delivery_date: this.date_deliver
+        })
+        .then((response) => {
+          this.alertAddOrder = response.data.message;
+          alert(this.alertAddOrder);
+        })
+        .catch((e) => console.log(e.response.data));
+        localStorage.removeItem("cart");
+        location.reload();
+        alert('Confirm order!!')
     },
   },
   data() {
@@ -288,11 +303,12 @@ export default {
       deleteIndex: null, //index in cart
 
       isModal: false,
-      dateSetup: null,
+      date_deliver: null,
       cart: [], //from localhost
       products: [], //data product from database
       totalPrice: 0,
       totalAmount: 0,
+      alertAddOrder:''
     };
   },
 };

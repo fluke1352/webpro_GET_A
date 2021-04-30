@@ -1,5 +1,6 @@
 <template>
   <div class="bg">
+    
     <!-- banner -->
     <div class="container" >
       <!-- <img src="../assets/banner1.png" alt=""> -->
@@ -280,7 +281,7 @@ export default {
   /* margin: auto; */
 
   min-width: 100%;
-  opacity: 0.7;
+  opacity: 0.85;
   transition: opacity 0.7s;
 }
 .card-image:hover {

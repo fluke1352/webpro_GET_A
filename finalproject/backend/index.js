@@ -20,6 +20,7 @@ const owner = require('./routes/addproduct')
 const allproduct = require('./routes/allproduct')
 const orderhistory = require('./routes/orderhistory')
 const productdetial = require('./routes/productdetial')
+const usercart = require('./routes/usercart')
 // const editaccount = require('./routes/editaccount')
 // const commentRouter = require('./routes/comment')
 
@@ -32,6 +33,7 @@ app.use(owner.router)
 app.use(allproduct.router)
 app.use(orderhistory.router)
 app.use(productdetial.router)
+app.use(usercart.router)
 // app.use(commentRouter.router)
 
 app.listen(3000, () => {

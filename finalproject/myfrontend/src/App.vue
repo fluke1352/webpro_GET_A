@@ -2,32 +2,45 @@
   <div id="app">
     <!-- navbar -->
     <nav
-      class="navbar"
+      class="navbar is-fixed-top"
       role="navigation"
       aria-label="main navigation"
       style="background-color: #ffdd57"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="http://localhost:8080/">
           <img src="../src/assets/logo999Auto.png" width="112" height="28" />
         </a>
       </div>
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item"> Home </a>
+          <a class="navbar-item" style="">
+            <router-link to="/" style="color: black">Home</router-link>
+          </a>
 
-          <a class="navbar-item"> Documentation!!! </a>
-
+          <a class="navbar-item" style="">
+            <router-link to="../allproduct" style="color: black"
+              >All product</router-link
+            >
+          </a>
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link"> More </a>
+            <a class="navbar-link" style="color: black"> Customer </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item"> About </a>
-              <a class="navbar-item"> Jobs </a>
-              <a class="navbar-item"> Contact </a>
+              <a class="navbar-item">
+                <router-link to="../editaccount" style="color: black"
+                  >Edit account</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../orderhistory" style="color: black"
+                  >Order history</router-link
+                >
+              </a>
+              <!-- <a class="navbar-item"> Contact </a>
               <hr class="navbar-divider" />
-              <a class="navbar-item"> Report an issue </a>
+              <a class="navbar-item"> Report an issue </a> -->
             </div>
           </div>
         </div>
@@ -36,6 +49,7 @@
           <div class="navbar-item">
             <div class="mr-5 is-size-4">
               <router-link to="../usercart">
+                <!-- user cart -->
                 <div class="buttons has-text-black mb-1">
                   <i class="fas fa-cart-arrow-down"></i>
                 </div>
@@ -53,6 +67,7 @@
         </div>
       </div>
     </nav>
+
     <!-- modal -->
     <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
@@ -125,7 +140,7 @@
 
     <router-view
       :key="$route.fullPath"
-      style="padding-bottom: 70px; padding-top: 40px"
+      style="padding-bottom: 70px; padding-top: 100px"
     />
 
     <footer class="footer has-background-dark" style="height: 41vh">
@@ -180,12 +195,6 @@
         <div class="columns">
           <div class="column">
             <p style="color: black">999Auto 2020.</p>
-          </div>
-          <div class="column has-text-right">
-            <!-- <i class="fa fa-facebook-square"></i>
-            <i class="fa fa-twitter-square"></i>
-            <i class="fa fa-google-plus-square"></i>
-            <i class="fa fa-linkedin-square"></i> -->
           </div>
         </div>
       </div>
@@ -257,5 +266,6 @@ textfoot {
   text-align: center;
   margin-top: 13px;
   margin-left: 7px;
+  background-color: #f8e184;
 }
 </style>

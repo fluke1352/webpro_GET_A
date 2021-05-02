@@ -12,7 +12,7 @@
         </div>
 
         <img
-          src="https://images.pexels.com/photos/2866077/pexels-photo-2866077.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          :src="imagePath(user.user_image)"
           alt=""
           style="width: 50%; margin-top: 50px; box-shadow: 5px 5px #888888"
         />
@@ -100,16 +100,25 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
+  props: ['user'],
   created() {
-    axios.post("http://localhost:3000/orderhistory").then((response) => {
+    axios.post("http://localhost:3000/orderhistory")
+    .then((response) => {
       this.data = response.data.message;
       // console.log(this.data);
     });
   },
   methods: {
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:3000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
   },
   data() {
     return {

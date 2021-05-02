@@ -209,7 +209,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
@@ -280,8 +280,12 @@ export default {
         (this.id_wantCancle = null);
     },
     Confirm() {
+      if(!this.date_deliver){
+        alert('กรุณาเลือก วันที่ต้องการเข้ามาติดตั้ง')
+      }
+      else{
       axios
-        .post("http://localhost:3000/usercart/8", {
+        .post("http://localhost:3000/usercart/confirm", {
           products: this.products,
           delivery_date: this.date_deliver
         })
@@ -293,6 +297,7 @@ export default {
         localStorage.removeItem("cart");
         location.reload();
         alert('Confirm order!!')
+        }
     },
   },
   data() {

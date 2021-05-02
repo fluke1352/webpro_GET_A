@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const pool = require("../config");
-
+const { loginAuth } = require('../middlewares')
 router = express.Router();
 
 // Require multer for file upload
@@ -19,18 +19,15 @@ var storage = multer.diskStorage({
     },
 });
 
-router.post("/orderhistory", async (req, res, next) => {
-    console.log('start!!!!!');
+router.post("/orderhistory", loginAuth,async (req, res, next) => {
+
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
-        // let [info, _] = await conn.query(
-        //     "SELECT * FROM 999auto.order;"
-        // );
 
         let [info, _] = await conn.query(
-            "select o.order_date, o.delivery_date, p.product_name, oi.item_amount, oi.item_price, oi.total_price from 999auto.order o join order_item oi on(o.order_id = oi.order_order_id) join product p on(oi.product_product_id = p.product_id) where o.user_user_id = ? ;",[1]
-            // "select * from 999auto.order o join 999auto.order_item oi on(o.order_id = oi.order_order_id) join 999auto.product p on(oi.product_product_id = p.product_id) join 999auto.user u on(o.user_user_id = u.user_id) join 999auto.account a on(o.user_user_id = a.user_id) where o.user_user_id = ? ;",[1]
+            "select o.order_date, o.delivery_date, p.product_name, oi.item_amount, oi.item_price, oi.total_price from 999auto.order o join order_item oi on(o.order_id = oi.order_order_id) join product p on(oi.product_product_id = p.product_id) where o.user_user_id = ? ;",[req.user.user_id]
+          
             );
 
 

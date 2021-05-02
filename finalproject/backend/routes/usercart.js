@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const pool = require("../config");
-
+const { loginAuth } = require('../middlewares')
 router = express.Router();
 
 router.post("/usercart", async (req, res, next) => {
@@ -43,17 +43,16 @@ router.post("/usercart", async (req, res, next) => {
     }
 })
 
-router.post("/usercart/:id", async (req, res, next) => {
+router.post("/usercart/confirm", loginAuth,async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
+    console.log(req.user);
     if (req.method == "POST") {
-
-
         const products = req.body.products;
         const delivery_date = req.body.delivery_date;
         let price_of_all_item = 0;
         let amount_of_all_item = 0;
-        const the_user_user_id = req.params.id;
+        const the_user_user_id = req.user.user_id;
         var d = new Date();
         var order_date = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 
@@ -64,9 +63,7 @@ router.post("/usercart/:id", async (req, res, next) => {
             amount_of_all_item += item.orderamount
             price_of_all_item += (item.orderamount * item.price)
         })
-
-
-
+        
 
         let order = []
         order.push(delivery_date)
@@ -77,39 +74,51 @@ router.post("/usercart/:id", async (req, res, next) => {
         try {
             //add to order
             await conn.query(
-                "INSERT INTO 999auto.order(delivery_date, order_date, price_of_all_item, amount_of_all_item, user_user_id) VALUES (?,?,?,?,?);",
+                "INSERT INTO 999auto.order(delivery_date, order_date, price_of_all_item,"+
+                " amount_of_all_item, user_user_id) VALUES (?,?,?,?,?);",
                 [delivery_date, order_date, price_of_all_item, amount_of_all_item, the_user_user_id]
             );
+
             //select order_id from order is same date and user
-            let [row, _] = await conn.query(
-                "select order_id from 999auto.order where order_date = ? and user_user_id = ?;", [order_date, the_user_user_id]
+            let [order_id_selected, _] = await conn.query(
+                "select order_id from 999auto.order where order_date = ?" +
+                " and user_user_id = ?;", [order_date, the_user_user_id]
             );
+            console.log(order_id_selected.order_id);
 
             //arr of want to add 
             products.forEach((item) => {
                 a.push(item.orderamount)
                 a.push(item.price)
                 a.push(item.orderamount * item.price)
-                a.push(row[0].order_id)
+                a.push(order_id_selected[order_id_selected.length - 1].order_id)
                 a.push(item.product_product_id)
                 arr_order_item.push(a)
                 a = []
             })
-            // console.log(arr_order_item);
 
             //add to order_item
             await conn.query(
-                "INSERT INTO 999auto.order_item(item_amount, item_price, total_price, order_order_id, product_product_id) VALUES ?;",
+                "INSERT INTO 999auto.order_item(item_amount, item_price, total_price" +
+                ", order_order_id, product_product_id) VALUES ?;",
                 [arr_order_item]
             );
 
             arr_order_item.forEach(async (item) => {
-                // console.log(item[0], item[4]);
                 await conn.query(
-                    "update product_type set amount_product = amount_product - ? where product_product_id = ?;", [item[0], item[4]]
+                    "update product_type" +
+                    " set amount_product = amount_product - ?" +
+                    " where product_product_id = ?;", [item[0], item[4]]
                 );
-                
+
             })
+            // want to update order id is same day are
+            // await conn.query(
+            //     "set @check_order_id := (select order_order_id from order_item where ) update order" +
+            //     " set order_id = check_order_id" +
+            //     " where product_product_id = ?;", [item[0], item[4]]
+            // );
+
 
 
             console.log("INSERT complete");
@@ -120,7 +129,6 @@ router.post("/usercart/:id", async (req, res, next) => {
         }
         catch (error) {
             conn.rollback();
-            // console.error(error);
             next(error);
         }
     }

@@ -4,6 +4,7 @@ const pool = require("../config");
 const fs = require("fs");
 const Joi = require('joi')
 router = express.Router();
+const bcrypt = require('bcrypt');
 
 // Require multer for file upload
 const multer = require("multer");
@@ -58,7 +59,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
         const user_lname = req.body.lastName;
         const user_phone = req.body.phoneNumber;
         const user_userName = req.body.userName;
-        const user_password = req.body.password;
+        const user_password = await bcrypt.hash(req.body.password, 5);
         let pathArray = [];
 
 

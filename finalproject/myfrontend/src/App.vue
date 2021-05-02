@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <!-- navbar -->
     <nav
-      class="navbar is-fixed-top"
+      class="navbar"
       role="navigation"
       aria-label="main navigation"
       style="background-color: #ffdd57"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="http://localhost:8080/">
+        <a class="navbar-item" href="https://bulma.io">
           <img src="../src/assets/logo999Auto.png" width="112" height="28" />
         </a>
       </div>
-
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" style="">
@@ -47,28 +45,56 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="mr-5 is-size-4">
-              <router-link to="../usercart">
-                <!-- user cart -->
-                <div class="buttons has-text-black mb-1">
-                  <i class="fas fa-cart-arrow-down"></i>
-                </div>
-              </router-link>
-            </div>
-            <div class="buttons" @click="isModal = true">
-              <a
-                class="button has-text-warning"
-                style="background-color: #252525"
-              >
-                <strong>Log in</strong>
+            <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                <figure class="image is-24x24 my-auto">
+                  <img
+                    class="is-rounded"
+                    :src="imagePath(user.user_image)"
+                  />
+                </figure>
+                <span class="pl-3"
+                  >{{ user.user_fname }} {{ user.user_lname }}</span
+                >
               </a>
+              <div class="navbar-dropdown">
+                <router-link to="/editaccount">
+                <a class="navbar-item">Profile</a>
+                </router-link>
+                <a class="navbar-item" @click="logout()">Log out</a>
+              </div>
+            </div>
+
+            <div v-if="!user" class="navbar-item">
+              <div class="buttons" @click="isModal = true">
+                <a
+                  class="button has-text-warning"
+                  style="background-color: #252525"
+                >
+                  <strong>Log in</strong>
+                </a>
+              </div>
+            </div>
+            <div v-if="!user" class="navbar-item">
+              <div class="buttons">
+                <a
+                  class="button has-text-warning"
+                  style="background-color: #252525"
+                >
+                <router-link to="/register">
+                   <strong>Signup</strong>
+                   </router-link>
+                </a>
+              </div>
+              
+               
+              
             </div>
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- modal -->
     <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
         class="modal-background"
@@ -140,14 +166,16 @@
 
     <router-view
       :key="$route.fullPath"
-      style="padding-bottom: 70px; padding-top: 100px"
+      style="padding-bottom: 70px; padding-top: 40px"
+      @auth-change="onAuthChange"
+      :user="user"
     />
 
-    <footer class="footer has-background-dark" style="height: 41vh">
+    <footer class="footer has-background-dark" style="height: ">
       <div class="content has-text-centered has-text-white">
         <h1 style="color: #ffdd57">999Auto ประดับยนต์</h1>
         <h6 style="color: #ffdd57">เปิด 8.00-19.00 หยุดวันอาทิตย์</h6>
-        <br />
+        <br /><br />
         <div class="columns">
           <div class="column">
             <h4 style="color: #ffdd57">About Us</h4>
@@ -196,42 +224,81 @@
           <div class="column">
             <p style="color: black">999Auto 2020.</p>
           </div>
+          <div class="column has-text-right">
+            <!-- <i class="fa fa-facebook-square"></i>
+            <i class="fa fa-twitter-square"></i>
+            <i class="fa fa-google-plus-square"></i>
+            <i class="fa fa-linkedin-square"></i> -->
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
+
 export default {
   name: "App",
-  created() {},
-  methods: {
-    login() {
-      axios
-        .post("http://localhost:3000/login", {
-          username: this.username,
-          password: this.password,
-        })
-        .then((response) => {
-          this.alertlogin = response.data.message;
-          alert(this.alertlogin);
-          if (this.alertlogin === "login success") {
-            this.$router.push("/");
-            this.isModal = false;
-          }
-        });
-    },
-  },
   data() {
     return {
-      username: null,
-      password: null,
-      alertlogin: null,
+      username: "",
+      password: "",
+      error: "",
       isModal: false,
+      user: null,
     };
+  },
+  mounted() {
+    this.onAuthChange();
+  },
+
+  methods: {
+    logout(){
+       localStorage.removeItem("token");
+       location.reload();
+    },
+    imagePath(file_path) {
+      if (file_path) {
+        return "http://localhost:3000/" + file_path;
+      } else {
+        return "https://bulma.io/images/placeholders/640x360.png";
+      }
+    },
+    onAuthChange() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        this.getUser();
+      }
+    },
+    getUser() {
+      axios.get("/user/me").then((res) => {
+        this.user = res.data;
+      });
+    },
+    login() {
+      this.isModal = false
+      const data = {
+        username: this.username,
+        password: this.password,
+      };
+
+      axios
+        .post("http://localhost:3000/auth", data)
+        .then((res) => {
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          this.$emit("auth-change");
+          location.reload();
+        })
+        .catch((error) => {
+          this.error = error.response.data;
+          console.log(error.response.data);
+        });
+    },
   },
 };
 </script>
@@ -241,7 +308,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* text-align: center; */
   color: #2c3e50;
+  /* margin-top: 10px; */
 }
 .footer,
 textfoot {
@@ -252,20 +321,25 @@ textfoot {
   background-color: #252525;
   color: white;
   text-transform: uppercase;
+  /* padding: 5%; */
 }
 .textInput input {
+  /* background: none; */
+  /* border: none; */
   margin-bottom: 5px;
+  /* padding: 10px; */
+  /* color: white; */
   float: left;
   font-size: 18px;
   outline: none;
 }
 .iconInput {
   text-align: center;
+  /* margin-top: 5px; */
 }
 .iconInput i {
   text-align: center;
   margin-top: 13px;
   margin-left: 7px;
-  background-color: #f8e184;
 }
 </style>

@@ -135,23 +135,35 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
+import bcrypt from 'bcryptjs'
 export default {
-  created() {
-    axios
-      .post("http://localhost:3000/editaccount", {
-        id: 23,
-      })
-      .then((response) => {
-        this.info = response.data.message;
-        console.log(this.info);
-      });
+  mounted() {
+    const token = localStorage.getItem("token");
+      if (token) {
+        this.getUser();
+      }
   },
+  // created() {
+  //   axios
+  //     .post("http://localhost:3000/editaccount", {
+  //       id: 23,
+  //     })
+  //     .then((response) => {
+  //       this.info = response.data.message;
+  //       console.log(this.info);
+  //     });
+  // },
   methods: {
+    getUser() {
+      axios.get("/user/me").then((res) => {
+        this.info = res.data;
+      });
+    },
     edit() {
       var password = prompt("Please enter your password:", "");
-      if (password == this.info.user_password) {
+      if (bcrypt.compare(password == this.info.user_password)) {
         this.showEdit = !this.showEdit;
       } else {
         alert("incorect password");
@@ -163,25 +175,18 @@ export default {
       let formData = new FormData();
       formData.append("username", username);
       formData.append("pass", pass);
-      formData.append("id", 23);
+      formData.append("id", this.info.user_id);
       if (this.images) {
-        // console.log("aaa");
+
         this.images.forEach((image) => {
           formData.append("myImage", image);
         });
       }
-      // else{
-      //   formData.append("myImage", info.user_image);
-      // }
-
       axios
         .put("http://localhost:3000/editaccount", formData)
         .then((response) => {
           console.log(response);
-          // this.info.user_username = username;
-          // this.info.user_password = pass;
           this.showEdit = !this.showEdit;
-          // this.info.user_image = this.images[0];
           this.fetchdb();
           alert("update complete");
         });
@@ -202,14 +207,14 @@ export default {
     showSelectImage(image) {
       return URL.createObjectURL(image);
     },
+
     fetchdb() {
       axios
         .post("http://localhost:3000/editaccount", {
-          id: 23,
+          id: this.info.user_id,
         })
         .then((response) => {
           this.info = response.data.message;
-          console.log(this.info);
         });
     },
   },

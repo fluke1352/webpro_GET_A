@@ -14,7 +14,7 @@ router.post("/allproduct", async (req, res, next) => {
         [info, _] = await conn.query(
             "select * from product p join product_type pt on(p.product_id = pt.product_product_id) order by (price)"
         );
-
+        // console.log(info);
         res.json({ message: info })
         conn.commit();
         conn.release();

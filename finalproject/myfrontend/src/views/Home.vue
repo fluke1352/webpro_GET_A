@@ -1,11 +1,11 @@
 <template>
-  <div :class="{bg: true}">
+  <div :class="{ bg: true }">
     <div class="columns">
       <div class="slideshow-container">
         <div class="fade" id="fade">
           <img
             :src="slide[indexsslide]"
-            style="width: 100%;  object-fit: cover;  height: 500px"
+            style="width: 100%; object-fit: cover; height: 500px"
           />
         </div>
 
@@ -35,7 +35,8 @@
           :to="{ name: 'showproduct', params: { category: 'speaker' } }"
         >
           <div class="image--">
-            <img style="height:420px"
+            <img
+              style="height: 420px"
               src="https://images.pexels.com/photos/157534/pexels-photo-157534.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             />
           </div>
@@ -47,7 +48,9 @@
           :to="{ name: 'showproduct', params: { category: 'radio' } }"
         >
           <div class="image--">
-            <img src="https://images.pexels.com/photos/3738982/pexels-photo-3738982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+            <img
+              src="https://images.pexels.com/photos/3738982/pexels-photo-3738982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            />
           </div>
           <p>Radio</p>
         </router-link>
@@ -71,7 +74,8 @@
           :to="{ name: 'showproduct', params: { category: 'camera' } }"
         >
           <div class="image--">
-            <img style="height:420px"
+            <img
+              style="height: 420px"
               src="https://images.pexels.com/photos/4062452/pexels-photo-4062452.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             />
           </div>
@@ -83,7 +87,10 @@
           :to="{ name: 'showproduct', params: { category: 'sensor' } }"
         >
           <div class="image--">
-            <img style="height:420px" src="https://news.hmgjournal.com/images_n/contents/0602_mobilgene_01.png" />
+            <img
+              style="height: 420px"
+              src="https://news.hmgjournal.com/images_n/contents/0602_mobilgene_01.png"
+            />
           </div>
           <p>Sensor</p>
         </router-link>
@@ -99,6 +106,16 @@
         </router-link>
       </div>
     </section>
+    <!-- <section>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3875.9239490270634!2d100.70693792960817!3d13.723054059996345!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6ce0c13f186de87d!2z4Lit4Li54LmIIDk5OSDguK3guK3guYLguJXguYnguJvguKPguLDguJTguLHguJrguKLguJnguJXguYw!5e0!3m2!1sth!2sth!4v1619628254679!5m2!1sth!2sth"
+        width="600"
+        height="450"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    </section> -->
   </div>
 </template>
 
@@ -112,7 +129,7 @@ export default {
     axios.post("http://localhost:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
       // console.log(this.data);
-    }); 
+    });
   },
   computed: {
     indexsslide() {
@@ -146,9 +163,10 @@ export default {
         element.classList.add("fade");
         this.indexslide++;
         this.timeOut = setTimeout(this.fade, 5000);
-      } catch (error) {console.log('error');}
+      } catch (error) {
+        console.log("error");
+      }
     },
-
   },
   data() {
     return {
@@ -160,7 +178,7 @@ export default {
       ],
       indexslide: 0,
       fades: null,
-      timeOut: null
+      timeOut: null,
     };
   },
 };
@@ -171,7 +189,7 @@ export default {
   /* background-image: url("../assets/bgSignUp.jpg"); */
 
   background-color: black;
-    height: 100%;
+  height: 100%;
 
   /* background-repeat: no-repeat;
   background-size: auto;
@@ -179,15 +197,16 @@ export default {
   object-fit: cover; */
   /* padding: 150px; */
 
-
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-body,html {
+body,
+html {
   background-color: black;
   height: 100%;
+  scroll-behavior: smooth;
 }
 .bgProduct {
   background-color: #ffdd57;

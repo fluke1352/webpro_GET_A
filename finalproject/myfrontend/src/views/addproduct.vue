@@ -31,23 +31,23 @@
           @change="selectImages"
         />
 
-        <div v-if="images" class="columns is-multiline" >
+        <div v-if="images" class="columns is-multiline is-centered" >
           <div
             v-for="(image, index) in images"
             :key="image.id"
             class="column is-one-quarter"
           >
-            <div class="card">
+            <div class="card" >
               <div class="card-image">
                 <figure class="image is-4by3">
                   <img :src="showSelectImage(image)" alt="Placeholder image" />
                 </figure>
               </div>
-              <footer class="card-footer">
+              <footer class="card-footer has-background-warning" style="border-top:black 3px solid">
                 <a
                   @click="deleteSelectImage(index)"
-                  class="card-footer-item has-text-danger"
-                  >Delete</a
+                  class="card-footer-item has-text-black"
+                  ><b>Delete</b> </a
                 >
               </footer>
             </div>
@@ -157,10 +157,10 @@
           <div class="control">
             <button
               @click="$router.go(-1)"
-              class="button is-light has-text-black"
-              style="border: #ffdd57 2px solid"
-            >
-              Cancel
+              class="button is-black has-text-warning"
+              
+            ><b>Cancel</b>
+              
             </button>
           </div>
         </div>
@@ -230,10 +230,35 @@ export default {
 .text {
   color: #ffdd57;
 }
-input {
+/* input {
   border: #ffdd57;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  transition: height 0.3s, box-shadow 0.3s;
+} */
+/* input:hover {
+   box-shadow: 8px 8px 18px 0px #ffdd57;
+} */
+input, textarea, select,  button{
+  border: #ffdd57;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  transition: height 0.3s, box-shadow 0.5s;
+}
+input:hover , textarea:hover, select:hover , button:hover{
+   box-shadow: 8px 8px 18px 0px #ffdd57;
 }
 .bgAddpro {
   background-image: url("../assets/bgAdd.jpg");
+}
+.card {
+  position: relative;
+  /* height: 360px; */
+  overflow: hidden;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  transition: height 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  /* height: 375px; */
+  box-shadow: 10px 10px 20px 0px #ffdd57;
 }
 </style>

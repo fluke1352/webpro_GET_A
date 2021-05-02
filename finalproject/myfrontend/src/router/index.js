@@ -59,6 +59,21 @@ const routes = [
     name: 'usercart',
     component: () => import('../views/usercart.vue') // set home as path '/'
   },
+  {
+    path: '/alluser',
+    name: 'alluser',
+    component: () => import('../views/alluser.vue') // set home as path '/'
+  },
+  {
+    path: '/allorder',
+    name: 'allorder',
+    component: () => import('../views/allorder.vue') // set home as path '/'
+  },
+  {
+    path: '/editproduct',
+    name: 'editproduct',
+    component: () => import('../views/editproduct.vue') // set home as path '/'
+  },
   
 ]
 

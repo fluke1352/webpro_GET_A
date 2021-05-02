@@ -209,6 +209,7 @@
 </template>
 
 <script>
+// import axios from "axios";
 import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
@@ -286,6 +287,7 @@ export default {
       else{
       axios
         .post("http://localhost:3000/usercart/confirm", {
+          // post("http://localhost:3000/usercart/confirm", {
           products: this.products,
           delivery_date: this.date_deliver
         })

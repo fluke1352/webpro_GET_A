@@ -97,9 +97,9 @@
               </div>
             </div>
           </router-link>
-
         </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -281,7 +281,7 @@ export default {
   /* margin: auto; */
 
   min-width: 100%;
-  opacity: 0.85;
+  opacity: 0.9;
   transition: opacity 0.7s;
 }
 .card-image:hover {

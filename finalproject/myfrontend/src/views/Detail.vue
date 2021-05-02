@@ -141,7 +141,7 @@ export default {
       } else {
         this.cart.push({ id: this.id, orderamount: this.orderamount });
       }
-
+      alert('Added to cart')
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     imagePath(file_path) {

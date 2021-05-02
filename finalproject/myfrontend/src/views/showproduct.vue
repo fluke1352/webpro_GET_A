@@ -287,7 +287,7 @@ export default {
   /* margin: auto; */
 
   min-width: 100%;
-  opacity: 0.85;
+  opacity: 0.90;
   transition: opacity 0.7s;
 }
 .card-image:hover {

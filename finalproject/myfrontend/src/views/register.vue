@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import {required,minLength,maxLength,sameAs} from "vuelidate/lib/validators";
 import "bulma/css/bulma.css";
 
@@ -172,7 +172,7 @@ export default {
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
-            this.$router.push("/login");    
+            location.reload();
           })
           .catch((err) => {
             alert(err.response.data.details.message);

@@ -3,23 +3,40 @@
     <div class="columns">
       <div class="user is-3 column has-background-black is-centered">
         <div style="margin-top: 15px; margin-bottom: -20px; text-align: right">
-          <a href=""
-            ><i
-              class="fas fa-pen-square has-text-warning is-size-5"
-              title="Edit account"
-            ></i
-          ></a>
+          <a>
+            <router-link to="../editaccount">
+              <i
+                class="fas fa-pen-square has-text-warning is-size-5"
+                title="Edit account"
+              ></i>
+            </router-link>
+          </a>
         </div>
 
-        <img
-          :src="imagePath(user.user_image)"
-          alt=""
-          style="width: 50%; margin-top: 50px; box-shadow: 5px 5px #888888"
-        />
+        <figure class="">
+          <img
+            :src="imagePath(user.user_image)"
+            alt=""
+            style="width: 50%; margin-top: 50px; box-shadow: 5px 5px #888888"
+          />
+        </figure>
         <br /><br />
-        <!-- <h3 class="has-text-warning">Username : {{info.user_username}}</h3> -->
-        <!-- <h3 class="has-text-warning">FISTNAME LASTNAME : {{info.user_fname +' ' +info.user_lname}}</h3> -->
-        <!-- <h3 class="has-text-warning">Phone : {{info.user_phone}}</h3> -->
+        <h3 class="has-text-warning is-size-5">
+          Username : {{ data2.user_username }}
+        </h3>
+        <h3 class="has-text-warning is-size-4">
+          {{ data2.user_fname + " " + data2.user_lname }}
+        </h3>
+        <h3 class="has-text-warning is-size-5">
+          Phone :
+          {{
+            data2.user_phone.slice(0, 3) +
+            "-" +
+            data2.user_phone.slice(3, 6) +
+            "-" +
+            data2.user_phone.slice(6)
+          }}
+        </h3>
       </div>
 
       <div class="is-1 column"></div>
@@ -27,71 +44,80 @@
       <div class="is-7 column">
         <!-- <div class="container"> -->
         <section v-for="(info, index) in data" :key="index">
-          <h1 class="has-text-warning">{{info.order_date}}</h1>
-          <!-- <h1 class="has-text-warning">History : {{
-                      info.order_date.slice(8, 10) +
-                      "/" +
-                      info.order_date.slice(5, 7) +
-                      "/" +
-                      info.order_date.slice(0, 4)
-                    }}</h1> -->
-          <div class="columns">
-            <div class="column">
-              <table
-                class="table is-bordered is-striped has-background-black mb-5"
-                style="width: 100%"
-              >
-                <tr class="has-text-centered" style="border: solid black">
-                  <th style="border: solid black" class="has-text-warning">
-                    Product
-                  </th>
-                  <!-- <th style="border: solid black" class="has-text-warning">
+          <!-- <h1 class="has-text-warning">{{info.order_date}}</h1> -->
+          <section
+            v-if="index == 0 || info.order_id != data[index - 1].order_id"
+          >
+            <h1 class="has-text-warning">
+              History order:
+              {{
+                info.order_date.slice(8, 10) +
+                "/" +
+                info.order_date.slice(5, 7) +
+                "/" +
+                info.order_date.slice(0, 4)
+              }}
+            </h1>
+            <div class="columns">
+              <div class="column">
+                <table
+                  class="table is-bordered is-striped has-background-black mb-5"
+                  style="width: 100%"
+                >
+                  <tr class="has-text-centered" style="border: solid black">
+                    <th style="border: solid black" class="has-text-warning">
+                      Product
+                    </th>
+                    <!-- <th style="border: solid black" class="has-text-warning">
                     Order Date
                   </th> -->
-                  <th style="border: solid black" class="has-text-warning">
-                    Delivery date
-                  </th>
-                  
-                  <th style="border: solid black" class="has-text-warning">
-                    Amount
-                  </th>
-                  <th style="border: solid black" class="has-text-warning">
-                    Price
-                  </th>
-                  <th style="border: solid black" class="has-text-warning">
-                    Total price
-                  </th>
-                </tr>
-                <tr>
-                  <!-- <td class="has-background-light">
-                    {{
-                      info.order_date.slice(8, 10) +
-                      "-" +
-                      info.order_date.slice(5, 7) +
-                      "-" +
-                      info.order_date.slice(0, 4)
-                    }}
-                  </td> -->
-                  <td class="has-background-light">{{ info.product_name }}</td>
-                  
-                  <td class="has-background-light">
-                    {{
-                      info.delivery_date.slice(8, 10) +
-                      "-" +
-                      info.delivery_date.slice(5, 7) +
-                      "-" +
-                      info.delivery_date.slice(0, 4)
-                    }}
-                  </td>
-                  
-                  <td class="has-background-light">{{ info.item_amount }}</td>
-                  <td class="has-background-light">{{ info.item_price }}</td>
-                  <td class="has-background-light">{{ info.total_price }}</td>
-                  <!-- <td class="has-background-dark">{{ info.inflow_date }}</td> -->
-                </tr>
-              </table>
+                    <th style="border: solid black" class="has-text-warning">
+                      Delivery date
+                    </th>
+
+                    <th style="border: solid black" class="has-text-warning">
+                      Amount
+                    </th>
+                    <th style="border: solid black" class="has-text-warning">
+                      Price
+                    </th>
+                    <th style="border: solid black" class="has-text-warning">
+                      Total price
+                    </th>
+                  </tr>
+                  <!-- <tr v-if="item.order_id = info.order_id"> -->
+                  <tr v-for="(item, key_in) in data" :key="key_in">
+                    <template v-if="item.order_id == info.order_id">
+                      <td class="has-background-light">
+                        {{ item.product_name }}
+                      </td>
+
+                      <td class="has-background-light">
+                        {{
+                          item.delivery_date.slice(8, 10) +
+                          "/" +
+                          item.delivery_date.slice(5, 7) +
+                          "/" +
+                          item.delivery_date.slice(0, 4)
+                        }}
+                      </td>
+
+                      <td class="has-background-light">
+                        {{ item.item_amount }}
+                      </td>
+                      <td class="has-background-light">
+                        {{ item.item_price }}
+                      </td>
+                      <td class="has-background-light">
+                        {{ item.total_price }}
+                      </td>
+                    </template>
+                    <!-- <td class="has-background-dark">{{ info.inflow_date }}</td> -->
+                  </tr>
+                </table>
+              </div>
             </div>
-          </div>
+          </section>
         </section>
         <!-- </div> -->
       </div>
@@ -103,12 +129,12 @@
 import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
-  props: ['user'],
+  props: ["user"],
   created() {
-    axios.post("http://localhost:3000/orderhistory")
-    .then((response) => {
-      this.data = response.data.message;
-      // console.log(this.data);
+    axios.post("http://localhost:3000/orderhistory").then((response) => {
+      this.data = response.data.message.orderDetail;
+      this.data2 = response.data.message.userDetail[0];
+      console.log(this.data2.user_image);
     });
   },
   methods: {
@@ -123,6 +149,8 @@ export default {
   data() {
     return {
       data: [],
+      data2: [],
+      // img: URL.createObjectURL(data2.user_image),
     };
   },
 };
@@ -137,11 +165,10 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
 }
-body, html{
+body,
+html {
   height: 100%;
-
 }
 .user {
   height: auto !important;
@@ -155,7 +182,7 @@ body, html{
 .user:hover {
   opacity: 100%;
 }
-th{
+th {
   width: 20%;
 }
 </style>

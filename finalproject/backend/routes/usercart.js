@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const pool = require("../config");
+
 const { loginAuth } = require('../middlewares')
 router = express.Router();
 
@@ -43,16 +44,22 @@ router.post("/usercart", async (req, res, next) => {
     }
 })
 
-router.post("/usercart/confirm", loginAuth,async (req, res, next) => {
+// router.post("/usercart/:id", async (req, res, next) => {
+router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
+
     console.log(req.user);
     if (req.method == "POST") {
+
+
         const products = req.body.products;
         const delivery_date = req.body.delivery_date;
         let price_of_all_item = 0;
         let amount_of_all_item = 0;
+        // const the_user_user_id = req.params.id;
         const the_user_user_id = req.user.user_id;
+        // console.log('the_user_user_id ', the_user_user_id);
         var d = new Date();
         var order_date = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 
@@ -63,7 +70,7 @@ router.post("/usercart/confirm", loginAuth,async (req, res, next) => {
             amount_of_all_item += item.orderamount
             price_of_all_item += (item.orderamount * item.price)
         })
-        
+
 
         let order = []
         order.push(delivery_date)
@@ -74,7 +81,7 @@ router.post("/usercart/confirm", loginAuth,async (req, res, next) => {
         try {
             //add to order
             await conn.query(
-                "INSERT INTO 999auto.order(delivery_date, order_date, price_of_all_item,"+
+                "INSERT INTO 999auto.order(delivery_date, order_date, price_of_all_item," +
                 " amount_of_all_item, user_user_id) VALUES (?,?,?,?,?);",
                 [delivery_date, order_date, price_of_all_item, amount_of_all_item, the_user_user_id]
             );
@@ -84,7 +91,7 @@ router.post("/usercart/confirm", loginAuth,async (req, res, next) => {
                 "select order_id from 999auto.order where order_date = ?" +
                 " and user_user_id = ?;", [order_date, the_user_user_id]
             );
-            console.log(order_id_selected.order_id);
+            // console.log(order_id_selected.order_id);
 
             //arr of want to add 
             products.forEach((item) => {

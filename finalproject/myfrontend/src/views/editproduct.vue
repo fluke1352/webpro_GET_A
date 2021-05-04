@@ -17,7 +17,7 @@
                     </td>
                     
                   </tbody>
-                  <div v-show="isActive == true && index == check && editproduct == false">
+                  <div v-show="isActive == true && index == check && (editproduct == false&& addproduct == false )">
                     <td class="column is-12">
                       ชื่อสินค้า : {{ product.product_name }}
                     </td>
@@ -28,10 +28,10 @@
                       ประเภทย่อย : {{ product.type_name }}
                     </td>
                     <td class="column is-12">ยี่ห้อ : {{ product.brand }}</td>
-                    <!-- <td class="column is-12">
+                    <td class="column is-12">
                       จำนวน : {{ product.amount_product }}
                     </td>
-                    <td class="column is-12">ราคา : {{ product.price }}</td> -->
+                    <td class="column is-12">ราคา : {{ product.price }}</td>
                     <td class="column is-12">
                       รายละเอียด : {{ product.other_spec }}
                     </td>
@@ -47,11 +47,7 @@
                     >
                   </div>
 
-                  <div
-                    v-show="
-                      isActive == true && index == check && editproduct == true
-                    "
-                  >
+                  <div v-show="isActive == true && index == check && editproduct == true">
                     <td class="column is-12">
                       ชื่อสินค้า : <input type="text" v-model="changename" />
                     </td>
@@ -73,12 +69,9 @@
                     <td class="column is-12">
                       ยี่ห้อ : <input type="text" v-model="changebrand" />
                     </td>
-                    <!-- <td class="column is-12">
-                      จำนวน : <input type="text" v-model="changeamount" />
-                    </td>
                     <td class="column is-12">
-                      ราคา : <input type="text" v-model="changeprice" />
-                    </td> -->
+                      ยี่ห้อ : <input type="text" v-model="changeprice" />
+                    </td>
                     <td class="column is-12">
                       รายละเอียด :
                       <input type="text" v-model="changeotherspec" />
@@ -86,6 +79,29 @@
                     <a
                       class="button is-small is-primary"
                       @click="saveproduct(index)"
+                      >SAVE</a
+                    >
+                    <a
+                      class="button is-small is-danger"
+                      @click="cancel()"
+                      >CANCEL</a>
+                  </div>
+
+
+                  <div
+                    v-show="
+                      isActive == true && index == check && addproduct == true
+                    "
+                  >
+                    <td class="column is-12">
+                      ชื่อสินค้า : {{changename}}  
+                    </td>
+                    <td class="column is-12">
+                      จำนวนชิ้น : <i class="fas fa-minus" @click="amount()"></i>  {{changeamount}}  <i class="fas fa-plus" @click="changeamount++"></i>           
+                    </td>
+                    <a
+                      class="button is-small is-primary"
+                      @click="saveamount(index)"
                       >SAVE</a
                     >
                     <a
@@ -113,6 +129,7 @@ export default {
   data() {
     return {
       products: [],
+      addproduct:false,
       check: null,
       isActive: false,
       editproduct: false,
@@ -133,6 +150,13 @@ export default {
     this.getproducts();
   },
   methods: {
+    amount(){
+      if (this.changeamount === 0) {
+        this.changeamount = 0
+      }else{
+        this.changeamount--
+      }
+    },
     test(index) {
         if(this.same == index){
           this.isActive = !this.isActive;
@@ -141,11 +165,10 @@ export default {
         }
     },
     cancel(){
-      this.editproduct = !this.editproduct;
+      this.editproduct = false
+      this.addproduct = false
     },
     saveproduct(index) {
-      this.diff = this.changeamount - this.products[index].amount_product;
-
       axios
         .post("http://localhost:3000/changeproduct", {
           id: index,
@@ -153,10 +176,27 @@ export default {
           category: this.changecategory,
           typename: this.changetypename,
           brand: this.changebrand,
-          // amount: this.changeamount,
-          // price: this.changeprice,
+          price: this.changeprice,
           description: this.changeotherspec,
+          
+        })
+        .then((response) => {
+          this.alertadd = response.data.message;
+          alert(this.alertadd);
+          location.reload();
+        })
+        .catch((e) => console.log(e.response.data));
+    },
+
+    saveamount(index) {
+      this.diff = this.changeamount - this.products[index].amount_product;
+      axios
+        .post("http://localhost:3000/addamount", {
+          id: index,
+          price: this.changeprice,
+          amount: this.changeamount,
           amountchange: this.diff,
+
         })
         .then((response) => {
           this.alertadd = response.data.message;
@@ -172,11 +212,15 @@ export default {
       this.changecategory = this.products[this.check].category;
       this.changetypename = this.products[this.check].type_name;
       this.changebrand = this.products[this.check].brand;
-      this.changeamount = this.products[this.check].amount_product;
       this.changeprice = this.products[this.check].price;
       this.changeotherspec = this.products[this.check].other_spec;
     },
-
+    addamount(){
+      this.addproduct = !this.addproduct
+      this.changename = this.products[this.check].product_name;
+      this.changeamount = this.products[this.check].amount_product;
+      this.changeprice = this.products[this.check].price;
+    },
     getproducts() {
       axios
         .get("http://localhost:3000/product")

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import axios from "@/plugins/axios";
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,19 +15,22 @@ const routes = [
     component: () => import('../views/register.vue') // set home as path '/'
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login.vue') // set home as path '/'
-  },
-  {
     path: '/detail/:id',
     name: 'detail',
+    meta: { login: true },
     component: () => import('../views/detail.vue') // set home as path '/'
   },
   {
     path: '/editaccount',
     name: 'editaccount',
+    meta: { login: true },
     component: () => import('../views/editaccount.vue') // set home as path '/'
+  },
+  {
+    path: '/editproduct',
+    name: 'editproduct',
+    meta: { admin : true },
+    component: () => import('../views/editproduct.vue') // set home as path '/'
   },
   {
     path: '/inflowhistory',
@@ -52,27 +55,14 @@ const routes = [
   {
     path: '/showproduct/:category',
     name: 'showproduct',
+
     component: () => import('../views/showproduct.vue') // set home as path '/'
   },
   {
     path: '/usercart',
     name: 'usercart',
+    meta: { login: true },
     component: () => import('../views/usercart.vue') // set home as path '/'
-  },
-  {
-    path: '/alluser',
-    name: 'alluser',
-    component: () => import('../views/alluser.vue') // set home as path '/'
-  },
-  {
-    path: '/allorder',
-    name: 'allorder',
-    component: () => import('../views/allorder.vue') // set home as path '/'
-  },
-  {
-    path: '/editproduct',
-    name: 'editproduct',
-    component: () => import('../views/editproduct.vue') // set home as path '/'
   },
   
 ]
@@ -83,4 +73,20 @@ const router = new VueRouter({
   routes
 })
 
+ router.beforeEach((to, from, next) => {
+    axios.get("/user/me").then((res) => {
+      const info = res.data;
+      const isLoggedIn = !!localStorage.getItem('token')
+      if (to.meta.login && !isLoggedIn) {
+        alert('Please login first!')
+        next({ path: '/' })
+      }
+      if (to.meta.admin && info.user_status != 'owner' && isLoggedIn) {
+        alert("You don't have a permission")
+        next({ path: '/'})
+      }
+      
+    });
+    next()
+})
 export default router

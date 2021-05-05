@@ -17,7 +17,9 @@ router.post("/usercart", async (req, res, next) => {
             cart.forEach(async (product) => {
 
                 let [this_product, _] = await conn.query(
-                    "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where product_id = ?", [parseInt(product.id)]
+                    "select *" +
+                    " from product p join product_type pt on(p.product_id = pt.product_product_id)" +
+                    " where product_id = ?", [parseInt(product.id)]
                 );
                 // console.log(this_product);
                 index++
@@ -57,12 +59,10 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
         const delivery_date = req.body.delivery_date;
         let price_of_all_item = 0;
         let amount_of_all_item = 0;
-        // const the_user_user_id = req.params.id;
         const the_user_user_id = req.user.user_id;
-        // console.log('the_user_user_id ', the_user_user_id);
         var d = new Date();
-        var order_date = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-
+        var order_date = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+        console.log(order_date);
         let a = []
         let arr_order_item = []
 
@@ -95,11 +95,11 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
 
             //arr of want to add 
             products.forEach((item) => {
-                a.push(item.orderamount)
+                a.push(item.orderamount) //item[0]
                 a.push(item.price)
                 a.push(item.orderamount * item.price)
                 a.push(order_id_selected[order_id_selected.length - 1].order_id)
-                a.push(item.product_product_id)
+                a.push(item.product_product_id) //item[4]
                 arr_order_item.push(a)
                 a = []
             })
@@ -119,15 +119,6 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
                 );
 
             })
-            // want to update order id is same day are
-            // await conn.query(
-            //     "set @check_order_id := (select order_order_id from order_item where ) update order" +
-            //     " set order_id = check_order_id" +
-            //     " where product_product_id = ?;", [item[0], item[4]]
-            // );
-
-
-
             console.log("INSERT complete");
 
             res.json({ message: "Confirm order :D" })

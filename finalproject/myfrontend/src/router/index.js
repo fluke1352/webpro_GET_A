@@ -29,7 +29,7 @@ const routes = [
   {
     path: '/editproduct',
     name: 'editproduct',
-    meta: { admin : true },
+    // meta: { admin : true },
     component: () => import('../views/editproduct.vue') // set home as path '/'
   },
   {
@@ -63,6 +63,12 @@ const routes = [
     name: 'usercart',
     meta: { login: true },
     component: () => import('../views/usercart.vue') // set home as path '/'
+  },
+  {
+    path: '/allorder',
+    name: 'allorder',
+    // meta: { admin : true },
+    component: () => import('../views/allorder.vue') // set home as path '/'
   },
   
 ]

@@ -70,6 +70,13 @@ const routes = [
     // meta: { admin : true },
     component: () => import('../views/allorder.vue') // set home as path '/'
   },
+  {
+    path: '/alluser',
+    name: 'alluser',
+    // meta: { admin : true },
+    component: () => import('../views/alluser.vue') // set home as path '/'
+  },
+  
   
 ]
 

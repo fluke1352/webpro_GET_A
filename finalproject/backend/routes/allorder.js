@@ -1,12 +1,8 @@
 const express = require("express");
-const path = require("path");
 const pool = require("../config");
-
 router = express.Router();
 
-
 router.post("/allorder", async (req, res, next) => {
-    // console.log('start!!!!!');
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
@@ -37,7 +33,6 @@ router.post("/allorder", async (req, res, next) => {
 })
 
 router.post("/datailorder", async (req, res, next) => {
-    // console.log('start!!!!!');
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {

@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const pool = require("../config");
 const fs = require("fs");
 
@@ -14,13 +13,11 @@ router.post("/allproduct", async (req, res, next) => {
         [info, _] = await conn.query(
             "select * from product p join product_type pt on(p.product_id = pt.product_product_id) order by (price)"
         );
-        // console.log(info);
         res.json({ message: info })
         conn.commit();
         conn.release();
     }
     catch (error) {
-        // console.error(error);
         next(error);
     }
 
@@ -30,7 +27,6 @@ router.post("/showproduct/:category", async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     let category = req.params.category
-    // console.log(category);
     try {
 
         [info, _] = await conn.query(
@@ -42,7 +38,6 @@ router.post("/showproduct/:category", async (req, res, next) => {
         conn.release();
     }
     catch (error) {
-        // console.error(error);
         next(error);
     }
 
@@ -68,14 +63,11 @@ router.post("/seaechproduct", async (req, res, next) => {
                 , ['%' + search + '%', '%' + search + '%', '%' + search + '%', minrange, maxrange]
             );
         }
-
-
         res.json({ message: info })
         conn.commit();
         conn.release();
     }
     catch (error) {
-        // console.error(error);
         next(error);
     }
 
@@ -101,14 +93,11 @@ router.post("/seaechproductincategory", async (req, res, next) => {
                 , [category , '%' + search + '%', '%' + search + '%', '%' + search + '%', minrange, maxrange]
             );
         }
-
-
         res.json({ message: info })
         conn.commit();
         conn.release();
     }
     catch (error) {
-        // console.error(error);
         next(error);
     }
 

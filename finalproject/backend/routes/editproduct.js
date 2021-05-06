@@ -4,12 +4,10 @@ router = express.Router();
 const { loginAuth } = require('../middlewares')
 
 const admin = async (req, res, next) => {
-   const [[adminproduct]] = await pool.query('SELECT * FROM owner WHERE owner_id=?', [req.params.id])
- 
-   if (adminproduct.owner_owner_id !== req.user.user_id) {
+    if (req.user.user_status != 'owner') {
+        console.log('You do not have permission to perform this action');
      return res.status(403).send('You do not have permission to perform this action')
-   }
- 
+    }
    next()
  }
 router.get("/product", async (req, res, next) => {
@@ -35,10 +33,6 @@ router.post("/addamount",async (req, res, next) => {
         const amount = req.body.amount;
         const id = req.body.id;
         const change = req.body.amountchange;
-        console.log(price);
-        console.log(amount);
-        console.log(id);
-        console.log(change);
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
@@ -58,13 +52,13 @@ router.post("/addamount",async (req, res, next) => {
         conn.rollback()
     }
   })
-router.post("/changeproduct",async (req, res, next) => {
+router.post("/changeproduct",loginAuth,admin,async (req, res, next) => {
     const name = req.body.name;
         const category = req.body.category;
         const type = req.body.typename;
         const brand = req.body.brand;
         const price = req.body.price;
-        const amount = req.body.amount;
+
         const id = req.body.id;
         const description = req.body.description;
         const change = req.body.amountchange;

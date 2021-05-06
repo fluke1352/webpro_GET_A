@@ -1,28 +1,11 @@
 const express = require("express");
-const path = require("path");
 const pool = require("../config");
-
 const { loginAuth } = require('../middlewares')
 router = express.Router();
 
-// Require multer for file upload
-const multer = require("multer");
-// SET STORAGE
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, "./static/uploads");
-    },
-    filename: function (req, file, callback) {
-        callback(
-            null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-        );
-    },
-});
 
-// router.post("/orderhistory", async (req, res, next) => {
+
 router.post("/orderhistory", loginAuth, async (req, res, next) => {
-    // console.log('start!!!!!');
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {

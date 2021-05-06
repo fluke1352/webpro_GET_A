@@ -55,12 +55,11 @@
             </div>
           </div>
 
-          <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'customer'">
             <a class="navbar-link" style="color: black"> Customer </a>
-
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                <router-link to="../editaccount" style="color: black"
+                <router-link to="../profile" style="color: black"
                   >Edit account</router-link
                 >
               </a>
@@ -71,6 +70,39 @@
               </a>
             </div>
           </div>
+
+          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'owner'">
+            <a class="navbar-link" style="color: black"> Owner </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <router-link to="../alluser" style="color: black"
+                  >All Customer</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../addproduct" style="color: black"
+                  >Add product</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../editproduct" style="color: black"
+                  >Edit product</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../allorder" style="color: black"
+                  >Order</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../inflowhistory" style="color: black"
+                  >Inflow History</router-link
+                >
+              </a>
+            </div>
+          </div>
+
+
         </div>
 
         <div class="navbar-end">
@@ -104,7 +136,7 @@
                   >
                 </a>
                 <div class="navbar-dropdown">
-                  <router-link to="/editaccount">
+                  <router-link to="/profile">
                     <a class="navbar-item">Profile</a>
                   </router-link>
                   <a class="navbar-item" @click="logout()">Log out</a>
@@ -116,14 +148,13 @@
       </div>
     </nav>
 
-    <!-- modal login-->
+
     <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
         class="modal-background"
         style="background-color: #181818; opacity: 95%"
       ></div>
       <div class="modal-content" style="overflow: hidden; width: 31%">
-        <!-- Any other Bulma elements you want -->
         <div class="columns is-centered">
           <div class="column mt-6" id="Login">
             <p
@@ -248,15 +279,7 @@
         </div>
       </div>
     </footer>
-    <!-- <div class="has-background-warning has-text-white bottom mt-5">
-      <div class="container is-fluid">
-        <div class="columns">
-          <div class="column">
-            <p style="color: black">999Auto 2020.</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
+
   </div>
 </template>
 

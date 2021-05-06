@@ -35,6 +35,11 @@
                 }}
               </h3>
             </div>
+            <footer class="card-footer">
+              <a href="#" class="card-footer-item" @click="addadmin(user.user_id)"
+                >ADD TO ADMIN</a
+              >
+            </footer>
           </div>
         </div>
       </div>
@@ -43,13 +48,14 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
+import bcrypt from "bcryptjs";
 export default {
   created() {
     axios.post("http://localhost:3000/alluser").then((response) => {
       this.data = response.data.message;
-      console.log(this.data);
+      // console.log(this.data);
     });
   },
   methods: {
@@ -60,10 +66,29 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
+    addadmin(id) {
+      var password = prompt("Please enter your password:", "");
+      if (bcrypt.compare(password == this.info.user_password)) {
+        // this.showEdit = !this.showEdit;
+        alert("corect password");
+        axios.put("http://localhost:3000/alluser", {id: id}).then(() => {
+          alert("add complete")
+          // console.log(this.data);
+        });
+      } else {
+        alert("incorect password");
+      }
+    },
+    getUser() {
+      axios.get("/user/me").then((res) => {
+        this.info = res.data;
+      });
+    },
   },
   data() {
     return {
       data: [],
+      info: [],
       // img: URL.createObjectURL(data.user_image),
     };
   },

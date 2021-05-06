@@ -146,8 +146,12 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
     await conn.beginTransaction();
     id = req.body.id
     const file = req.files;
+    firstname = req.body.firstname
+    lastname = req.body.lastname
+    phone = req.body.phone
+    console.log(phone);
     username = req.body.username
-    password = req.body.pass
+    password = await bcrypt.hash(req.body.pass, 5);
     let pathArray = [];
     // console.log(file);
 
@@ -155,9 +159,12 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
     try {
         if (file.length === 0) {
             console.log("not file");
-            let [info, _] = await conn.query(
+            await conn.query(
                 "UPDATE account SET user_username = ?, user_password = ? WHERE user_user_id=?;", [username, password, id]
             );
+            await conn.query(
+                "UPDATE user SET user_fname = ?, user_lname = ?, user_phone = ? WHERE user_id=?;", [firstname, lastname, phone, id]
+            )
         }
         else {
             console.log("have file")
@@ -166,7 +173,7 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
                 pathArray.push(path);
             });
 
-            let [info, _] = await conn.query(
+            await conn.query(
                 "UPDATE account SET user_username = ?, user_password = ? WHERE user_user_id=?;", [username, password, id]
             );
             await conn.query(
@@ -177,11 +184,11 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
             
         }
 
+        conn.commit();
+        conn.release();
         res.json({
             message: 'UPDATE complete'
         });
-        conn.commit();
-        conn.release();
 
     } catch (error) {
         next(error)

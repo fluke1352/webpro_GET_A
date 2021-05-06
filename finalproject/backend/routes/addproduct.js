@@ -52,6 +52,8 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
             if (check.length > 0 && check2.length > 0) {
                 console.log("already add");
                 res.json({ message: "Already add" })
+                // let [a, b] = await conn.query('SELECT product_type.amount_product FROM product_type  WHERE product_product_id=?', [check[0].product_id])
+                // await conn.query("UPDATE product_type SET amount_product=? WHERE product_product_id=?",[a[0].amount_product+parseInt(productamount), check[0].product_id])
             } else {
                 await conn.query(
                     "INSERT INTO product(product_name, category, storge_date) VALUES (?,?,CURRENT_TIMESTAMP);",
@@ -62,7 +64,12 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
                     "select * from product;",
                 );
                 let id = data[data.length - 1].product_id
+
                 let a  = [];
+                // req.files.forEach((file, index) => {
+                //     let path = [producttype, productdescription,productprice, productamount,productbrand,id ,file.path.substring(6)];
+                //     pathArray.push(path);
+                // });
                 req.files.forEach((file, index) => {
                     let path = [file.path.substring(6)];
                     pathArray.push(path);
@@ -80,6 +87,9 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
                     "INSERT INTO product_owner(product_product_id,owner_owner_id,date) VALUES (?,1,CURRENT_TIMESTAMP);",
                     [id]
                 );
+
+                    // console.log(pathArray);
+
                 await conn.query(
                     "INSERT INTO product_type(type_name, other_spec , price, amount_product,brand,product_product_id,image) VALUES ?;",
                     [path]
@@ -90,6 +100,7 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
             conn.release();
         }
         catch (error) {
+            // console.error(error);
             next(error);
         }
     }

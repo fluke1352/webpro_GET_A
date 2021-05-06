@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const pool = require("../config");
 const fs = require("fs");
 
@@ -12,7 +13,9 @@ router.post("/productdetial/:id", async (req, res, next) => {
     try {
 
         [info, _] = await conn.query(
-            "select * from product p join product_type pt on(p.product_id = pt.product_product_id) where product_id = ?", [id]
+            "select *"+
+            " from product p join product_type pt on(p.product_id = pt.product_product_id)"+
+            " where product_id = ?", [id]
         );
 
         res.json({ message: info })

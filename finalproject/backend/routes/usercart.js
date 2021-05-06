@@ -1,5 +1,7 @@
 const express = require("express");
+const path = require("path");
 const pool = require("../config");
+
 const { loginAuth } = require('../middlewares')
 router = express.Router();
 
@@ -19,6 +21,7 @@ router.post("/usercart", async (req, res, next) => {
                     " from product p join product_type pt on(p.product_id = pt.product_product_id)" +
                     " where product_id = ?", [parseInt(product.id)]
                 );
+                // console.log(this_product);
                 index++
                 allProduct.push(this_product[0])
 
@@ -43,6 +46,7 @@ router.post("/usercart", async (req, res, next) => {
     }
 })
 
+// router.post("/usercart/:id", async (req, res, next) => {
 router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
@@ -75,7 +79,7 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
         order.push(the_user_user_id)
 
         try {
-
+            //add to order
             await conn.query(
                 "INSERT INTO 999auto.order(delivery_date, order_date, price_of_all_item," +
                 " amount_of_all_item, user_user_id) VALUES (?,?,?,?,?);",
@@ -87,7 +91,7 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
                 "select order_id from 999auto.order where order_date = ?" +
                 " and user_user_id = ?;", [order_date, the_user_user_id]
             );
-
+            // console.log(order_id_selected.order_id);
 
             //arr of want to add 
             products.forEach((item) => {

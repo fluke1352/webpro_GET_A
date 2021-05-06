@@ -109,7 +109,7 @@
           </div>
 
           <div class="column mx-auto has-text-centered">
-            <button class="button is-warning" @click="resgister()">
+            <button class="button is-warning" @click="register()">
               <strong> Sign up</strong>
             </button>
           </div>
@@ -156,7 +156,7 @@ export default {
     showSelectImage(image) {
       return URL.createObjectURL(image);
     },
-    resgister() {
+    register() {
       this.$v.$touch();
       let formData = new FormData();
       formData.append("firstName", this.firstName);
@@ -173,9 +173,9 @@ export default {
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);
-            location.reload();
           })
           .catch((err) => {
+            alert("Something went wrong")
             alert(err.response.data.details.message);
           });
       }

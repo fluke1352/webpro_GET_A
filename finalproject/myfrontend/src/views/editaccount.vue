@@ -184,9 +184,9 @@ export default {
         this.info = res.data;
       });
     },
-    edit() {
+   edit() {
       var password = prompt("Please enter your password:", "");
-      if (bcrypt.compare(password == this.info.user_password)) {
+      if (bcrypt.compareSync(password , this.info.user_password)) {
         this.showEdit = !this.showEdit;
       } else {
         alert("incorect password");

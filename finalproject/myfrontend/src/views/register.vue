@@ -68,6 +68,7 @@
             <input
               v-model="$v.phoneNumber.$model"
               :class="{ 'is-danger': $v.phoneNumber.$error }"
+              maxlength="10"
               class="input"
               placeholder="เบอร์โทร"
               type="text"

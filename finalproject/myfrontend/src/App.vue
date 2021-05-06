@@ -138,38 +138,41 @@
               Login
             </p>
 
-            <div class="column is-12">
-              <div class="columns">
-                <div class="column is-1 iconInput">
-                  <i class="fas fa-user has-background-dark"></i>
-                </div>
-                <div class="column textInput">
-                  <input
-                    class="input"
-                    type="text"
-                    id="Username"
-                    placeholder="Username"
-                    v-model="username"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="column is-12">
-              <div class="columns">
-                <div class="column is-1 iconInput">
-                  <i class="fas fa-lock has-background-dark"></i>
-                </div>
-                <div class="column textInput">
-                  <input
-                    class="input"
-                    type="password"
-                    id="Password"
-                    placeholder="Password"
-                    v-model="password"
-                  />
+            <form @submit.prevent>
+              <div class="column is-12">
+                <div class="columns">
+                  <div class="column is-1 iconInput">
+                    <i class="fas fa-user has-background-dark"></i>
+                  </div>
+                  <div class="column textInput">
+                    <input
+                      class="input"
+                      type="text"
+                      id="Username"
+                      placeholder="Username"
+                      v-model="username"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+              <div class="column is-12">
+                <div class="columns">
+                  <div class="column is-1 iconInput">
+                    <i class="fas fa-lock has-background-dark"></i>
+                  </div>
+                  <div class="column textInput">
+                    <input
+                      class="input"
+                      type="password"
+                      id="Password"
+                      placeholder="Password"
+                      v-model="password"
+                      @keyup.enter='login'
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
 
             <div class="column mx-auto has-text-centered">
               <button class="button is-warning has-text-black" @click="login()">
@@ -198,8 +201,8 @@
       :user="user"
     />
 
-    <footer class="footer has-background-dark" style="height: 41vh">
-      <div class="content has-text-centered has-text-white">
+    <footer class="footer has-background-dark " style="height: 44vh;">
+      <div class="content has-text-centered has-text-white" style="margin-top: -25px">
         <h1 style="color: #ffdd57">999Auto ประดับยนต์</h1>
         <h6 style="color: #ffdd57">เปิด 8.00-19.00 หยุดวันอาทิตย์</h6>
         <br />
@@ -245,7 +248,7 @@
         </div>
       </div>
     </footer>
-    <div class="has-background-warning has-text-white bottom">
+    <!-- <div class="has-background-warning has-text-white bottom mt-5">
       <div class="container is-fluid">
         <div class="columns">
           <div class="column">
@@ -253,7 +256,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

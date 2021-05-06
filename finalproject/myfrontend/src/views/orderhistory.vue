@@ -1,6 +1,7 @@
 <template>
   <div class="bg">
     <div class="columns">
+      <!-- info user -->
       <div class="user is-3 column has-background-black is-centered">
         <div style="margin-top: 15px; margin-bottom: -20px; text-align: right">
           <a>
@@ -41,15 +42,14 @@
 
       <div class="is-1 column"></div>
 
+      <!-- order history -->
       <div class="is-7 column">
-        <!-- <div class="container"> -->
-        <section v-for="(info, index) in data" :key="index">
-          <!-- <h1 class="has-text-warning">{{info.order_date}}</h1> -->
-          <section
-            v-if="index == 0 || info.order_id != data[index - 1].order_id"
-          >
+          <section v-for="(info, index) in data" :key="index">
+            <section v-if="index < valmax && index >= valmin">
+              <section v-if="index == 0 || info.order_id != data[index - 1].order_id">
             <h1 class="has-text-warning">
-              History order:
+              <b> Order ID: {{ info.order_id }} </b>
+              at
               {{
                 info.order_date.slice(8, 10) +
                 "/" +
@@ -65,33 +65,28 @@
                   style="width: 100%"
                 >
                   <tr class="has-text-centered" style="border: solid black">
-                    <th style="border: solid black" class="has-text-warning">
+                    <th style="border: solid black;width: 25%" class="has-text-warning">
                       Product
                     </th>
-                    <!-- <th style="border: solid black" class="has-text-warning">
-                    Order Date
-                  </th> -->
-                    <th style="border: solid black" class="has-text-warning">
+                    <th style="border: solid black;width: 20%" class="has-text-warning">
                       Delivery date
                     </th>
 
-                    <th style="border: solid black" class="has-text-warning">
+                    <th style="border: solid black;width: 15%" class="has-text-warning">
                       Amount
                     </th>
-                    <th style="border: solid black" class="has-text-warning">
+                    <th style="border: solid black;width: 20%" class="has-text-warning">
                       Price
                     </th>
-                    <th style="border: solid black" class="has-text-warning">
-                      Total price
+                    <th style="border: solid black;width: 20%" class="has-text-warning">
+                      Sum
                     </th>
                   </tr>
-                  <!-- <tr v-if="item.order_id = info.order_id"> -->
                   <tr v-for="(item, key_in) in data" :key="key_in">
                     <template v-if="item.order_id == info.order_id">
                       <td class="has-background-light">
                         {{ item.product_name }}
                       </td>
-
                       <td class="has-background-light">
                         {{
                           item.delivery_date.slice(8, 10) +
@@ -101,7 +96,6 @@
                           item.delivery_date.slice(0, 4)
                         }}
                       </td>
-
                       <td class="has-background-light">
                         {{ item.item_amount }}
                       </td>
@@ -112,14 +106,33 @@
                         {{ item.total_price }}
                       </td>
                     </template>
-                    <!-- <td class="has-background-dark">{{ info.inflow_date }}</td> -->
+                  </tr>
+                  <tr v-for="(theID, key_price) in list_id" :key="key_price">
+                    <td
+                    v-if="theID == info.order_id"
+                      class="has-background-light has-background-white has-background-white-ter"
+                      style="text-align: center;"
+                      colspan="5"
+                    >
+                    <p class=" is-size-6">
+                      Total price =
+                      <b> {{list_totalPrice[key_price]}}</b>
+                      </p>
+                    </td>
                   </tr>
                 </table>
               </div>
             </div>
+              </section>
+            </section>
           </section>
-        </section>
-        <!-- </div> -->
+        <div class="columns is-centered  mt-4">
+          <button class="column is-1 " @click="valmax = 4; valmin = 0; page = 1;">&lt;&lt;</button>
+          <button class="column is-1 ml-3" @click="valmax -= 4; valmin -= 4; page--;">&lt;</button>
+         <div class="column is-8 has-text-warning"><p  style="text-align:center; width:100%;" class="is-size-6"><b>{{pages + '/' + maxpage}}</b></p></div>
+          <button class="column is-1 mr-3" @click="valmax += 4; valmin += 4; page++;">&gt;</button>
+          <button class="column is-1 " @click="setpage( 4*maxpage, 4*(maxpage-1), maxpage)">&gt;&gt;</button>
+        </div>
       </div>
     </div>
   </div>
@@ -130,14 +143,54 @@ import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   props: ["user"],
+  data() {
+    return {
+      data: [],
+      data2: [],
+      list_totalPrice: [],
+      list_id:[],
+      valmax: 4,
+      valmin: 0,
+      page: 1,
+      maxpage: null,
+    };
+  },
   created() {
     axios.post("http://localhost:3000/orderhistory").then((response) => {
       this.data = response.data.message.orderDetail;
       this.data2 = response.data.message.userDetail[0];
-      console.log(this.data2.user_image);
+      this.list_totalPrice = response.data.message.totalPrice;
+      this.list_id = response.data.message.ArrayId;
+      this.maxpage = Math.ceil(this.data.length/4);
     });
   },
+  computed:{
+    pages(){
+      let page = 1
+      let maxpage = this.maxpage;
+      // console.log(maxpage);
+      if(this.page < 0 || this.valmin < 0){
+        // console.log("<<<< 00");
+        this.setpage(4,0,1)
+        page = 1
+      }
+      else if(this.page > this.maxpage && this.valmax > this.data.length){
+        page = this.maxpage;
+        this.setpage(4*maxpage, 4*(maxpage-1), maxpage)
+      }
+      else{
+        page = this.page
+      }
+
+      return page
+    }
+  }, 
   methods: {
+    setpage(max, min, page){
+      this.valmax = max;
+      this.valmin = min;
+      this.page = page;
+    },
     imagePath(file_path) {
       if (file_path) {
         return "http://localhost:3000/" + file_path;
@@ -145,14 +198,9 @@ export default {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
+    calcuPrice() {},
   },
-  data() {
-    return {
-      data: [],
-      data2: [],
-      // img: URL.createObjectURL(data2.user_image),
-    };
-  },
+  
 };
 </script>
 

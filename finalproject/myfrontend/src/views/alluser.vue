@@ -5,7 +5,7 @@
       <p class="has-text-centered is-size-1 mb-5 has-text-warning">ALL USERS</p>
       <div class="columns is-multiline">
         <div class="column is-3" v-for="(user, index) in data" :key="index">
-          <div class="card has-background-black" style="border-radius: 10%">
+          <div class="card has-background-black" style="border-radius: 10%" :class="{'has-background-warning has-text-black' : user.user_status != 'customer'}">
             <div class="card-image">
               <figure class="image">
                 <img
@@ -15,7 +15,7 @@
               </figure>
             </div>
             <div
-              class="card-content has-text-centered has-background-black"
+              class="card-content has-text-centered has-background-black "
               style="opacity: 0.95"
             >
               <h3 class="has-text-warning is-size-6">
@@ -34,9 +34,10 @@
                   user.user_phone.slice(6)
                 }}
               </h3>
+              <h3 class="has-text-warning is-size-6">Role : {{user.user_status}}</h3>
             </div>
-            <footer class="card-footer">
-              <a href="#" class="card-footer-item" @click="addadmin(user.user_id)"
+            <footer class="card-footer"  v-if="user.user_status == 'customer'">
+              <a href="#" class="card-footer-item" @click="addadmin(user.user_id)" 
                 >ADD TO ADMIN</a
               >
             </footer>
@@ -55,7 +56,7 @@ export default {
   created() {
     axios.post("http://localhost:3000/alluser").then((response) => {
       this.data = response.data.message;
-      // console.log(this.data);
+      
     });
   },
   methods: {
@@ -68,21 +69,16 @@ export default {
     },
     addadmin(id) {
       var password = prompt("Please enter your password:", "");
-      if (bcrypt.compare(password == this.info.user_password)) {
+      if (bcrypt.compareSync(password , this.info.user_password)) {
         // this.showEdit = !this.showEdit;
-        alert("corect password");
+        alert("correct password");
         axios.put("http://localhost:3000/alluser", {id: id}).then(() => {
           alert("add complete")
-          // console.log(this.data);
+  
         });
       } else {
         alert("incorect password");
       }
-    },
-    getUser() {
-      axios.get("/user/me").then((res) => {
-        this.info = res.data;
-      });
     },
   },
   data() {

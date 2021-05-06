@@ -25,7 +25,7 @@ router.post("/alluser", async (req, res, next) => {
     await conn.beginTransaction();
     try {
         let [isUser, __] = await conn.query(
-            "SELECT a.user_username, u.user_fname, u.user_lname, u.user_phone, u.user_image, u.user_id" +
+            "SELECT u.user_status , a.user_username, u.user_fname, u.user_lname, u.user_phone, u.user_image, u.user_id" +
             " FROM user u join account a on(u.user_id = a.user_user_id);"
         );
         // console.log([isUser, __][0].length);

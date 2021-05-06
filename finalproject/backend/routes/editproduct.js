@@ -28,11 +28,15 @@ router.get("/product", async (req, res, next) => {
       next(error)
   }
 })
-router.post("/addamount",async (req, res, next) => {
+router.post("/addamount",loginAuth,admin,async (req, res, next) => {
         const price = req.body.price;
         const amount = req.body.amount;
         const id = req.body.id;
         const change = req.body.amountchange;
+        console.log(price);
+        console.log(amount);
+        console.log(id);
+        console.log(change);
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
@@ -52,13 +56,13 @@ router.post("/addamount",async (req, res, next) => {
         conn.rollback()
     }
   })
-router.post("/changeproduct",loginAuth,admin,async (req, res, next) => {
+  router.post("/changeproduct",loginAuth,admin,async (req, res, next) => {
     const name = req.body.name;
         const category = req.body.category;
         const type = req.body.typename;
         const brand = req.body.brand;
         const price = req.body.price;
-
+        const amount = req.body.amount;
         const id = req.body.id;
         const description = req.body.description;
         const change = req.body.amountchange;

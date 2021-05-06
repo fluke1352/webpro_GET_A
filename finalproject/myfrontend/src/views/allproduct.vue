@@ -1,9 +1,7 @@
 <template>
   <div class="bg">
     
-    <!-- banner -->
     <div class="container" >
-      <!-- <img src="../assets/banner1.png" alt=""> -->
       <div class="columns">
         <div class="slideshow-container">
           <div class="fade" id="fade">
@@ -35,7 +33,6 @@
       </div>
     </div>
 
- <!-- serch -->
     <div class="container my-6 has-text-warning">
       <p class="has-text-centered is-size-1 mb-5">ALL PRODUCT</p>
       <div class="columns mt-5">
@@ -72,7 +69,6 @@
         </div>
       </div>
 
-       <!-- card product -->
       <div class="columns is-multiline mt-5">
         <div
           class="column is-3"
@@ -105,7 +101,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
@@ -139,7 +135,6 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
@@ -152,11 +147,9 @@ export default {
     },
 
     imagePath(file_path) {
-      // console.log(file_path);
 
       if (file_path) {
         let img = file_path.slice(1, file_path.length-1).split(',')
-      // console.log(img[0]);
         return "http://localhost:3000/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
@@ -204,7 +197,6 @@ export default {
 .slideshow-container {
   width: 100%;
   position: relative;
-  /* margin: auto; */
 }
 
 /* Next & previous buttons */

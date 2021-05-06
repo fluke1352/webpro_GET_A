@@ -6,8 +6,6 @@
       <section class="section" v-if="error">
         <div class="container is-widescreen">
           <div class="notification is-danger">
-            <!-- <%= error.code + ': ' + error.sqlMessage %> -->
-            <!---->
             {{ error }}
           </div>
         </div>
@@ -170,7 +168,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   data() {
@@ -230,14 +228,7 @@ export default {
 .text {
   color: #ffdd57;
 }
-/* input {
-  border: #ffdd57;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
-  transition: height 0.3s, box-shadow 0.3s;
-} */
-/* input:hover {
-   box-shadow: 8px 8px 18px 0px #ffdd57;
-} */
+
 input, textarea, select,  button{
   border: #ffdd57;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
@@ -251,14 +242,12 @@ input:hover , textarea:hover, select:hover , button:hover{
 }
 .card {
   position: relative;
-  /* height: 360px; */
   overflow: hidden;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
   transition: height 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
-  /* height: 375px; */
   box-shadow: 10px 10px 20px 0px #ffdd57;
 }
 </style>

@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import {required,minLength,maxLength,sameAs} from "vuelidate/lib/validators";
 import "bulma/css/bulma.css";
 

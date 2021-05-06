@@ -122,7 +122,7 @@
 
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {

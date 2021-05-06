@@ -1,6 +1,5 @@
 <template>
   <div class="bg">
-    <!-- <div class="container"> -->
     <div class="" style="margin-left: 170px; margin-right: 170px">
       <p class="has-text-centered is-size-1 mb-5 has-text-warning">ALL USERS</p>
       <div class="columns is-multiline">
@@ -70,7 +69,6 @@ export default {
     addadmin(id) {
       var password = prompt("Please enter your password:", "");
       if (bcrypt.compareSync(password , this.info.user_password)) {
-        // this.showEdit = !this.showEdit;
         alert("correct password");
         axios.put("http://localhost:3000/alluser", {id: id}).then(() => {
           alert("add complete")
@@ -85,7 +83,6 @@ export default {
     return {
       data: [],
       info: [],
-      // img: URL.createObjectURL(data.user_image),
     };
   },
 };

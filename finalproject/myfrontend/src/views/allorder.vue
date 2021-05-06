@@ -4,7 +4,6 @@
       <button class="button mx-1 has-background-warning has-text-black" @click="sortby('order_id')">SOTR BY ORDER ID</button>
     <button class="button mx-1 has-background-warning has-text-black" @click="sortby('delivery_date')">SOTR BY DELIVERY DATE</button>
 
-      <!-- <template v-for="(order, index) in orders" :key="index"> -->
       <div
         class="columns mb-3 has-text-warning"
         style="background: #363636"
@@ -61,7 +60,7 @@
 
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {

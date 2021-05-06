@@ -145,16 +145,7 @@ export default {
         this.getUser();
       }
   },
-  // created() {
-  //   axios
-  //     .post("http://localhost:3000/editaccount", {
-  //       id: 23,
-  //     })
-  //     .then((response) => {
-  //       this.info = response.data.message;
-  //       console.log(this.info);
-  //     });
-  // },
+
   methods: {
     getUser() {
       axios.get("/user/me").then((res) => {

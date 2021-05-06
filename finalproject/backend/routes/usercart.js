@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const pool = require("../config");
 
 const { loginAuth } = require('../middlewares')
@@ -46,7 +45,7 @@ router.post("/usercart", async (req, res, next) => {
     }
 })
 
-// router.post("/usercart/:id", async (req, res, next) => {
+
 router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();

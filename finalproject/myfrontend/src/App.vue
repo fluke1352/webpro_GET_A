@@ -55,7 +55,8 @@
             </div>
           </div>
 
-          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'customer'">
+
+          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'customer' ">
             <a class="navbar-link" style="color: black"> Customer </a>
             <div class="navbar-dropdown">
               <a class="navbar-item">
@@ -116,7 +117,8 @@
               </router-link>
             </div>
             <div class="columns">
-              <div v-if="!user" class="navbar-item">
+
+              <div v-if="user.length == 0" class="navbar-item">
                 <div class="buttons" @click="isModal = true">
                   <a
                     class="button has-text-warning"
@@ -126,7 +128,8 @@
                   </a>
                 </div>
               </div>
-              <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+
+              <div v-if="user.length != 0" class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   <figure class="image is-24x24 my-auto">
                     <img class="is-rounded" :src="imagePath(user.user_image)" />
@@ -288,15 +291,24 @@ import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 
 export default {
+  
   name: "App",
+  
   data() {
     return {
       username: "",
       password: "",
       error: "",
       isModal: false,
-      user: null,
+      user: [],
     };
+  },
+  computed: {
+    nonNullItems: function() {
+      return this.user.filter(function(item) {
+        return item !== null;
+      });
+    }
   },
   mounted() {
     this.onAuthChange();

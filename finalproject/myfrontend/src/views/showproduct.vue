@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
@@ -144,7 +144,7 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
+
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;

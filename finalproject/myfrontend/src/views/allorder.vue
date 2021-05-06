@@ -4,13 +4,15 @@
       <button class="button mx-1 has-background-warning has-text-black" @click="sortby('order_id')">SOTR BY ORDER ID</button>
     <button class="button mx-1 has-background-warning has-text-black" @click="sortby('delivery_date')">SOTR BY DELIVERY DATE</button>
 
+      <!-- <template v-for="(order, index) in orders" :key="index"> -->
       <div
-        class="columns mb-3 has-text-warning"
+        class="columns mb-3 has-text-warning my-5"
         style="background: #363636"
-        v-for="(order, index) in orders" :key="index">
+        v-for="(order, index) in orders" :key="index"
+        :class="{ 'is-hidden': !(index < valmax && index >= valmin) }">
         <div
           v-if="index < valmax && index >= valmin"
-          :class="{ 'is-hidden': !(index < valmax && index >= valmin) }"
+          
         >
           <img
             :src="imagePath(order.user_image)"
@@ -60,7 +62,7 @@
 
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {

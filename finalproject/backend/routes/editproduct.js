@@ -33,6 +33,10 @@ router.post("/addamount",loginAuth,admin,async (req, res, next) => {
         const amount = req.body.amount;
         const id = req.body.id;
         const change = req.body.amountchange;
+        console.log(price);
+        console.log(amount);
+        console.log(id);
+        console.log(change);
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {

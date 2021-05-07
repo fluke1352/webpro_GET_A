@@ -211,6 +211,7 @@
                       isActive == true && index == check && addproduct == true
                     "
                   >
+                    <!-- <div class="label  mx-5 my-3 mt-5"  style="width: 7%">รายละเอียด</div> -->
                     <td class="column is-12 is-size-5">
                       ชื่อสินค้า : {{ changename }}
                     </td>
@@ -291,7 +292,7 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import "bulma/css/bulma.css";
 // @ is an alias to /src
 export default {

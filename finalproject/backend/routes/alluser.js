@@ -20,6 +20,7 @@ var storage = multer.diskStorage({
 });
 
 router.post("/alluser", async (req, res, next) => {
+    // console.log('start!!!!!');
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {
@@ -27,7 +28,12 @@ router.post("/alluser", async (req, res, next) => {
             "SELECT u.user_status , a.user_username, u.user_fname, u.user_lname, u.user_phone, u.user_image, u.user_id" +
             " FROM user u join account a on(u.user_id = a.user_user_id);"
         );
+        // console.log([isUser, __][0].length);
+        // console.log([isUser, __][0]);
 
+        // const data = {
+        //     userDetail: isUser
+        // }
         res.json({
             message: isUser
 

@@ -38,9 +38,17 @@ router.post("/orderhistory", loginAuth, async (req, res, next) => {
             " FROM user u join account a on(u.user_id = a.user_user_id)" +
             " where u.user_id = ?;", [req.user.user_id]
         );
+
+        let [count, ___] = await conn.query(
+            "select count(o.order_id) " +
+            " from 999auto.order o join order_item oi on(o.order_id = oi.order_order_id)" +
+            " join product p on(oi.product_product_id = p.product_id)" +
+            " where o.user_user_id = ? group by(o.order_id) ;", [req.user.user_id]
+        );
         console.log([info, _][0]);
         // console.log([isUser, _][0]);
 
+        //create total price per ID
         let arr_totalPrice = new Array()
         let ttp = 0
         const mySet_id = new Set()
@@ -63,6 +71,7 @@ router.post("/orderhistory", loginAuth, async (req, res, next) => {
                 ttp = 0
             }
         })
+
         let arr_id = Array.from(mySet_id);
         console.log(arr_totalPrice);
         console.log('arr_id');
@@ -70,9 +79,10 @@ router.post("/orderhistory", loginAuth, async (req, res, next) => {
 
         const data = {
             orderDetail: info,
+            count:count,
             userDetail: isUser,
             totalPrice: arr_totalPrice,
-            ArrayId:arr_id
+            ArrayId:arr_id,
         }
         res.json({
             message: data

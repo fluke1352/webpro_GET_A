@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {

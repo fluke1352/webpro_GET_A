@@ -6,13 +6,7 @@ function generateToken () {
    }
    return result.join('');
 }
-// function adminToken () {
-//     const result = [];
-//       result.push("admin");
-//    return result.join('');
-// }
 
 module.exports = {
-    generateToken,
-    // adminToken
+    generateToken
 }

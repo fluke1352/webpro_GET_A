@@ -1,11 +1,16 @@
 <template>
   <div class="bg">
-    <div class="container" style="margin-top:100px;margin-bottom:100px">
-      <div class="columns has-text-warning" >
+    <div class="container" style="margin-top: 100px; margin-bottom: 100px">
+      <div class="columns has-text-warning">
         <div class="column is-1"></div>
         <div
           class="column is-5 has-text-centered mt-6"
-          style="background-color: #1a1a1a; opacity: 100% ;margin-top:100px;margin-bottom:100px;"
+          style="
+            background-color: #1a1a1a;
+            opacity: 100%;
+            margin-top: 100px;
+            margin-bottom: 100px;
+          "
         >
           <img
             v-if="info.user_image && !images"
@@ -28,7 +33,6 @@
               />
             </figure>
           </div>
-          
 
           <!-- wellcome to 999auto -->
           <h1 class="is-size-4 mt-3" v-if="!images"><b> Profile image</b></h1>
@@ -44,12 +48,31 @@
               />
             </div>
           </div>
-          <div style="background-color:#FFDD57; width:50%; height:2px;  margin-left:20px;"></div>
-          <div style="background-color:#FFDD57; width:50%; height:2px; margin-top:20px; margin-left:250px;" ></div>
+          <div
+            style="
+              background-color: #ffdd57;
+              width: 50%;
+              height: 2px;
+              margin-left: 20px;
+            "
+          ></div>
+          <div
+            style="
+              background-color: #ffdd57;
+              width: 50%;
+              height: 2px;
+              margin-top: 20px;
+              margin-left: 250px;
+            "
+          ></div>
         </div>
         <div
           class="column is-5 mt-6"
-          style="background-color: #111111; margin-top:100px;margin-bottom:100px;"
+          style="
+            background-color: #111111;
+            margin-top: 100px;
+            margin-bottom: 100px;
+          "
         >
           <p class="is-size-3 has-text-centered"><b> Edit Account</b></p>
           <p class="has-text-centered">check your info to confirmation</p>
@@ -62,8 +85,8 @@
                 type="text"
                 id="FirstName"
                 placeholder="ชื่อ"
+                :disabled="showEdit"
                 :value="info.user_fname"
-                :disabled="true"
               />
             </div>
 
@@ -74,8 +97,8 @@
                 type="text"
                 id="LasttName"
                 placeholder="นามสกุล"
+                :disabled="showEdit"
                 :value="info.user_lname"
-                :disabled="true"
               />
             </div>
           </div>
@@ -88,8 +111,8 @@
               id="phone"
               placeholder="เบอร์โทร"
               maxlength="10"
+              :disabled="showEdit"
               :value="info.user_phone"
-              :disabled="true"
             />
           </div>
 
@@ -137,38 +160,52 @@
 <script>
 import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
 export default {
   mounted() {
     const token = localStorage.getItem("token");
-      if (token) {
-        this.getUser();
-      }
+    if (token) {
+      this.getUser();
+    }
   },
-
+  // created() {
+  //   axios
+  //     .post("http://localhost:3000/editaccount", {
+  //       id: 23,
+  //     })
+  //     .then((response) => {
+  //       this.info = response.data.message;
+  //       console.log(this.info);
+  //     });
+  // },
   methods: {
     getUser() {
       axios.get("/user/me").then((res) => {
         this.info = res.data;
       });
     },
-    edit() {
+   edit() {
       var password = prompt("Please enter your password:", "");
-      if (bcrypt.compare(password == this.info.user_password)) {
+      if (bcrypt.compareSync(password , this.info.user_password)) {
         this.showEdit = !this.showEdit;
       } else {
         alert("incorect password");
       }
     },
     confirm() {
+      let firstname = document.getElementById("FirstName").value;
+      let lastname = document.getElementById("LasttName").value;
+      let phone = document.getElementById("phone").value;
       let username = document.getElementById("username").value;
       let pass = document.getElementById("password").value;
       let formData = new FormData();
+      formData.append("firstname", firstname);
+      formData.append("lastname", lastname);
+      formData.append("phone", phone);
       formData.append("username", username);
       formData.append("pass", pass);
       formData.append("id", this.info.user_id);
       if (this.images) {
-
         this.images.forEach((image) => {
           formData.append("myImage", image);
         });
@@ -181,6 +218,7 @@ export default {
           this.fetchdb();
           alert("update complete");
         });
+        this.$router.go()
     },
     imagePath(file_path) {
       if (file_path) {

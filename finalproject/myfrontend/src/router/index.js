@@ -12,7 +12,6 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    meta: {already: true},
     component: () => import('../views/register.vue') // set home as path '/'
   },
   {
@@ -30,19 +29,17 @@ const routes = [
   {
     path: '/editproduct',
     name: 'editproduct',
-    meta: { admin : true },
+    // meta: { admin : true },
     component: () => import('../views/editproduct.vue') // set home as path '/'
   },
   {
     path: '/inflowhistory',
     name: 'inflowhistory',
-    meta: { admin : true },
     component: () => import('../views/inflowhistory.vue') // set home as path '/'
   },
   {
     path: '/addproduct',
     name: 'addproduct',
-    meta: { admin : true },
     component: () => import('../views/addproduct.vue') // set home as path '/'
   },
   {
@@ -53,12 +50,12 @@ const routes = [
   {
     path: '/orderhistory',
     name: 'orderhistory',
-    meta: { login: true },
     component: () => import('../views/orderhistory.vue') // set home as path '/'
   },
   {
     path: '/showproduct/:category',
     name: 'showproduct',
+
     component: () => import('../views/showproduct.vue') // set home as path '/'
   },
   {
@@ -70,13 +67,13 @@ const routes = [
   {
     path: '/allorder',
     name: 'allorder',
-    meta: { admin : true },
+    // meta: { admin : true },
     component: () => import('../views/allorder.vue') // set home as path '/'
   },
   {
     path: '/alluser',
     name: 'alluser',
-    meta: { admin : true },
+    // meta: { admin : true },
     component: () => import('../views/alluser.vue') // set home as path '/'
   },
   
@@ -95,10 +92,6 @@ const router = new VueRouter({
       const isLoggedIn = !!localStorage.getItem('token')
       if (to.meta.login && !isLoggedIn) {
         alert('Please login first!')
-        next({ path: '/' })
-      }
-      if (to.meta.already && isLoggedIn) {
-        alert('You\'re already login')
         next({ path: '/' })
       }
       if (to.meta.admin && info.user_status != 'owner' && isLoggedIn) {

@@ -52,6 +52,7 @@
             Other spec is <b class="has-text-light">:</b>
             {{ productdetial.other_spec }}
           </p>
+          <!-- <div class="column"></div> -->
           <p class="mt-5"><b>จำนวน</b></p>
           <div class="columns p-0 m-0 mt-1 has-text-centered">
             <div class="column has-text-centered button" @click="orderamount--">
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {

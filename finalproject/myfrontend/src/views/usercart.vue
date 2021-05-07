@@ -287,7 +287,6 @@ export default {
       else{
       axios
         .post("http://localhost:3000/usercart/confirm", {
-          // post("http://localhost:3000/usercart/confirm", {
           products: this.products,
           delivery_date: this.date_deliver
         })

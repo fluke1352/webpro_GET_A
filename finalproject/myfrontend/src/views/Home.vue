@@ -106,29 +106,18 @@
         </router-link>
       </div>
     </section>
-    <!-- <section>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3875.9239490270634!2d100.70693792960817!3d13.723054059996345!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6ce0c13f186de87d!2z4Lit4Li54LmIIDk5OSDguK3guK3guYLguJXguYnguJvguKPguLDguJTguLHguJrguKLguJnguJXguYw!5e0!3m2!1sth!2sth!4v1619628254679!5m2!1sth!2sth"
-        width="600"
-        height="450"
-        style="border: 0"
-        allowfullscreen=""
-        loading="lazy"
-      ></iframe>
-    </section> -->
   </div>
 </template>
 
 
 
 <script>
-import axios from "@/plugins/axios";
+import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
     axios.post("http://localhost:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
-      // console.log(this.data);
     });
   },
   computed: {

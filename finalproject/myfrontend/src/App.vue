@@ -60,7 +60,7 @@
 
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                <router-link to="../editaccount" style="color: black"
+                <router-link to="../profile" style="color: black"
                   >Edit account</router-link
                 >
               </a>

@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const pool = require("../config");
 const fs = require("fs");
-
+const { loginAuth } = require('../middlewares')
 router = express.Router();
 
 // Require multer for file upload
@@ -22,12 +22,12 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) => {
+router.post("/addproduct", upload.array("myImage", 6), loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     if (req.method == "POST") {
         const file = req.files;
-
+        const owner = req.user.user_username
         const productname = req.body.name;
         const productcategory = req.body.category;
         const producttype = req.body.type;
@@ -56,7 +56,7 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
                 // await conn.query("UPDATE product_type SET amount_product=? WHERE product_product_id=?",[a[0].amount_product+parseInt(productamount), check[0].product_id])
             } else {
                 await conn.query(
-                    "INSERT INTO product(product_name, category, storge_date) VALUES (?,?,CURRENT_TIMESTAMP);",
+                    "INSERT INTO product(product_name, category, storge_date) VALUES (?,?,1);",
                     [productname, productcategory]
                 );
                 console.log("add complete");
@@ -65,7 +65,7 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
                 );
                 let id = data[data.length - 1].product_id
 
-                let a  = [];
+                let a = [];
                 // req.files.forEach((file, index) => {
                 //     let path = [producttype, productdescription,productprice, productamount,productbrand,id ,file.path.substring(6)];
                 //     pathArray.push(path);
@@ -82,17 +82,28 @@ router.post("/addproduct", upload.array("myImage", 6), async (req, res, next) =>
                     "INSERT INTO product_inflow(inflow_amount, inflow_price, product_product_id,inflow_date) VALUES (?,?,?,CURRENT_TIMESTAMP);",
                     [productamount, productprice, id]
                 );
+                
+                let [row, b] = await conn.query(
+                    "select owner_id from owner where owner_username = ?",
+                    [owner]
+                );
+                // console.log(owner + " " + );
 
                 await conn.query(
-                    "INSERT INTO product_owner(product_product_id,owner_owner_id,date) VALUES (?,1,CURRENT_TIMESTAMP);",
-                    [id]
+                    "INSERT INTO product_owner(product_product_id,owner_owner_id,date) VALUES (?,?,CURRENT_TIMESTAMP);",
+                    [id, row[0].owner_id]
                 );
 
-                    // console.log(pathArray);
+                // console.log(pathArray);
 
                 await conn.query(
                     "INSERT INTO product_type(type_name, other_spec , price, amount_product,brand,product_product_id,image) VALUES ?;",
                     [path]
+                );
+
+                await conn.query(
+                    "INSERT INTO product_storge_date(product_product_id, storge_date) VALUES (?, CURRENT_TIMESTAMP);",
+                    [id]
                 );
             }
             res.json({ message: "Add complete" })

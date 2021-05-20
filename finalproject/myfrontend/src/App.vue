@@ -55,9 +55,9 @@
             </div>
           </div>
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" style="color: black"> Customer </a>
 
+          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'customer' ">
+            <a class="navbar-link" style="color: black"> Customer </a>
             <div class="navbar-dropdown">
               <a class="navbar-item">
                 <router-link to="../profile" style="color: black"
@@ -71,6 +71,39 @@
               </a>
             </div>
           </div>
+
+          <div class="navbar-item has-dropdown is-hoverable" v-if="user.user_status == 'owner'">
+            <a class="navbar-link" style="color: black"> Owner </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <router-link to="../alluser" style="color: black"
+                  >All Customer</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../addproduct" style="color: black"
+                  >Add product</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../editproduct" style="color: black"
+                  >Edit product</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../allorder" style="color: black"
+                  >Order</router-link
+                >
+              </a>
+              <a class="navbar-item"
+                ><router-link to="../inflowhistory" style="color: black"
+                  >Inflow History</router-link
+                >
+              </a>
+            </div>
+          </div>
+
+
         </div>
 
         <div class="navbar-end">
@@ -84,7 +117,8 @@
               </router-link>
             </div>
             <div class="columns">
-              <div v-if="!user" class="navbar-item">
+
+              <div v-if="user.length == 0" class="navbar-item">
                 <div class="buttons" @click="isModal = true">
                   <a
                     class="button has-text-warning"
@@ -94,7 +128,8 @@
                   </a>
                 </div>
               </div>
-              <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+
+              <div v-if="user.length != 0" class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                   <figure class="image is-24x24 my-auto">
                     <img class="is-rounded" :src="imagePath(user.user_image)" />
@@ -104,7 +139,7 @@
                   >
                 </a>
                 <div class="navbar-dropdown">
-                  <router-link to="/editaccount">
+                  <router-link to="/profile">
                     <a class="navbar-item">Profile</a>
                   </router-link>
                   <a class="navbar-item" @click="logout()">Log out</a>
@@ -116,14 +151,13 @@
       </div>
     </nav>
 
-    <!-- modal login-->
+
     <div class="modal is-active" v-show="isModal" @close="isModal = false">
       <div
         class="modal-background"
         style="background-color: #181818; opacity: 95%"
       ></div>
       <div class="modal-content" style="overflow: hidden; width: 31%">
-        <!-- Any other Bulma elements you want -->
         <div class="columns is-centered">
           <div class="column mt-6" id="Login">
             <p
@@ -207,7 +241,7 @@
         <h6 style="color: #ffdd57">เปิด 8.00-19.00 หยุดวันอาทิตย์</h6>
         <br />
         <div class="columns">
-          <!-- <div class="column">
+          <div class="column">
             <h4 style="color: #ffdd57">About Us</h4>
             <p class="has-text-center">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -215,7 +249,7 @@
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </p>
-          </div> -->
+          </div>
           <div class="column">
             <h4 style="color: #ffdd57">Product</h4>
             <!-- <ul> -->
@@ -248,15 +282,7 @@
         </div>
       </div>
     </footer>
-    <!-- <div class="has-background-warning has-text-white bottom mt-5">
-      <div class="container is-fluid">
-        <div class="columns">
-          <div class="column">
-            <p style="color: black">999Auto 2020.</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
+
   </div>
 </template>
 
@@ -265,15 +291,24 @@ import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 
 export default {
+  
   name: "App",
+  
   data() {
     return {
       username: "",
       password: "",
       error: "",
       isModal: false,
-      user: null,
+      user: [],
     };
+  },
+  computed: {
+    nonNullItems: function() {
+      return this.user.filter(function(item) {
+        return item !== null;
+      });
+    }
   },
   mounted() {
     this.onAuthChange();

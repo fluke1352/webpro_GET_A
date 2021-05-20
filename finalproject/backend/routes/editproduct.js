@@ -56,6 +56,9 @@ router.post("/addamount",loginAuth,admin,async (req, res, next) => {
         conn.rollback()
     }
   })
+
+
+  
   router.post("/changeproduct",loginAuth,admin,async (req, res, next) => {
     const name = req.body.name;
         const category = req.body.category;

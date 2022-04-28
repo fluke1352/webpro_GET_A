@@ -18,7 +18,7 @@ const routes = [
     path: '/detail/:id',
     name: 'detail',
     meta: { login: true },
-    component: () => import('../views/detail.vue') // set home as path '/'
+    component: () => import('../views/Detail.vue') // set home as path '/'
   },
   {
     path: '/profile',

@@ -89,7 +89,7 @@
           <div class="image--">
             <img
               style="height: 420px"
-              src="https://news.hmgjournal.com/images_n/contents/0602_mobilgene_01.png"
+              src="https://www.hitechcarsound.com.au/wp-content/uploads/2016/08/4-Head-Reversing-Sensors.jpg"
             />
           </div>
           <p>Sensor</p>

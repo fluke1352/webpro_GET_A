@@ -6,7 +6,7 @@ const fs = require("fs");
 router = express.Router();
 
 
-router.post("/allproduct", async (req, res, next) => {
+router.get("/allproduct", async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     try {

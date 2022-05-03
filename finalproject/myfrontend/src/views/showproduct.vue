@@ -113,7 +113,7 @@ import "bulma/css/bulma.css";
 export default {
   created() {
     axios
-      .post("showproduct/" + this.category)
+      .post("/showproduct/" + this.category)
       .then((response) => {
         this.allproduct = response.data.message;
         console.log(this.allproduct);

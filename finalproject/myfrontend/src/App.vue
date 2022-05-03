@@ -8,7 +8,7 @@
       style="background-color: #ffdd57"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="13.213.140.233/">
+        <a class="navbar-item" href="/">
           <img src="../src/assets/logo999Auto.png" width="112" height="28" />
         </a>
       </div>

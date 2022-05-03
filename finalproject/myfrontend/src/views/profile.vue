@@ -202,7 +202,7 @@ export default {
         });
       }
       axios
-        .put("10.0.142.187:3000/editaccount", formData)
+        .put("/editaccount", formData)
         .then((response) => {
           console.log(response);
           this.showEdit = !this.showEdit;
@@ -213,7 +213,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "10.0.142.187:3000/" + file_path;
+        return "/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -230,7 +230,7 @@ export default {
 
     fetchdb() {
       axios
-        .post("10.0.142.187:3000/editaccount", {
+        .post("/editaccount", {
           id: this.info.user_id,
         })
         .then((response) => {

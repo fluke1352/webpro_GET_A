@@ -8,7 +8,7 @@
       style="background-color: #ffdd57"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="http://localhost:8080/">
+        <a class="navbar-item" href="13.213.140.233/">
           <img src="../src/assets/logo999Auto.png" width="112" height="28" />
         </a>
       </div>
@@ -321,7 +321,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "10.0.142.187:3000/" + file_path;
+        return "/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -345,7 +345,7 @@ export default {
       };
 
       axios
-        .post("10.0.142.187:3000/auth", data)
+        .post("/auth", data)
         .then((res) => {
           const token = res.data.token;
           localStorage.setItem("token", token);

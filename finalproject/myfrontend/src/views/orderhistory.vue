@@ -172,7 +172,7 @@ export default {
     };
   },
   created() {
-    axios.post("http://localhost:3000/orderhistory").then((response) => {
+    axios.post("/orderhistory").then((response) => {
       this.data = response.data.message.orderDetail;
       this.count = response.data.message.count;
       this.data2 = response.data.message.userDetail[0];
@@ -183,7 +183,7 @@ export default {
   methods: {
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

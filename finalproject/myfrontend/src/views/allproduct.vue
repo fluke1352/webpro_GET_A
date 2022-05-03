@@ -109,7 +109,7 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("10.0.142.187:3000/allproduct").then((response) => {
+    axios.get("http://10.0.142.187:3000/allproduct").then((response) => {
       this.allproduct = response.data.message;
       console.log(this.allproduct);
     });

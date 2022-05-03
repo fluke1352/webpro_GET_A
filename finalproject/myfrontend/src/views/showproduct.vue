@@ -113,7 +113,7 @@ import "bulma/css/bulma.css";
 export default {
   created() {
     axios
-      .post("/showproduct/" + this.category)
+      .post("10.0.142.187:3000//showproduct/" + this.category)
       .then((response) => {
         this.allproduct = response.data.message;
         console.log(this.allproduct);
@@ -169,7 +169,7 @@ export default {
     },
     searchProduct() {
       axios
-        .post("/seaechproductincategory", {
+        .post("10.0.142.187:3000//seaechproductincategory", {
           search: this.search,
           minrange: this.minrange,
           maxrange: this.maxrange,

@@ -112,14 +112,10 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    fetch("10.0.142.187:3000/showproduct/")
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-
-    // axios.post("/showproduct/" + this.category).then((response) => {
-    //   this.allproduct = response.data.message;
-    //   console.log(this.allproduct);
-    // });
+    axios.post("/showproduct/" + this.category).then((response) => {
+      this.allproduct = response.data.message;
+      // console.log(this.allproduct);
+    });
   },
   mounted: function () {
     clearInterval(this.fades);

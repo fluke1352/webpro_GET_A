@@ -135,7 +135,7 @@ export default {
       this.diff = this.changeamount - this.products[index].amount_product;
 
       axios
-        .post("http://localhost:3000/changeproduct", {
+        .post("10.0.142.187:3000/changeproduct", {
           id: index,
           name: this.changename,
           category: this.changecategory,
@@ -165,7 +165,7 @@ export default {
 
     getproducts() {
       axios
-        .get("http://localhost:3000/product")
+        .get("10.0.142.187:3000/product")
         .then((response) => {
           this.products = response.data.message;
         })
@@ -175,7 +175,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "10.0.142.187:3000/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

@@ -169,7 +169,7 @@ export default {
       });
       if (!this.$v.$invalid) {
         axios
-          .post("http://localhost:3000/register", formData)
+          .post("10.0.142.187:3000/register", formData)
           .then((response) => {
             this.alertregister = response.data.message;
             alert(this.alertregister);

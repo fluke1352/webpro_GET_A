@@ -321,7 +321,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "10.0.142.187:3000/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -345,7 +345,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:3000/auth", data)
+        .post("10.0.142.187:3000/auth", data)
         .then((res) => {
           const token = res.data.token;
           localStorage.setItem("token", token);

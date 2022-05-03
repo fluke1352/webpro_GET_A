@@ -226,7 +226,7 @@ export default {
       if (file_path) {
         let img = file_path.slice(1, file_path.length - 1).split(",");
         // console.log(img[0]);
-        return "http://localhost:3000/" + img[0];
+        return "10.0.142.187:3000/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -237,7 +237,7 @@ export default {
         this.cart = JSON.parse(localStorage.getItem("cart"));
 
         axios
-          .post("http://localhost:3000/usercart", { cart: this.cart })
+          .post("10.0.142.187:3000/usercart", { cart: this.cart })
           .then((response) => {
             this.products = response.data.message;
 
@@ -286,7 +286,7 @@ export default {
       }
       else{
       axios
-        .post("http://localhost:3000/usercart/confirm", {
+        .post("10.0.142.187:3000/usercart/confirm", {
           products: this.products,
           delivery_date: this.date_deliver
         })

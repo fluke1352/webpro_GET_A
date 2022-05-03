@@ -54,12 +54,12 @@ import "bulma/css/bulma.css";
 import bcrypt from "bcryptjs";
 export default {
   created() {
-    axios.post("/alluser").then((response) => {
+    axios.post("10.0.142.187:3000/alluser").then((response) => {
       this.data = response.data.message;
       
       
     });
-     axios.get("/user/me").then((res) => {
+     axios.get("10.0.142.187:3000/user/me").then((res) => {
         this.info = res.data;
       });
   },
@@ -76,7 +76,7 @@ export default {
       if (bcrypt.compareSync(password , this.info.user_password)) {
         // this.showEdit = !this.showEdit;
         alert("correct password");
-        axios.put("/alluser", {id: id}).then(() => {
+        axios.put("10.0.142.187:3000/alluser", {id: id}).then(() => {
           alert("add complete")
   
         });

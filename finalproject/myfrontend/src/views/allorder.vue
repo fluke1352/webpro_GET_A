@@ -66,11 +66,11 @@ import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("/allorder").then((res) => {
+    axios.post("10.0.142.187:3000/allorder").then((res) => {
       this.orders = res.data.message;
       this.maxpage = Math.ceil(this.orders.length / 5);
     });
-    axios.post("/datailorder").then((res) => {
+    axios.post("10.0.142.187:3000/datailorder").then((res) => {
       this.products = res.data.message;
     });
     console.log(this.maxpage);

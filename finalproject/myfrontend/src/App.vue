@@ -333,7 +333,7 @@ export default {
       }
     },
     getUser() {
-      axios.get("/user/me").then((res) => {
+      axios.get("10.0.142.187:3000/user/me").then((res) => {
         this.user = res.data;
       });
     },

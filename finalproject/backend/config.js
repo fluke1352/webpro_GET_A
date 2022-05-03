@@ -1,9 +1,9 @@
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
+  host: 'auto-db.cclk4zrxortg.ap-southeast-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'xitgmLwmp12q',
   database: '999auto',
   waitForConnections: true,
   connectionLimit: 10,

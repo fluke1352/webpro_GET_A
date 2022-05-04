@@ -66,11 +66,11 @@ import axios from "@/plugins/axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("http://localhost:3000/allorder").then((res) => {
+    axios.post("http://18.139.80.70:3000/allorder").then((res) => {
       this.orders = res.data.message;
       this.maxpage = Math.ceil(this.orders.length / 5);
     });
-    axios.post("http://localhost:3000/datailorder").then((res) => {
+    axios.post("http://18.139.80.70:3000/datailorder").then((res) => {
       this.products = res.data.message;
     });
     console.log(this.maxpage);
@@ -78,7 +78,7 @@ export default {
   methods: {
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/images/" + file_path;
+        return "http://18.139.80.70:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -90,7 +90,7 @@ export default {
     },
     sortby(status) {
       axios
-        .post("http://localhost:3000/allorder", { status: status })
+        .post("http://18.139.80.70:3000/allorder", { status: status })
         .then((res) => {
           this.orders = res.data.message;
           this.maxpage = Math.ceil(this.orders.length / 5);

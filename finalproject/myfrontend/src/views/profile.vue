@@ -171,7 +171,7 @@ export default {
 
   methods: {
     getUser() {
-      axios.get("http://localhost:3000/user/me").then((res) => {
+      axios.get("http://18.139.80.70:3000/user/me").then((res) => {
         this.info = res.data;
         console.log(this.info);
       });
@@ -203,7 +203,7 @@ export default {
         });
       }
       axios
-        .put("http://localhost:3000/editaccount", formData)
+        .put("http://18.139.80.70:3000/editaccount", formData)
         .then((response) => {
           console.log(response);
           this.showEdit = !this.showEdit;
@@ -214,7 +214,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/images/" + file_path;
+        return "http://18.139.80.70:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -231,7 +231,7 @@ export default {
 
     fetchdb() {
       axios
-        .post("http://localhost:3000/editaccount", {
+        .post("http://18.139.80.70:3000/editaccount", {
           id: this.info.user_id,
         })
         .then((response) => {

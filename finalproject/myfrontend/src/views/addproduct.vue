@@ -215,7 +215,7 @@ export default {
       });
 
       axios
-        .post("http://localhost:3000/addproduct", formData)
+        .post("http://18.139.80.70:3000/addproduct", formData)
         .then((response) => {
           this.alertadd = response.data.message;
           alert(this.alertadd);

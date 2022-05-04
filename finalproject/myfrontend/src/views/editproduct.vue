@@ -371,7 +371,7 @@ export default {
     },
     saveproduct(index) {
       axios
-        .post("http://localhost:3000/changeproduct", {
+        .post("http://18.139.80.70:3000/changeproduct", {
           id: index,
           name: this.changename,
           category: this.changecategory,
@@ -391,7 +391,7 @@ export default {
     saveamount(index) {
       this.diff = this.changeamount - this.products[index].amount_product;
       axios
-        .post("http://localhost:3000/addamount", {
+        .post("http://18.139.80.70:3000/addamount", {
           id: index,
           price: this.changeprice,
           amount: this.changeamount,
@@ -422,7 +422,7 @@ export default {
     },
     getproducts() {
       axios
-        .get("http://localhost:3000/product")
+        .get("http://18.139.80.70:3000/product")
         .then((response) => {
           this.products = response.data.message;
           console.log(this.products.length);

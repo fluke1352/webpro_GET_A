@@ -112,7 +112,7 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("http://localhost:3000/showproduct/" + this.category).then((response) => {
+    axios.post("http://18.139.80.70:3000/showproduct/" + this.category).then((response) => {
       this.allproduct = response.data.message;
       // console.log(this.allproduct);
     });
@@ -160,14 +160,14 @@ export default {
       if (file_path) {
         let img = file_path.slice(10, file_path.length - 1).split(",");
         // console.log(img[0]);
-        return "http://localhost:3000/images/" + img[0];
+        return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
     searchProduct() {
       axios
-        .post("http://localhost:3000/seaechproductincategory", {
+        .post("http://18.139.80.70:3000/seaechproductincategory", {
           search: this.search,
           minrange: this.minrange,
           maxrange: this.maxrange,

@@ -172,7 +172,7 @@ export default {
     };
   },
   created() {
-    axios.post("http://localhost:3000/orderhistory").then((response) => {
+    axios.post("http://18.139.80.70:3000/orderhistory").then((response) => {
       this.data = response.data.message.orderDetail;
       this.count = response.data.message.count;
       this.data2 = response.data.message.userDetail[0];

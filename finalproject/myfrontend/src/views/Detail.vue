@@ -94,7 +94,7 @@ import "bulma/css/bulma.css";
 export default {
   created() {
     axios
-      .post("http://localhost:3000/productdetial/" + this.$route.params.id)
+      .post("http://18.139.80.70:3000/productdetial/" + this.$route.params.id)
       .then((response) => {
         this.productdetial = response.data.message[0];
         this.img = this.productdetial.image
@@ -151,7 +151,7 @@ export default {
       if (file_path) {
         let img = file_path.slice(9, file_path.length).split(",");
         // console.log(img[0]);
-        return "http://localhost:3000/images/" + img[0];
+        return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

@@ -110,14 +110,14 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    fetch("10.0.142.187:3000/allproduct")
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    // fetch("http://localhost:3000/allproduct")
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
       
-    // axios.get("http://10.0.142.187:3000/allproduct").then((response) => {
-    //   this.allproduct = response.data.message;
-    //   console.log(this.allproduct);
-    // });
+    axios.get("http://localhost:3000/allproduct").then((response) => {
+      this.allproduct = response.data.message;
+      console.log(this.allproduct);
+    });
   },
   mounted: function () {
     clearInterval(this.fades);
@@ -160,16 +160,17 @@ export default {
       // console.log(file_path);
 
       if (file_path) {
-        let img = file_path.slice(1, file_path.length - 1).split(",");
-        // console.log(img[0]);
-        return "/" + img[0];
+        let img = file_path.slice(10, file_path.length - 1).split(",");
+        console.log(img[0]);
+        // console.log(img[0], "ettsfawwedaawsedawdawdawd");
+        return "http://localhost:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
     searchProduct() {
       axios
-        .post("/seaechproduct", {
+        .post("http://localhost:3000/seaechproduct", {
           search: this.search,
           minrange: this.minrange,
           maxrange: this.maxrange,

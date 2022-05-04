@@ -321,7 +321,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "/" + file_path;
+        return "http://localhost:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -333,7 +333,7 @@ export default {
       }
     },
     getUser() {
-      axios.get("http://10.0.142.187:3000/user/me").then((res) => {
+      axios.get("http://localhost:3000/user/me").then((res) => {
         this.user = res.data;
       });
     },
@@ -345,7 +345,7 @@ export default {
       };
 
       axios
-        .post("/auth", data)
+        .post("http://localhost:3000/auth", data)
         .then((res) => {
           const token = res.data.token;
           localStorage.setItem("token", token);

@@ -69,7 +69,7 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("/inflowhistory").then((response) => {
+    axios.post("http://localhost:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
       this.maxpage = Math.ceil(this.data.length/15);
       // console.log(this.maxpage);

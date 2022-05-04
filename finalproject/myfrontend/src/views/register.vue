@@ -169,14 +169,14 @@ export default {
       });
       if (!this.$v.$invalid) {
         axios
-          .post("/register", formData)
-          .then((response) => {
-            this.alertregister = response.data.message;
-            alert(this.alertregister);
+          .post("http://localhost:3000/register", formData)
+          .then(() => {
+            
+            alert("success");
             location.reload();
           })
-          .catch((err) => {
-            alert(err.response.data.details.message);
+          .catch(() => {
+            alert("Please try again");
           });
       }
     },

@@ -135,7 +135,7 @@ export default {
       this.diff = this.changeamount - this.products[index].amount_product;
 
       axios
-        .post("/changeproduct", {
+        .post("http://localhost:3000/changeproduct", {
           id: index,
           name: this.changename,
           category: this.changecategory,
@@ -165,7 +165,7 @@ export default {
 
     getproducts() {
       axios
-        .get("/product")
+        .get("http://localhost:3000/product")
         .then((response) => {
           this.products = response.data.message;
         })

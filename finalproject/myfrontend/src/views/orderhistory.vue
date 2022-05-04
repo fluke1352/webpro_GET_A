@@ -183,7 +183,7 @@ export default {
   methods: {
     imagePath(file_path) {
       if (file_path) {
-        return "/" + file_path;
+        return "http://18.139.80.70:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

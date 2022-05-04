@@ -51,7 +51,7 @@ router.post("/usercart/confirm", loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
 
-    console.log(req.user);
+    // console.log(req);
     if (req.method == "POST") {
 
 

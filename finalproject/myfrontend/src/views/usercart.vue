@@ -133,8 +133,7 @@
         <header class="modal-card-head has-background-dark">
           <p class="modal-card-title has-text-warning">Your cart is blank</p>
           <router-link to="../allproduct">
-          <button class="delete" aria-label="close">       
-          </button>
+            <button class="delete" aria-label="close"></button>
           </router-link>
         </header>
         <section class="modal-card-body has-background-warning">
@@ -147,14 +146,24 @@
         <footer class="modal-card-foot has-background-dark">
           <router-link to="../allproduct">
             <button
-              class="button has-text-black has-background-warning is-dark border"
+              class="
+                button
+                has-text-black has-background-warning
+                is-dark
+                border
+              "
             >
               <b>Get order!</b>
             </button>
           </router-link>
           <router-link to="/" class="ml-1">
             <button
-              class="button has-text-black has-background-warning is-dark border"
+              class="
+                button
+                has-text-black has-background-warning
+                is-dark
+                border
+              "
             >
               <b> Home page. </b>
             </button>
@@ -216,16 +225,25 @@ export default {
   created() {
     this.fetchDatabase();
   },
-  computed: {
+  mounted() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.getUser();
+    }
   },
 
   methods: {
+    getUser() {
+      axios.get("http://18.139.80.70:3000/user/me").then((res) => {
+        this.info = res.data;
+      });
+    },
     imagePath(file_path) {
-      // console.log(file_path);
+      console.log(file_path);
 
       if (file_path) {
         let img = file_path.slice(10, file_path.length - 1).split(",");
-        // console.log(img[0]);
+        console.log(img[0]);
         return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
@@ -272,7 +290,6 @@ export default {
       this.cart = this.cart.filter((_, index) => index != this.deleteIndex);
       localStorage.removeItem("cart");
       localStorage.setItem("cart", JSON.stringify(this.cart));
-      
     },
     resetModalData() {
       (this.isModal = false),
@@ -281,24 +298,25 @@ export default {
         (this.id_wantCancle = null);
     },
     Confirm() {
-      if(!this.date_deliver){
-        alert('กรุณาเลือก วันที่ต้องการเข้ามาติดตั้ง')
-      }
-      else{
-      axios
-        .post("http://18.139.80.70:3000/usercart/confirm", {
-          products: this.products,
-          delivery_date: this.date_deliver
-        })
-        .then((response) => {
-          this.alertAddOrder = response.data.message;
-          alert(this.alertAddOrder);
-        })
-        .catch((e) => console.log(e.response.data));
+      if (!this.date_deliver) {
+        alert("กรุณาเลือก วันที่ต้องการเข้ามาติดตั้ง");
+      } else {
+        axios
+          .post("http://18.139.80.70:3000/usercart/confirm", {
+            products: this.products,
+            delivery_date: this.date_deliver,
+            user : this.info,
+          })
+          .then((response) => {
+            this.alertAddOrder = response.data.message;
+            alert(this.alertAddOrder);
+          })
+          // .catch((e) => console.log(e.response.data));
+
         localStorage.removeItem("cart");
         location.reload();
-        alert('Confirm order!!')
-        }
+        // alert('Confirm order!!')
+      }
     },
   },
   data() {
@@ -307,14 +325,14 @@ export default {
       category: null,
       id_wantCancle: null,
       deleteIndex: null, //index in cart
-
+      info: [],
       isModal: false,
       date_deliver: null,
       cart: [], //from 18.139.80.70
       products: [], //data product from database
       totalPrice: 0,
       totalAmount: 0,
-      alertAddOrder:''
+      alertAddOrder: "",
     };
   },
 };

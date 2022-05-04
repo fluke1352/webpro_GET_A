@@ -73,7 +73,7 @@ export default {
     axios.post("http://18.139.80.70:3000/datailorder").then((res) => {
       this.products = res.data.message;
     });
-    console.log(this.maxpage);
+    
   },
   methods: {
     imagePath(file_path) {
@@ -101,9 +101,7 @@ export default {
     pages() {
       let page = 1;
       let maxpage = this.maxpage;
-      // console.log(maxpage);
       if (this.page < 0 || this.valmin < 0) {
-        // console.log("<<<< 00");
         this.setpage(5, 0, 1);
         page = 1;
       } else if (this.page > this.maxpage && this.valmax > this.orders.length) {

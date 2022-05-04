@@ -327,9 +327,7 @@ export default {
     pages() {
       let page = 1;
       let maxpage = this.maxpage;
-      // console.log(maxpage);
       if (this.page < 0 || this.valmin < 0) {
-        // console.log("<<<< 00");
         this.setpage(15, 0, 1);
         page = 1;
       } else if (
@@ -385,7 +383,6 @@ export default {
           alert(this.alertadd);
           location.reload();
         })
-        .catch((e) => console.log(e.response.data));
     },
 
     saveamount(index) {
@@ -425,7 +422,6 @@ export default {
         .get("http://18.139.80.70:3000/product")
         .then((response) => {
           this.products = response.data.message;
-          console.log(this.products.length);
           this.maxpage = Math.ceil(this.products.length / 15);
         })
         .catch((err) => {

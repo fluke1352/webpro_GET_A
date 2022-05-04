@@ -173,7 +173,6 @@ export default {
     getUser() {
       axios.get("http://18.139.80.70:3000/user/me").then((res) => {
         this.info = res.data;
-        console.log(this.info);
       });
     },
    edit() {
@@ -204,8 +203,7 @@ export default {
       }
       axios
         .put("http://18.139.80.70:3000/editaccount", formData)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.showEdit = !this.showEdit;
           this.fetchdb();
           alert("update complete");
@@ -221,9 +219,7 @@ export default {
     },
     selectImages(event) {
       this.images = event.target.files;
-      console.log(this.images);
       this.test.push(event.target.files);
-      console.log(this.test);
     },
     showSelectImage(image) {
       return URL.createObjectURL(image);

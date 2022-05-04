@@ -239,11 +239,9 @@ export default {
       });
     },
     imagePath(file_path) {
-      console.log(file_path);
 
       if (file_path) {
         let img = file_path.slice(10, file_path.length - 1).split(",");
-        console.log(img[0]);
         return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
@@ -311,11 +309,10 @@ export default {
             this.alertAddOrder = response.data.message;
             alert(this.alertAddOrder);
           })
-          // .catch((e) => console.log(e.response.data));
+          .catch((e) => console.log(e.response.data));
 
         localStorage.removeItem("cart");
         location.reload();
-        // alert('Confirm order!!')
       }
     },
   },

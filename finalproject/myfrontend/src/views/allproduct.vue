@@ -110,13 +110,8 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    // fetch("http://18.139.80.70:3000/allproduct")
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data));
-      
     axios.get("http://18.139.80.70:3000/allproduct").then((response) => {
       this.allproduct = response.data.message;
-      console.log(this.allproduct);
     });
   },
   mounted: function () {

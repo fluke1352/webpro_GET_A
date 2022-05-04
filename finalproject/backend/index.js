@@ -33,7 +33,3 @@ app.use(productdetial.router)
 app.use(usercart.router)
 app.use(alluser.router)
 app.use(allorder.router)
-
-app.listen(3000, () => {
-  console.log(`Example app listening at http://localhost:3000`)
-})

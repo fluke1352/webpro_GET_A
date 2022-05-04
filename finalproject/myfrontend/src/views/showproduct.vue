@@ -114,7 +114,6 @@ export default {
   created() {
     axios.post("http://18.139.80.70:3000/showproduct/" + this.category).then((response) => {
       this.allproduct = response.data.message;
-      // console.log(this.allproduct);
     });
   },
   mounted: function () {
@@ -142,7 +141,6 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
@@ -150,16 +148,14 @@ export default {
         this.indexslide++;
         this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {
-        console.log("error");
+        console.log(error);
       }
     },
 
     imagePath(file_path) {
-      // console.log(file_path);
 
       if (file_path) {
         let img = file_path.slice(10, file_path.length - 1).split(",");
-        // console.log(img[0]);
         return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
@@ -175,7 +171,6 @@ export default {
         })
         .then((response) => {
           this.allproduct = response.data.message;
-          console.log(this.allproduct);
         });
     },
   },

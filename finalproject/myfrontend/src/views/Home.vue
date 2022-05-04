@@ -145,7 +145,6 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
@@ -153,7 +152,7 @@ export default {
         this.indexslide++;
         this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {
-        console.log("error");
+        console.log(error);
       }
     },
   },

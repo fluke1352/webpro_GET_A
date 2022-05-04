@@ -191,13 +191,11 @@ export default {
   methods: {
     selectImages(event) {
       this.images = event.target.files;
-      console.log(this.images);
     },
     showSelectImage(image) {
       return URL.createObjectURL(image);
     },
     deleteSelectImage(index) {
-      console.log(this.images);
       this.images = Array.from(this.images);
       this.images.splice(index, 1);
     },
@@ -220,7 +218,7 @@ export default {
           this.alertadd = response.data.message;
           alert(this.alertadd);
         })
-        .catch((e) => console.log(e.response.data));
+    
     },
   },
 };

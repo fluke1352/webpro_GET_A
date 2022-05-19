@@ -5,22 +5,11 @@ const fs = require("fs");
 const Joi = require('joi')
 router = express.Router();
 const bcrypt = require('bcrypt');
+const { uploadFile, getFileStream } = require('./s3bucket')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' });
 
-// Require multer for file upload
-const multer = require("multer");
-// SET STORAGE
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, "./static/uploads");
-    },
-    filename: function (req, file, callback) {
-        callback(
-            null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-        );
-    },
-});
-const upload = multer({ storage: storage });
+
 const passwordcheck = (value, helpers) =>{
     if (value.length < 6) {
         throw new Joi.ValidationError('Password must contain at least 6 characters')
@@ -44,8 +33,17 @@ const registercheck = Joi.object({
     userName: Joi.string().required().min(5).max(20).external(usernamecheck),
     password: Joi.string().required().custom(passwordcheck),
    })
+   
+router.get('/images/:key', async (req, res) => {
+    const key = req.params.key
+    const readstream = getFileStream(key)
+    readstream.pipe(res)
+})
+
 
 router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
+    
+
     try{
         registercheck.validateAsync(req.body,  { abortEarly: false })
     } catch (err) {
@@ -54,7 +52,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     if (req.method == "POST") {
-        const file = req.files;
+        const file = req.files[0]
         const user_fname = req.body.firstName;
         const user_lname = req.body.lastName;
         const user_phone = req.body.phoneNumber;
@@ -62,7 +60,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
         const user_password = await bcrypt.hash(req.body.password, 5);
         let pathArray = [];
 
-
+        await uploadFile(file)
 
         try {
             let [info, _] = await conn.query(
@@ -70,7 +68,7 @@ router.post("/register", upload.array("myImage", 1), async (req, res, next) => {
                 [user_fname, user_phone]
             );
             req.files.forEach((file, index) => {
-                let path = [user_fname, user_lname, user_phone, file.path.substring(6)];
+                let path = [user_fname, user_lname, user_phone, file.originalname];
                 pathArray.push(path);
             });
             if (info.length == 0) {
@@ -145,15 +143,14 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     id = req.body.id
-    const file = req.files;
+    const file = req.files[0];
     firstname = req.body.firstname
     lastname = req.body.lastname
     phone = req.body.phone
     console.log(phone);
     username = req.body.username
     password = await bcrypt.hash(req.body.pass, 5);
-    let pathArray = [];
-    // console.log(file);
+    console.log(file);
 
 
     try {
@@ -168,16 +165,13 @@ router.put("/editaccount", upload.array("myImage", 1), async (req, res, next) =>
         }
         else {
             console.log("have file")
-            req.files.forEach((file, index) => {
-                let path = [file.path.substring(6)];
-                pathArray.push(path);
-            });
+            await uploadFile(file)
 
             await conn.query(
-                "UPDATE account SET user_username = ?, user_password = ? WHERE user_user_id=?;", [username, password, id]
+                "UPDATE account SET user_username = ? WHERE user_user_id=?;", [username, id]
             );
             await conn.query(
-                "UPDATE user SET user_image = ? WHERE user_id=?;", [pathArray, id]
+                "UPDATE user SET user_image = ? WHERE user_id=?;", [file.originalname, id]
             );
            
             // console.log(info[0]);

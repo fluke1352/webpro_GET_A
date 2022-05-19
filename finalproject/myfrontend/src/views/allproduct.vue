@@ -1,8 +1,7 @@
 <template>
   <div class="bg">
-    
     <!-- banner -->
-    <div class="container" >
+    <div class="container">
       <!-- <img src="../assets/banner1.png" alt=""> -->
       <div class="columns">
         <div class="slideshow-container">
@@ -14,32 +13,35 @@
           </div>
 
           <a
-          class="prev"
-          @click="
-            indexslide--;
-            clearTimeout(this.timeOut);
-            fade();
-          "
-          >&#10094;</a
-        >
-        <a
-          class="next"
-          @click="
-            indexslide++;
-            clearTimeout(this.timeOut);
-            fade();
-          "
-          >&#10095;</a
-        >
+            class="prev"
+            @click="
+              indexslide--;
+              clearTimeout(this.timeOut);
+              fade();
+            "
+            >&#10094;</a
+          >
+          <a
+            class="next"
+            @click="
+              indexslide++;
+              clearTimeout(this.timeOut);
+              fade();
+            "
+            >&#10095;</a
+          >
         </div>
       </div>
     </div>
 
- <!-- serch -->
+    <!-- serch -->
     <div class="container my-6 has-text-warning">
       <p class="has-text-centered is-size-1 mb-5">ALL PRODUCT</p>
       <div class="columns mt-5">
-        <i class="fas fa-search column is-size-5" style="margin-right: -70px"></i>
+        <i
+          class="fas fa-search column is-size-5"
+          style="margin-right: -70px"
+        ></i>
         <input
           class="input column is-6"
           type="text"
@@ -72,7 +74,7 @@
         </div>
       </div>
 
-       <!-- card product -->
+      <!-- card product -->
       <div class="columns is-multiline mt-5">
         <div
           class="column is-3"
@@ -80,7 +82,7 @@
           :key="index"
         >
           <router-link
-            :to="{ name: 'detail', params: { id: product.product_id} }"
+            :to="{ name: 'detail', params: { id: product.product_id } }"
           >
             <div class="card">
               <div class="card-image">
@@ -99,7 +101,6 @@
           </router-link>
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -109,9 +110,8 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("http://localhost:3000/allproduct").then((response) => {
+    axios.get("http://18.139.80.70:3000/allproduct").then((response) => {
       this.allproduct = response.data.message;
-      console.log(this.allproduct);
     });
   },
   mounted: function () {
@@ -155,16 +155,17 @@ export default {
       // console.log(file_path);
 
       if (file_path) {
-        let img = file_path.slice(1, file_path.length-1).split(',')
-      // console.log(img[0]);
-        return "http://localhost:3000/" + img[0];
+        let img = file_path.slice(10, file_path.length - 1).split(",");
+        console.log(img[0]);
+        // console.log(img[0], "ettsfawwedaawsedawdawdawd");
+        return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
     searchProduct() {
       axios
-        .post("http://localhost:3000/seaechproduct", {
+        .post("http://18.139.80.70:3000/seaechproduct", {
           search: this.search,
           minrange: this.minrange,
           maxrange: this.maxrange,
@@ -189,17 +190,16 @@ export default {
       ],
       indexslide: 0,
       fades: null,
-      timeOut: null
+      timeOut: null,
     };
   },
 };
 </script>
 
 <style scoped>
-.bg{
-  background-color:rgb(26, 26, 26)
+.bg {
+  background-color: rgb(26, 26, 26);
 }
-
 
 .slideshow-container {
   width: 100%;

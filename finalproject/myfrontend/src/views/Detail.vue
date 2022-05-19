@@ -94,21 +94,17 @@ import "bulma/css/bulma.css";
 export default {
   created() {
     axios
-      .post("http://localhost:3000/productdetial/" + this.$route.params.id)
+      .post("http://18.139.80.70:3000/productdetial/" + this.$route.params.id)
       .then((response) => {
         this.productdetial = response.data.message[0];
         this.img = this.productdetial.image
           .slice(1, this.productdetial.image.length - 1)
           .split(",");
-        // console.log(this.img);
-        // this.imagePath(this.productdetial.image);
       });
     this.id = this.$route.params.id;
     if (localStorage.getItem("cart")) {
       this.cart = JSON.parse(localStorage.getItem("cart"));
     }
-
-    // console.log(this.$route.params.id);
   },
   computed: {
     computorderamount() {
@@ -129,8 +125,6 @@ export default {
       this.orderamount = val;
     },
     addtocart() {
-      // console.log(this.cart.filter((product) => (product.id = this.id)).length);
-
       if (this.cart.filter((product) => product.id === this.id).length > 0) {
         this.cart.forEach((product) => {
           if (product.id == this.id) {
@@ -146,11 +140,9 @@ export default {
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     imagePath(file_path) {
-      // console.log(file_path);
       if (file_path) {
-        // let img = file_path.slice(1, file_path.length - 1).split(",");
-        // console.log(img[0]);
-        return "http://localhost:3000/" + file_path;
+        let img = file_path.slice(9, file_path.length).split(",");
+        return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

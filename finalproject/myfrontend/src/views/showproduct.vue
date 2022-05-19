@@ -13,23 +13,23 @@
           </div>
 
           <a
-          class="prev"
-          @click="
-            indexslide--;
-            clearTimeout(this.timeOut);
-            fade();
-          "
-          >&#10094;</a
-        >
-        <a
-          class="next"
-          @click="
-            indexslide++;
-            clearTimeout(this.timeOut);
-            fade();
-          "
-          >&#10095;</a
-        >
+            class="prev"
+            @click="
+              indexslide--;
+              clearTimeout(this.timeOut);
+              fade();
+            "
+            >&#10094;</a
+          >
+          <a
+            class="next"
+            @click="
+              indexslide++;
+              clearTimeout(this.timeOut);
+              fade();
+            "
+            >&#10095;</a
+          >
         </div>
       </div>
     </div>
@@ -112,12 +112,9 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios
-      .post("http://localhost:3000/showproduct/" + this.category)
-      .then((response) => {
-        this.allproduct = response.data.message;
-        console.log(this.allproduct);
-      });
+    axios.post("http://18.139.80.70:3000/showproduct/" + this.category).then((response) => {
+      this.allproduct = response.data.message;
+    });
   },
   mounted: function () {
     clearInterval(this.fades);
@@ -144,7 +141,6 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
@@ -152,24 +148,22 @@ export default {
         this.indexslide++;
         this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {
-        console.log("error");
+        console.log(error);
       }
     },
 
     imagePath(file_path) {
-      // console.log(file_path);
 
       if (file_path) {
-        let img = file_path.slice(1, file_path.length-1).split(',')
-      // console.log(img[0]);
-        return "http://localhost:3000/" + img[0];
+        let img = file_path.slice(10, file_path.length - 1).split(",");
+        return "http://18.139.80.70:3000/images/" + img[0];
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
     searchProduct() {
       axios
-        .post("http://localhost:3000/seaechproductincategory", {
+        .post("http://18.139.80.70:3000/seaechproductincategory", {
           search: this.search,
           minrange: this.minrange,
           maxrange: this.maxrange,
@@ -177,7 +171,6 @@ export default {
         })
         .then((response) => {
           this.allproduct = response.data.message;
-          console.log(this.allproduct);
         });
     },
   },
@@ -196,15 +189,15 @@ export default {
       ],
       indexslide: 0,
       fades: null,
-      timeOut: null
+      timeOut: null,
     };
   },
 };
 </script>
 
 <style scoped>
-.bg{
-  background-color:rgb(26, 26, 26)
+.bg {
+  background-color: rgb(26, 26, 26);
 }
 
 .slideshow-container {
@@ -287,11 +280,10 @@ export default {
   /* margin: auto; */
 
   min-width: 100%;
-  opacity: 0.90;
+  opacity: 0.9;
   transition: opacity 0.7s;
 }
 .card-image:hover {
   opacity: 1;
 }
-
 </style>

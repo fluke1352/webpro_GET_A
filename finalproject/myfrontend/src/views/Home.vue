@@ -116,7 +116,7 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("http://localhost:3000/inflowhistory").then((response) => {
+    axios.post("http://18.139.80.70:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
     });
   },
@@ -145,7 +145,6 @@ export default {
     },
     fade() {
       try {
-        // console.log("reani");
         var element = document.getElementById("fade");
         element.classList.remove("fade");
         void element.offsetWidth;
@@ -153,7 +152,7 @@ export default {
         this.indexslide++;
         this.timeOut = setTimeout(this.fade, 5000);
       } catch (error) {
-        console.log("error");
+        console.log(error);
       }
     },
   },

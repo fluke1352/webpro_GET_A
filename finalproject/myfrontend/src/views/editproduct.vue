@@ -327,9 +327,7 @@ export default {
     pages() {
       let page = 1;
       let maxpage = this.maxpage;
-      // console.log(maxpage);
       if (this.page < 0 || this.valmin < 0) {
-        // console.log("<<<< 00");
         this.setpage(15, 0, 1);
         page = 1;
       } else if (
@@ -371,7 +369,7 @@ export default {
     },
     saveproduct(index) {
       axios
-        .post("http://localhost:3000/changeproduct", {
+        .post("http://18.139.80.70:3000/changeproduct", {
           id: index,
           name: this.changename,
           category: this.changecategory,
@@ -385,13 +383,12 @@ export default {
           alert(this.alertadd);
           location.reload();
         })
-        .catch((e) => console.log(e.response.data));
     },
 
     saveamount(index) {
       this.diff = this.changeamount - this.products[index].amount_product;
       axios
-        .post("http://localhost:3000/addamount", {
+        .post("http://18.139.80.70:3000/addamount", {
           id: index,
           price: this.changeprice,
           amount: this.changeamount,
@@ -422,10 +419,9 @@ export default {
     },
     getproducts() {
       axios
-        .get("http://localhost:3000/product")
+        .get("http://18.139.80.70:3000/product")
         .then((response) => {
           this.products = response.data.message;
-          console.log(this.products.length);
           this.maxpage = Math.ceil(this.products.length / 15);
         })
         .catch((err) => {
@@ -434,7 +430,7 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }

@@ -54,19 +54,19 @@ import "bulma/css/bulma.css";
 import bcrypt from "bcryptjs";
 export default {
   created() {
-    axios.post("http://localhost:3000/alluser").then((response) => {
+    axios.post("http://18.139.80.70:3000/alluser").then((response) => {
       this.data = response.data.message;
       
       
     });
-     axios.get("/user/me").then((res) => {
+     axios.get("http://18.139.80.70:3000/user/me").then((res) => {
         this.info = res.data;
       });
   },
   methods: {
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "http://18.139.80.70:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
@@ -76,7 +76,7 @@ export default {
       if (bcrypt.compareSync(password , this.info.user_password)) {
         // this.showEdit = !this.showEdit;
         alert("correct password");
-        axios.put("http://localhost:3000/alluser", {id: id}).then(() => {
+        axios.put("http://18.139.80.70:3000/alluser", {id: id}).then(() => {
           alert("add complete")
   
         });

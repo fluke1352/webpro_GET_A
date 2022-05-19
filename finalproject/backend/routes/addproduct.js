@@ -5,28 +5,15 @@ const fs = require("fs");
 const { loginAuth } = require('../middlewares')
 router = express.Router();
 
-// Require multer for file upload
-const multer = require("multer");
-// SET STORAGE
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, "./static/uploads");
-    },
-    filename: function (req, file, callback) {
-        callback(
-            null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-        );
-    },
-});
-const upload = multer({ storage: storage });
-
+const { uploadFile, getFileStream } = require('./s3bucket')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' });
 
 router.post("/addproduct", upload.array("myImage", 6), loginAuth, async (req, res, next) => {
     const conn = await pool.getConnection();
     await conn.beginTransaction();
     if (req.method == "POST") {
-        const file = req.files;
+        const file = req.files[0];
         const owner = req.user.user_username
         const productname = req.body.name;
         const productcategory = req.body.category;
@@ -36,7 +23,7 @@ router.post("/addproduct", upload.array("myImage", 6), loginAuth, async (req, re
         const productamount = req.body.amount;
         const productdescription = req.body.description;
         let pathArray = [];
-
+        await uploadFile(file)
 
 
         try {

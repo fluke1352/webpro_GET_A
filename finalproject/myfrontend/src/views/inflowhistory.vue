@@ -69,10 +69,9 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 export default {
   created() {
-    axios.post("http://localhost:3000/inflowhistory").then((response) => {
+    axios.post("http://18.139.80.70:3000/inflowhistory").then((response) => {
       this.data = response.data.message;
       this.maxpage = Math.ceil(this.data.length/15);
-      // console.log(this.maxpage);
     });
   },
   methods: {
@@ -86,9 +85,7 @@ export default {
     pages(){
       let page = 1
       let maxpage = this.maxpage;
-      // console.log(maxpage);
       if(this.page < 0 || this.valmin < 0){
-        // console.log("<<<< 00");
         this.setpage(15,0,1)
         page = 1
       }

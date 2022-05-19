@@ -168,19 +168,10 @@ export default {
       this.getUser();
     }
   },
-  // created() {
-  //   axios
-  //     .post("http://localhost:3000/editaccount", {
-  //       id: 23,
-  //     })
-  //     .then((response) => {
-  //       this.info = response.data.message;
-  //       console.log(this.info);
-  //     });
-  // },
+
   methods: {
     getUser() {
-      axios.get("/user/me").then((res) => {
+      axios.get("http://18.139.80.70:3000/user/me").then((res) => {
         this.info = res.data;
       });
     },
@@ -211,9 +202,8 @@ export default {
         });
       }
       axios
-        .put("http://localhost:3000/editaccount", formData)
-        .then((response) => {
-          console.log(response);
+        .put("http://18.139.80.70:3000/editaccount", formData)
+        .then(() => {
           this.showEdit = !this.showEdit;
           this.fetchdb();
           alert("update complete");
@@ -222,16 +212,14 @@ export default {
     },
     imagePath(file_path) {
       if (file_path) {
-        return "http://localhost:3000/" + file_path;
+        return "http://18.139.80.70:3000/images/" + file_path;
       } else {
         return "https://bulma.io/images/placeholders/640x360.png";
       }
     },
     selectImages(event) {
       this.images = event.target.files;
-      console.log(this.images);
       this.test.push(event.target.files);
-      console.log(this.test);
     },
     showSelectImage(image) {
       return URL.createObjectURL(image);
@@ -239,7 +227,7 @@ export default {
 
     fetchdb() {
       axios
-        .post("http://localhost:3000/editaccount", {
+        .post("http://18.139.80.70:3000/editaccount", {
           id: this.info.user_id,
         })
         .then((response) => {
